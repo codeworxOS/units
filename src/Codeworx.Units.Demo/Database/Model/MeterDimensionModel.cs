@@ -2,12 +2,12 @@
 
 namespace Units.Demo.Database.Model
 {
-    public class MeterDimensionTest
+    public class MeterDimensionModel
     {
         public int Id { get; set; }
 
-        public Meter Meter { get; set; }
+        public Meter RequiredMeter { get; set; }
 
-        public Meter? MeterNullable { get; set; }
+        public Meter? OptionalMeter { get; set; }
     }
 }

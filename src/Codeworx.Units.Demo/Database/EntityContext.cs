@@ -7,14 +7,17 @@ namespace Units.Demo.Database
 {
     public class EntityContext : DbContext
     {
+        public EntityContext(DbContextOptions options) : base(options)
+        {
+        }
+
+        protected EntityContext()
+        {
+        }
+
         public DbSet<DistanceDimensionModel> DistanceDimensionTest { get; set; }
 
-        public DbSet<MeterDimensionTest> MeterDimensionTest { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=UnitTestData;Trusted_Connection=True;");
-        }
+        public DbSet<MeterDimensionModel> MeterDimensionTest { get; set; }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {

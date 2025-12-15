@@ -11,7 +11,7 @@ namespace Codeworx.Units.EntityFrameworkCore
 
         public required string UnitKey { get; set; }
 
-        public static DimensionValue<T>? GetEntity(T? entry)
+        public static DimensionValue<T> GetEntity(T entry)
         {
             if (entry == null)
                 return null;
