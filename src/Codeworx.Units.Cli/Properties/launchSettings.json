@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Codeworx.Units.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "-n Codeworx.Units.Defaults -i ..\\..\\..\\..\\..\\src\\Codeworx.Units.Defaults\\Default.Units.json --typescript temp.ts"
+    }
+  }
+}

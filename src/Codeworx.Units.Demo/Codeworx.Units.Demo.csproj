@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Codeworx.Units.Defaults\Codeworx.Units.Defaults.csproj" />
+    <ProjectReference Include="..\Codeworx.Units.EntityFrameworkCore\Codeworx.Units.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>
