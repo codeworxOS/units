@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "°C";
         public string Key => "Temperature_Celsius";
+        public UnitSystem System => UnitSystem.Both;
 
         public Celsius(decimal val)
         {

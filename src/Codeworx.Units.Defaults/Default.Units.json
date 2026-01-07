@@ -198,7 +198,8 @@
     "ImperialDefault": "Yard",
     "Units": {
       "Meter": {
-        "Symbol": "m"
+        "Symbol": "m",
+        "System": "Metric"
       },
       "Centimeter": {
         "Symbol": "cm",

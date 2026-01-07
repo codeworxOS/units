@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "ft²";
         public string Key => "Area_SquareFeet";
+        public UnitSystem System => UnitSystem.Both;
 
         public SquareFeet(decimal val)
         {

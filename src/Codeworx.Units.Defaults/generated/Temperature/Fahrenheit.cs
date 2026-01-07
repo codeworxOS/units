@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "F";
         public string Key => "Temperature_Fahrenheit";
+        public UnitSystem System => UnitSystem.Both;
 
         public Fahrenheit(decimal val)
         {

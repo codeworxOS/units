@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "m/s";
         public string Key => "Speed_MeterPerSecond";
+        public UnitSystem System => UnitSystem.Both;
 
         public MeterPerSecond(decimal val)
         {

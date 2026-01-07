@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "cm";
         public string Key => "Distance_Centimeter";
+        public UnitSystem System => UnitSystem.Both;
 
         public Centimeter(decimal val)
         {

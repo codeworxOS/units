@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "ft/s";
         public string Key => "Speed_FeetPerSecond";
+        public UnitSystem System => UnitSystem.Both;
 
         public FeetPerSecond(decimal val)
         {

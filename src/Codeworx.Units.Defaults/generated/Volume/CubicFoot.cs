@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "ft³";
         public string Key => "Volume_CubicFoot";
+        public UnitSystem System => UnitSystem.Both;
 
         public CubicFoot(decimal val)
         {

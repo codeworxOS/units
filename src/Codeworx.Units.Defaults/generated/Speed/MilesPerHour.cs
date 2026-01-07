@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "mph";
         public string Key => "Speed_MilesPerHour";
+        public UnitSystem System => UnitSystem.Both;
 
         public MilesPerHour(decimal val)
         {

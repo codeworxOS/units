@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "s";
         public string Key => "Time_Second";
+        public UnitSystem System => UnitSystem.Both;
 
         public Second(decimal val)
         {

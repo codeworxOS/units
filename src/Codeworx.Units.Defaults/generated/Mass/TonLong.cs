@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.MassDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "ln tn";
         public string Key => "Mass_TonLong";
+        public UnitSystem System => UnitSystem.Both;
 
         public TonLong(decimal val)
         {

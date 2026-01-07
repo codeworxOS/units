@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "m";
         public string Key => "Distance_Meter";
+        public UnitSystem System => UnitSystem.Metric;
 
         public Meter(decimal val)
         {

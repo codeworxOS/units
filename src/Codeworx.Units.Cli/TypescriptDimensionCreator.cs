@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Codeworx.Units.Cli.Data;
 using Codeworx.Units.Cli.Typescript;
+using Codeworx.Units.Primitives;
 using HandlebarsDotNet;
 
 namespace Codeworx.Units.Cli
@@ -56,6 +57,7 @@ namespace Codeworx.Units.Cli
                         DimensionName = dimensionName.GetClassName(),
                         UnitName = unitName.GetClassName(),
                         Symbol = unitData.Symbol,
+                        SystemString = string.Join(",", GetSystemString(unitData.System).Select(d => $"'{d}'")),
                         Conversion = conversions
                     });
                 }
@@ -72,6 +74,28 @@ namespace Codeworx.Units.Cli
             }
 
             _dimensionData = dimensions;
+        }
+
+        private IEnumerable<string> GetSystemString(UnitSystem? system)
+        {
+            List<string> systems = new List<string>();
+
+            if (system.HasValue)
+            {
+                var flagValues = Enum.GetValues(typeof(UnitSystem)).Cast<UnitSystem>().Where(x => system.Value.HasFlag(x));
+
+                foreach (var item in flagValues)
+                {
+                    systems.Add(item.ToString());
+                }
+            }
+
+            if (systems.Count == 0)
+            {
+                return [nameof(UnitSystem.Metric), nameof(UnitSystem.Imperial)];
+            }
+
+            return systems;
         }
 
         public async Task<bool> ProcessAsync()

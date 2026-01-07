@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "h";
         public string Key => "Time_Hour";
+        public UnitSystem System => UnitSystem.Both;
 
         public Hour(decimal val)
         {

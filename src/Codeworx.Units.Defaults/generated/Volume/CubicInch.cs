@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "in³";
         public string Key => "Volume_CubicInch";
+        public UnitSystem System => UnitSystem.Both;
 
         public CubicInch(decimal val)
         {

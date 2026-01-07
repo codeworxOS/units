@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "kt";
         public string Key => "Speed_Knots";
+        public UnitSystem System => UnitSystem.Both;
 
         public Knots(decimal val)
         {

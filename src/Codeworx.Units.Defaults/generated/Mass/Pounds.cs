@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.MassDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "lbs";
         public string Key => "Mass_Pounds";
+        public UnitSystem System => UnitSystem.Both;
 
         public Pounds(decimal val)
         {

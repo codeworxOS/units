@@ -11,6 +11,8 @@ namespace Codeworx.Units.Cli.Typescript
 
         public required string Symbol { get; set; }
 
+        public required string SystemString { get; set; }
+
         public required List<TSConversion> Conversion { get; set; }
     }
 }

@@ -8,6 +8,8 @@ export function isIDimension(obj: any): obj is IDimension {
   return obj?.toUnit != undefined && obj?.symbol != undefined && obj.value != undefined;
 }
 
+export type UnitSystems = 'Metric' | 'Imperial';
+
 export type DimensionName = {{{Names}}};
 export const DimensionNameList: DimensionName[] = [{{{NameList}}}];
 
@@ -15,6 +17,7 @@ export interface IDimension {
   value: number;
   symbol: string;
   dimension: string;
+  system: UnitSystems[];
   toUnit(symbol: string): IDimension;
 }
 
@@ -32,11 +35,14 @@ export abstract class I{{{DimensionName}}} implements IDimension {
 
     public symbol: string;
 
+    public system: UnitSystems[];
+
     public dimension: string = "{{{DimensionName}}}";
 
-    public constructor(val: number, sym: string) {
+    public constructor(val: number, sym: string, system: UnitSystems[]) {
         this.value = val;
         this.symbol = sym;
+        this.system = system;
     }
 {{#Units}}
     public abstract To{{{UnitName}}}(): {{{DimensionName}}}{{{UnitName}}};
@@ -81,6 +87,16 @@ export abstract class I{{{DimensionName}}} implements IDimension {
         }
     }
 
+    public static getSymbols() : string[] {
+        var symbols : string[] = [];
+
+{{#Units}}
+        symbols.push("{{{Symbol}}}");
+{{/Units}}
+
+        return symbols;
+    }
+
     public toUnit(symbol: string): I{{{DimensionName}}} {
         switch (symbol) {
 
@@ -102,10 +118,10 @@ export abstract class I{{{DimensionName}}} implements IDimension {
 export class {{{DimensionName}}}{{{UnitName}}} extends I{{{DimensionName}}} {
     
     public constructor(val: number) {
-        super(val, "{{{Symbol}}}");
+        super(val, "{{{Symbol}}}", [{{{SystemString}}}]);
     }
 
-{{#ConversionUnits}}
+{{#Conversion}}
     public To{{{ConversionUnitName}}}(): {{{DimensionName}}}{{{ConversionUnitName}}} {
         {{^HasConversion}}
             return this;
@@ -114,7 +130,7 @@ export class {{{DimensionName}}}{{{UnitName}}} extends I{{{DimensionName}}} {
             return new {{{DimensionName}}}{{{ConversionUnitName}}}({{{Conversion}}});
         {{/HasConversion}}
     }
-{{/ConversionUnits}}
+{{/Conversion}}
 
     public toJSON(): string {
         return (this.value + " {{{Symbol}}}");
@@ -122,3 +138,22 @@ export class {{{DimensionName}}}{{{UnitName}}} extends I{{{DimensionName}}} {
 }
 {{/Units}}
 {{/Dimensions}}
+
+export class DimensionHelper {
+  constructor(public parse: (value: string) => IDimension, public parseWithSymbol: (symbol: string, value: number) => IDimension, public getSymbols: () => string[], public defaultSymbol: string) { }
+
+  public static GetHelper(
+    dimensionName: DimensionName
+  ): DimensionHelper
+  {
+    switch (dimensionName) {
+    
+{{#Dimensions}}
+      case '{{{DimensionName}}}':
+        return new DimensionHelper(I{{{DimensionName}}}.parse, I{{{DimensionName}}}.parseWithSymbol, I{{{DimensionName}}}.getSymbols, I{{{DimensionName}}}.DefaultSymbol);
+{{/Dimensions}}
+    }
+
+    throw Error('Invalid dimensionName "' + dimensionName + '"!');
+  }
+}

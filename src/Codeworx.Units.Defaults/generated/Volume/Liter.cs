@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "l";
         public string Key => "Volume_Liter";
+        public UnitSystem System => UnitSystem.Both;
 
         public Liter(decimal val)
         {

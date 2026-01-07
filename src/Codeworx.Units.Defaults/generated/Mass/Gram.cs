@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.MassDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "g";
         public string Key => "Mass_Gram";
+        public UnitSystem System => UnitSystem.Both;
 
         public Gram(decimal val)
         {

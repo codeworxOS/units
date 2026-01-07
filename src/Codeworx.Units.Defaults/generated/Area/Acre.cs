@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "ac";
         public string Key => "Area_Acre";
+        public UnitSystem System => UnitSystem.Both;
 
         public Acre(decimal val)
         {

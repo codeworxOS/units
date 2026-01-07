@@ -8,6 +8,8 @@
 
         string Key { get; }
 
+        UnitSystem System { get; }
+
         IUnitBase ToUnit(string symbol);
     }
 }

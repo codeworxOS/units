@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "min";
         public string Key => "Time_Minute";
+        public UnitSystem System => UnitSystem.Both;
 
         public Minute(decimal val)
         {

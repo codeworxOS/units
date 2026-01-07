@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.MassDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "mug";
         public string Key => "Mass_Microgram";
+        public UnitSystem System => UnitSystem.Both;
 
         public Microgram(decimal val)
         {

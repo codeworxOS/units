@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "cm²";
         public string Key => "Area_SquareCentiMeter";
+        public UnitSystem System => UnitSystem.Both;
 
         public SquareCentiMeter(decimal val)
         {

@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.MassDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "kg";
         public string Key => "Mass_Kilogram";
+        public UnitSystem System => UnitSystem.Both;
 
         public Kilogram(decimal val)
         {

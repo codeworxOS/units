@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.MassDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "sh tn";
         public string Key => "Mass_TonShort";
+        public UnitSystem System => UnitSystem.Both;
 
         public TonShort(decimal val)
         {

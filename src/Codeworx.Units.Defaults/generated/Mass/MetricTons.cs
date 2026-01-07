@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.MassDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "t";
         public string Key => "Mass_MetricTons";
+        public UnitSystem System => UnitSystem.Both;
 
         public MetricTons(decimal val)
         {

@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "yard";
         public string Key => "Distance_Yard";
+        public UnitSystem System => UnitSystem.Both;
 
         public Yard(decimal val)
         {

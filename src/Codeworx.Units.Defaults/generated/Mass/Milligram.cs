@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.MassDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "mg";
         public string Key => "Mass_Milligram";
+        public UnitSystem System => UnitSystem.Both;
 
         public Milligram(decimal val)
         {

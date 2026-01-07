@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "mi";
         public string Key => "Distance_Mile";
+        public UnitSystem System => UnitSystem.Both;
 
         public Mile(decimal val)
         {

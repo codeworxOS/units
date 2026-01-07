@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Codeworx.Units.Primitives;
 
 namespace Codeworx.Units.Cli.Data
 {
@@ -9,6 +10,9 @@ namespace Codeworx.Units.Cli.Data
         public string Name { get; set; } = null!;
 
         public required string Symbol { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public UnitSystem? System { get; set; }
 
         public decimal Divisor { get; set; } = 1;
 

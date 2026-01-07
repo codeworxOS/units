@@ -20,4 +20,8 @@
 	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Codeworx.Units.Primitives\Codeworx.Units.Primitives.csproj" />
+	</ItemGroup>
+
 </Project>

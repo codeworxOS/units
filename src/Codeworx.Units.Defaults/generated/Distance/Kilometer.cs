@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "km";
         public string Key => "Distance_Kilometer";
+        public UnitSystem System => UnitSystem.Both;
 
         public Kilometer(decimal val)
         {

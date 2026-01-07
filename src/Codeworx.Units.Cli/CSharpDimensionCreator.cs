@@ -164,7 +164,7 @@ namespace Codeworx.Units.Cli
             {
                 var unitClassName = unitName.GetClassName();
 
-                string template = $"public struct tmp_Struct {{private readonly decimal _value; decimal IUnitBase.BaseValue => _value; public string Symbol => \"{unitData.Symbol}\"; public string Key => \"{dimensionClassName}_{unitClassName}\"; }}";
+                string template = $"public struct tmp_Struct {{private readonly decimal _value; decimal IUnitBase.BaseValue => _value; public string Symbol => \"{unitData.Symbol}\"; public string Key => \"{dimensionClassName}_{unitClassName}\"; public UnitSystem System => UnitSystem.{unitData.System ?? Primitives.UnitSystem.Both}; }}";
 
                 var classDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as StructDeclarationSyntax)!;
 

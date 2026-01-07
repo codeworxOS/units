@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "in²";
         public string Key => "Area_SquareInch";
+        public UnitSystem System => UnitSystem.Both;
 
         public SquareInch(decimal val)
         {

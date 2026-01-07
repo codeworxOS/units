@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "K";
         public string Key => "Temperature_Kelvin";
+        public UnitSystem System => UnitSystem.Both;
 
         public Kelvin(decimal val)
         {

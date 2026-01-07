@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "ft";
         public string Key => "Distance_Feet";
+        public UnitSystem System => UnitSystem.Both;
 
         public Feet(decimal val)
         {

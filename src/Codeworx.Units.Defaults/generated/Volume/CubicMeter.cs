@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "m³";
         public string Key => "Volume_CubicMeter";
+        public UnitSystem System => UnitSystem.Both;
 
         public CubicMeter(decimal val)
         {

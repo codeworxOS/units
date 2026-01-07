@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "inch";
         public string Key => "Distance_Inch";
+        public UnitSystem System => UnitSystem.Both;
 
         public Inch(decimal val)
         {

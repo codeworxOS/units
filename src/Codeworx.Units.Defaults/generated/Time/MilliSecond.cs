@@ -13,6 +13,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "ms";
         public string Key => "Time_MilliSecond";
+        public UnitSystem System => UnitSystem.Both;
 
         public MilliSecond(decimal val)
         {
