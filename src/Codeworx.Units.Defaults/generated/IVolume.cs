@@ -10,7 +10,7 @@ namespace Codeworx.Units.Defaults
     public interface IVolume : IUnitBase, IComparable
     {
         VolumeDimension.CubicMeter ToCubicMeter();
-        VolumeDimension.CubicCentiMeter ToCubicCentiMeter();
+        VolumeDimension.CubicCentimeter ToCubicCentimeter();
         VolumeDimension.CubicFoot ToCubicFoot();
         VolumeDimension.CubicInch ToCubicInch();
         VolumeDimension.Gallon ToGallon();
@@ -42,8 +42,8 @@ namespace Codeworx.Units.Defaults
                 case "Volume_CubicMeter":
                     return new VolumeDimension.CubicMeter(value);
                 case "cm³":
-                case "Volume_CubicCentiMeter":
-                    return new VolumeDimension.CubicCentiMeter(value);
+                case "Volume_CubicCentimeter":
+                    return new VolumeDimension.CubicCentimeter(value);
                 case "ft³":
                 case "Volume_CubicFoot":
                     return new VolumeDimension.CubicFoot(value);

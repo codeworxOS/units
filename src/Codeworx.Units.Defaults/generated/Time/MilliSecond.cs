@@ -7,15 +7,15 @@ namespace Codeworx.Units.Defaults.TimeDimension
     using Codeworx.Units.Primitives;
 
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
-    public struct MilliSecond : ITime
+    public struct Millisecond : ITime
     {
         private readonly decimal _value;
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "ms";
-        public string Key => "Time_MilliSecond";
+        public string Key => "Time_Millisecond";
         public UnitSystem System => UnitSystem.Both;
 
-        public MilliSecond(decimal val)
+        public Millisecond(decimal val)
         {
             _value = val;
         }
@@ -35,7 +35,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
             return new Minute(_value / 60000M);
         }
 
-        public MilliSecond ToMilliSecond() => this;
+        public Millisecond ToMillisecond() => this;
         public ITime ToUnit(string symbol)
         {
             switch (symbol)
@@ -47,7 +47,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
                 case "min":
                     return ToMinute();
                 case "ms":
-                    return ToMilliSecond();
+                    return ToMillisecond();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
@@ -64,113 +64,113 @@ namespace Codeworx.Units.Defaults.TimeDimension
                 case "min":
                     return ToMinute();
                 case "ms":
-                    return ToMilliSecond();
+                    return ToMillisecond();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
-        public static implicit operator MilliSecond(decimal value)
+        public static implicit operator Millisecond(decimal value)
         {
-            return new MilliSecond(value);
+            return new Millisecond(value);
         }
 
-        public static MilliSecond operator +(MilliSecond first, ITime second)
+        public static Millisecond operator +(Millisecond first, ITime second)
         {
-            return new MilliSecond(first._value + second.ToMilliSecond()._value);
+            return new Millisecond(first._value + second.ToMillisecond()._value);
         }
 
-        public static MilliSecond operator -(MilliSecond first, ITime second)
+        public static Millisecond operator -(Millisecond first, ITime second)
         {
-            return new MilliSecond(first._value - second.ToMilliSecond()._value);
+            return new Millisecond(first._value - second.ToMillisecond()._value);
         }
 
-        public static MilliSecond operator +(MilliSecond first, decimal second)
+        public static Millisecond operator +(Millisecond first, decimal second)
         {
-            return new MilliSecond(first._value + second);
+            return new Millisecond(first._value + second);
         }
 
-        public static MilliSecond operator -(MilliSecond first, decimal second)
+        public static Millisecond operator -(Millisecond first, decimal second)
         {
-            return new MilliSecond(first._value - second);
+            return new Millisecond(first._value - second);
         }
 
-        public static MilliSecond operator *(MilliSecond first, decimal second)
+        public static Millisecond operator *(Millisecond first, decimal second)
         {
-            return new MilliSecond(first._value * second);
+            return new Millisecond(first._value * second);
         }
 
-        public static MilliSecond operator /(MilliSecond first, decimal second)
+        public static Millisecond operator /(Millisecond first, decimal second)
         {
-            return new MilliSecond(first._value / second);
+            return new Millisecond(first._value / second);
         }
 
-        public static decimal operator /(MilliSecond first, ITime second)
+        public static decimal operator /(Millisecond first, ITime second)
         {
-            return first._value / second.ToMilliSecond()._value;
+            return first._value / second.ToMillisecond()._value;
         }
 
-        public static MilliSecond operator -(MilliSecond first)
+        public static Millisecond operator -(Millisecond first)
         {
-            return new MilliSecond(-first._value);
+            return new Millisecond(-first._value);
         }
 
-        public static bool operator>(MilliSecond first, ITime second)
+        public static bool operator>(Millisecond first, ITime second)
         {
-            return first._value > second.ToMilliSecond()._value;
+            return first._value > second.ToMillisecond()._value;
         }
 
-        public static bool operator >=(MilliSecond first, ITime second)
+        public static bool operator >=(Millisecond first, ITime second)
         {
-            return first._value >= second.ToMilliSecond()._value;
+            return first._value >= second.ToMillisecond()._value;
         }
 
-        public static bool operator <(MilliSecond first, ITime second)
+        public static bool operator <(Millisecond first, ITime second)
         {
-            return first._value < second.ToMilliSecond()._value;
+            return first._value < second.ToMillisecond()._value;
         }
 
-        public static bool operator <=(MilliSecond first, ITime second)
+        public static bool operator <=(Millisecond first, ITime second)
         {
-            return first._value <= second.ToMilliSecond()._value;
+            return first._value <= second.ToMillisecond()._value;
         }
 
-        public static bool operator ==(MilliSecond first, ITime second)
+        public static bool operator ==(Millisecond first, ITime second)
         {
-            return first._value == second.ToMilliSecond()._value;
+            return first._value == second.ToMillisecond()._value;
         }
 
-        public static bool operator !=(MilliSecond first, ITime second)
+        public static bool operator !=(Millisecond first, ITime second)
         {
-            return first._value != second.ToMilliSecond()._value;
+            return first._value != second.ToMillisecond()._value;
         }
 
-        public static bool operator>(MilliSecond first, MilliSecond second)
+        public static bool operator>(Millisecond first, Millisecond second)
         {
             return first._value > second._value;
         }
 
-        public static bool operator >=(MilliSecond first, MilliSecond second)
+        public static bool operator >=(Millisecond first, Millisecond second)
         {
             return first._value >= second._value;
         }
 
-        public static bool operator <(MilliSecond first, MilliSecond second)
+        public static bool operator <(Millisecond first, Millisecond second)
         {
             return first._value < second._value;
         }
 
-        public static bool operator <=(MilliSecond first, MilliSecond second)
+        public static bool operator <=(Millisecond first, Millisecond second)
         {
             return first._value <= second._value;
         }
 
-        public static bool operator ==(MilliSecond first, MilliSecond second)
+        public static bool operator ==(Millisecond first, Millisecond second)
         {
             return first._value == second._value;
         }
 
-        public static bool operator !=(MilliSecond first, MilliSecond second)
+        public static bool operator !=(Millisecond first, Millisecond second)
         {
             return first._value != second._value;
         }
@@ -190,7 +190,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
             if (obj == null)
                 return 1;
             if (obj is ITime conv)
-                return this._value.CompareTo(conv.ToMilliSecond()._value);
+                return this._value.CompareTo(conv.ToMillisecond()._value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 

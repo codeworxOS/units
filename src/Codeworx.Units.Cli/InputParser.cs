@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Codeworx.Units.Cli.Data;
@@ -41,7 +42,7 @@ namespace Codeworx.Units.Cli
                 WriteErrorOutput($"Error in {CurrentOptions.Input}.{Environment.NewLine}{ex}");
                 return false;
             }
-
+            HashSet<string> unitKeys = new HashSet<string>();
             HashSet<string> dimensionNames = new HashSet<string>();
             foreach ((var dimensionName, var data) in Result.ToList())
             {
@@ -59,14 +60,27 @@ namespace Codeworx.Units.Cli
                 foreach ((var unitName, var unit) in data.Units.ToList())
                 {
                     unit.Name = unitName;
-
                     var unitClassName = unitName.GetClassName();
+
                     if (unitNames.Contains(unitClassName) || string.IsNullOrWhiteSpace(unitClassName))
                     {
                         data.Units.Remove(unitName);
                         WriteWarningOutput($"Skipping Unit {unitName} in {dimensionName}, invalid or duplicated ClassName");
                         continue;
                     }
+
+                    if (unit.Key == null)
+                    {
+                        unit.Key = $"{dimensionClassName}_{unitClassName}";
+                    }
+
+                    if (unitKeys.Contains(unit.Key))
+                    {
+                        data.Units.Remove(unitName);
+                        WriteWarningOutput($"Skipping Unit {unitName} in {dimensionName}, invalid or duplicated Key");
+                    }
+
+                    unitKeys.Add(unit.Key);
 
                     if (unitName != data.BaseUnit)
                     {

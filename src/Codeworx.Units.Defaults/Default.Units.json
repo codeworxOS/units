@@ -21,7 +21,7 @@
         "Symbol": "min",
         "Factor": 60
       },
-      "Milli Second": {
+      "Millisecond": {
         "Symbol": "ms",
         "Divisor": 1000
       }
@@ -103,15 +103,15 @@
         "Symbol": "ac",
         "Factor": 4046.8564224
       },
-      "SquareCentiMeter": {
+      "SquareCentimeter": {
         "Symbol": "cm²",
         "Divisor": 10000
       },
-      "SquareKiloMeter": {
+      "SquareKilometer": {
         "Symbol": "km²",
         "Factor": 1000000
       },
-      "SquareMilliMeter": {
+      "SquareMillimeter": {
         "Symbol": "mm²",
         "Divisor": 1000000
       },
@@ -134,7 +134,7 @@
       "CubicMeter": {
         "Symbol": "m³"
       },
-      "CubicCentiMeter": {
+      "CubicCentimeter": {
         "Symbol": "cm³",
         "Divisor": 1000000
       },

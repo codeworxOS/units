@@ -7,15 +7,15 @@ namespace Codeworx.Units.Defaults.AreaDimension
     using Codeworx.Units.Primitives;
 
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
-    public struct SquareCentiMeter : IArea
+    public struct SquareCentimeter : IArea
     {
         private readonly decimal _value;
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "cm²";
-        public string Key => "Area_SquareCentiMeter";
+        public string Key => "Area_SquareCentimeter";
         public UnitSystem System => UnitSystem.Both;
 
-        public SquareCentiMeter(decimal val)
+        public SquareCentimeter(decimal val)
         {
             _value = val;
         }
@@ -30,15 +30,15 @@ namespace Codeworx.Units.Defaults.AreaDimension
             return new Acre(_value / 40468564.2240000M);
         }
 
-        public SquareCentiMeter ToSquareCentiMeter() => this;
-        public SquareKiloMeter ToSquareKiloMeter()
+        public SquareCentimeter ToSquareCentimeter() => this;
+        public SquareKilometer ToSquareKilometer()
         {
-            return new SquareKiloMeter(_value / 10000000000M);
+            return new SquareKilometer(_value / 10000000000M);
         }
 
-        public SquareMilliMeter ToSquareMilliMeter()
+        public SquareMillimeter ToSquareMillimeter()
         {
-            return new SquareMilliMeter(_value / 0.01M);
+            return new SquareMillimeter(_value / 0.01M);
         }
 
         public SquareFeet ToSquareFeet()
@@ -60,11 +60,11 @@ namespace Codeworx.Units.Defaults.AreaDimension
                 case "ac":
                     return ToAcre();
                 case "cm²":
-                    return ToSquareCentiMeter();
+                    return ToSquareCentimeter();
                 case "km²":
-                    return ToSquareKiloMeter();
+                    return ToSquareKilometer();
                 case "mm²":
-                    return ToSquareMilliMeter();
+                    return ToSquareMillimeter();
                 case "ft²":
                     return ToSquareFeet();
                 case "in²":
@@ -83,11 +83,11 @@ namespace Codeworx.Units.Defaults.AreaDimension
                 case "ac":
                     return ToAcre();
                 case "cm²":
-                    return ToSquareCentiMeter();
+                    return ToSquareCentimeter();
                 case "km²":
-                    return ToSquareKiloMeter();
+                    return ToSquareKilometer();
                 case "mm²":
-                    return ToSquareMilliMeter();
+                    return ToSquareMillimeter();
                 case "ft²":
                     return ToSquareFeet();
                 case "in²":
@@ -97,107 +97,107 @@ namespace Codeworx.Units.Defaults.AreaDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
-        public static implicit operator SquareCentiMeter(decimal value)
+        public static implicit operator SquareCentimeter(decimal value)
         {
-            return new SquareCentiMeter(value);
+            return new SquareCentimeter(value);
         }
 
-        public static SquareCentiMeter operator +(SquareCentiMeter first, IArea second)
+        public static SquareCentimeter operator +(SquareCentimeter first, IArea second)
         {
-            return new SquareCentiMeter(first._value + second.ToSquareCentiMeter()._value);
+            return new SquareCentimeter(first._value + second.ToSquareCentimeter()._value);
         }
 
-        public static SquareCentiMeter operator -(SquareCentiMeter first, IArea second)
+        public static SquareCentimeter operator -(SquareCentimeter first, IArea second)
         {
-            return new SquareCentiMeter(first._value - second.ToSquareCentiMeter()._value);
+            return new SquareCentimeter(first._value - second.ToSquareCentimeter()._value);
         }
 
-        public static SquareCentiMeter operator +(SquareCentiMeter first, decimal second)
+        public static SquareCentimeter operator +(SquareCentimeter first, decimal second)
         {
-            return new SquareCentiMeter(first._value + second);
+            return new SquareCentimeter(first._value + second);
         }
 
-        public static SquareCentiMeter operator -(SquareCentiMeter first, decimal second)
+        public static SquareCentimeter operator -(SquareCentimeter first, decimal second)
         {
-            return new SquareCentiMeter(first._value - second);
+            return new SquareCentimeter(first._value - second);
         }
 
-        public static SquareCentiMeter operator *(SquareCentiMeter first, decimal second)
+        public static SquareCentimeter operator *(SquareCentimeter first, decimal second)
         {
-            return new SquareCentiMeter(first._value * second);
+            return new SquareCentimeter(first._value * second);
         }
 
-        public static SquareCentiMeter operator /(SquareCentiMeter first, decimal second)
+        public static SquareCentimeter operator /(SquareCentimeter first, decimal second)
         {
-            return new SquareCentiMeter(first._value / second);
+            return new SquareCentimeter(first._value / second);
         }
 
-        public static decimal operator /(SquareCentiMeter first, IArea second)
+        public static decimal operator /(SquareCentimeter first, IArea second)
         {
-            return first._value / second.ToSquareCentiMeter()._value;
+            return first._value / second.ToSquareCentimeter()._value;
         }
 
-        public static SquareCentiMeter operator -(SquareCentiMeter first)
+        public static SquareCentimeter operator -(SquareCentimeter first)
         {
-            return new SquareCentiMeter(-first._value);
+            return new SquareCentimeter(-first._value);
         }
 
-        public static bool operator>(SquareCentiMeter first, IArea second)
+        public static bool operator>(SquareCentimeter first, IArea second)
         {
-            return first._value > second.ToSquareCentiMeter()._value;
+            return first._value > second.ToSquareCentimeter()._value;
         }
 
-        public static bool operator >=(SquareCentiMeter first, IArea second)
+        public static bool operator >=(SquareCentimeter first, IArea second)
         {
-            return first._value >= second.ToSquareCentiMeter()._value;
+            return first._value >= second.ToSquareCentimeter()._value;
         }
 
-        public static bool operator <(SquareCentiMeter first, IArea second)
+        public static bool operator <(SquareCentimeter first, IArea second)
         {
-            return first._value < second.ToSquareCentiMeter()._value;
+            return first._value < second.ToSquareCentimeter()._value;
         }
 
-        public static bool operator <=(SquareCentiMeter first, IArea second)
+        public static bool operator <=(SquareCentimeter first, IArea second)
         {
-            return first._value <= second.ToSquareCentiMeter()._value;
+            return first._value <= second.ToSquareCentimeter()._value;
         }
 
-        public static bool operator ==(SquareCentiMeter first, IArea second)
+        public static bool operator ==(SquareCentimeter first, IArea second)
         {
-            return first._value == second.ToSquareCentiMeter()._value;
+            return first._value == second.ToSquareCentimeter()._value;
         }
 
-        public static bool operator !=(SquareCentiMeter first, IArea second)
+        public static bool operator !=(SquareCentimeter first, IArea second)
         {
-            return first._value != second.ToSquareCentiMeter()._value;
+            return first._value != second.ToSquareCentimeter()._value;
         }
 
-        public static bool operator>(SquareCentiMeter first, SquareCentiMeter second)
+        public static bool operator>(SquareCentimeter first, SquareCentimeter second)
         {
             return first._value > second._value;
         }
 
-        public static bool operator >=(SquareCentiMeter first, SquareCentiMeter second)
+        public static bool operator >=(SquareCentimeter first, SquareCentimeter second)
         {
             return first._value >= second._value;
         }
 
-        public static bool operator <(SquareCentiMeter first, SquareCentiMeter second)
+        public static bool operator <(SquareCentimeter first, SquareCentimeter second)
         {
             return first._value < second._value;
         }
 
-        public static bool operator <=(SquareCentiMeter first, SquareCentiMeter second)
+        public static bool operator <=(SquareCentimeter first, SquareCentimeter second)
         {
             return first._value <= second._value;
         }
 
-        public static bool operator ==(SquareCentiMeter first, SquareCentiMeter second)
+        public static bool operator ==(SquareCentimeter first, SquareCentimeter second)
         {
             return first._value == second._value;
         }
 
-        public static bool operator !=(SquareCentiMeter first, SquareCentiMeter second)
+        public static bool operator !=(SquareCentimeter first, SquareCentimeter second)
         {
             return first._value != second._value;
         }
@@ -217,7 +217,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
             if (obj == null)
                 return 1;
             if (obj is IArea conv)
-                return this._value.CompareTo(conv.ToSquareCentiMeter()._value);
+                return this._value.CompareTo(conv.ToSquareCentimeter()._value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 

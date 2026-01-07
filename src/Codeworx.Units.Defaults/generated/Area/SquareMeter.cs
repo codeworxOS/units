@@ -26,19 +26,19 @@ namespace Codeworx.Units.Defaults.AreaDimension
             return new Acre(_value / 4046.8564224M);
         }
 
-        public SquareCentiMeter ToSquareCentiMeter()
+        public SquareCentimeter ToSquareCentimeter()
         {
-            return new SquareCentiMeter(_value * 10000M);
+            return new SquareCentimeter(_value * 10000M);
         }
 
-        public SquareKiloMeter ToSquareKiloMeter()
+        public SquareKilometer ToSquareKilometer()
         {
-            return new SquareKiloMeter(_value / 1000000M);
+            return new SquareKilometer(_value / 1000000M);
         }
 
-        public SquareMilliMeter ToSquareMilliMeter()
+        public SquareMillimeter ToSquareMillimeter()
         {
-            return new SquareMilliMeter(_value * 1000000M);
+            return new SquareMillimeter(_value * 1000000M);
         }
 
         public SquareFeet ToSquareFeet()
@@ -60,11 +60,11 @@ namespace Codeworx.Units.Defaults.AreaDimension
                 case "ac":
                     return ToAcre();
                 case "cm²":
-                    return ToSquareCentiMeter();
+                    return ToSquareCentimeter();
                 case "km²":
-                    return ToSquareKiloMeter();
+                    return ToSquareKilometer();
                 case "mm²":
-                    return ToSquareMilliMeter();
+                    return ToSquareMillimeter();
                 case "ft²":
                     return ToSquareFeet();
                 case "in²":
@@ -83,11 +83,11 @@ namespace Codeworx.Units.Defaults.AreaDimension
                 case "ac":
                     return ToAcre();
                 case "cm²":
-                    return ToSquareCentiMeter();
+                    return ToSquareCentimeter();
                 case "km²":
-                    return ToSquareKiloMeter();
+                    return ToSquareKilometer();
                 case "mm²":
-                    return ToSquareMilliMeter();
+                    return ToSquareMillimeter();
                 case "ft²":
                     return ToSquareFeet();
                 case "in²":

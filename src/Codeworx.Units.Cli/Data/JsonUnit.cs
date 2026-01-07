@@ -11,6 +11,8 @@ namespace Codeworx.Units.Cli.Data
 
         public required string Symbol { get; set; }
 
+        public string? Key { get; set; }
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public UnitSystem? System { get; set; }
 

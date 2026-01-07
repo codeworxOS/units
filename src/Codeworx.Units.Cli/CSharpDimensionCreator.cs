@@ -163,8 +163,8 @@ namespace Codeworx.Units.Cli
             foreach ((var unitName, var unitData) in dimensionData.Units)
             {
                 var unitClassName = unitName.GetClassName();
-
-                string template = $"public struct tmp_Struct {{private readonly decimal _value; decimal IUnitBase.BaseValue => _value; public string Symbol => \"{unitData.Symbol}\"; public string Key => \"{dimensionClassName}_{unitClassName}\"; public UnitSystem System => UnitSystem.{unitData.System ?? Primitives.UnitSystem.Both}; }}";
+                var unitKey = unitData.Key;
+                string template = $"public struct tmp_Struct {{private readonly decimal _value; decimal IUnitBase.BaseValue => _value; public string Symbol => \"{unitData.Symbol}\"; public string Key => \"{unitKey}\"; public UnitSystem System => UnitSystem.{unitData.System ?? Primitives.UnitSystem.Both}; }}";
 
                 var classDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as StructDeclarationSyntax)!;
 

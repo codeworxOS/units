@@ -12,7 +12,7 @@ namespace Codeworx.Units.Defaults
         TimeDimension.Second ToSecond();
         TimeDimension.Hour ToHour();
         TimeDimension.Minute ToMinute();
-        TimeDimension.MilliSecond ToMilliSecond();
+        TimeDimension.Millisecond ToMillisecond();
         new ITime ToUnit(string symbol);
         public static ITime Parse(string valueStr)
         {
@@ -45,8 +45,8 @@ namespace Codeworx.Units.Defaults
                 case "Time_Minute":
                     return new TimeDimension.Minute(value);
                 case "ms":
-                case "Time_MilliSecond":
-                    return new TimeDimension.MilliSecond(value);
+                case "Time_Millisecond":
+                    return new TimeDimension.Millisecond(value);
             }
 
             throw new NotSupportedException($"Symbol {symbolOrKey} not supported.");

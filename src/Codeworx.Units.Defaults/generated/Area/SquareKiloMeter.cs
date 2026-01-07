@@ -7,15 +7,15 @@ namespace Codeworx.Units.Defaults.AreaDimension
     using Codeworx.Units.Primitives;
 
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
-    public struct SquareKiloMeter : IArea
+    public struct SquareKilometer : IArea
     {
         private readonly decimal _value;
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "km²";
-        public string Key => "Area_SquareKiloMeter";
+        public string Key => "Area_SquareKilometer";
         public UnitSystem System => UnitSystem.Both;
 
-        public SquareKiloMeter(decimal val)
+        public SquareKilometer(decimal val)
         {
             _value = val;
         }
@@ -30,15 +30,15 @@ namespace Codeworx.Units.Defaults.AreaDimension
             return new Acre(_value * 247.1053814671653422482439292M);
         }
 
-        public SquareCentiMeter ToSquareCentiMeter()
+        public SquareCentimeter ToSquareCentimeter()
         {
-            return new SquareCentiMeter(_value * 10000000000M);
+            return new SquareCentimeter(_value * 10000000000M);
         }
 
-        public SquareKiloMeter ToSquareKiloMeter() => this;
-        public SquareMilliMeter ToSquareMilliMeter()
+        public SquareKilometer ToSquareKilometer() => this;
+        public SquareMillimeter ToSquareMillimeter()
         {
-            return new SquareMilliMeter(_value * 1000000000000M);
+            return new SquareMillimeter(_value * 1000000000000M);
         }
 
         public SquareFeet ToSquareFeet()
@@ -60,11 +60,11 @@ namespace Codeworx.Units.Defaults.AreaDimension
                 case "ac":
                     return ToAcre();
                 case "cm²":
-                    return ToSquareCentiMeter();
+                    return ToSquareCentimeter();
                 case "km²":
-                    return ToSquareKiloMeter();
+                    return ToSquareKilometer();
                 case "mm²":
-                    return ToSquareMilliMeter();
+                    return ToSquareMillimeter();
                 case "ft²":
                     return ToSquareFeet();
                 case "in²":
@@ -83,11 +83,11 @@ namespace Codeworx.Units.Defaults.AreaDimension
                 case "ac":
                     return ToAcre();
                 case "cm²":
-                    return ToSquareCentiMeter();
+                    return ToSquareCentimeter();
                 case "km²":
-                    return ToSquareKiloMeter();
+                    return ToSquareKilometer();
                 case "mm²":
-                    return ToSquareMilliMeter();
+                    return ToSquareMillimeter();
                 case "ft²":
                     return ToSquareFeet();
                 case "in²":
@@ -97,107 +97,107 @@ namespace Codeworx.Units.Defaults.AreaDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
-        public static implicit operator SquareKiloMeter(decimal value)
+        public static implicit operator SquareKilometer(decimal value)
         {
-            return new SquareKiloMeter(value);
+            return new SquareKilometer(value);
         }
 
-        public static SquareKiloMeter operator +(SquareKiloMeter first, IArea second)
+        public static SquareKilometer operator +(SquareKilometer first, IArea second)
         {
-            return new SquareKiloMeter(first._value + second.ToSquareKiloMeter()._value);
+            return new SquareKilometer(first._value + second.ToSquareKilometer()._value);
         }
 
-        public static SquareKiloMeter operator -(SquareKiloMeter first, IArea second)
+        public static SquareKilometer operator -(SquareKilometer first, IArea second)
         {
-            return new SquareKiloMeter(first._value - second.ToSquareKiloMeter()._value);
+            return new SquareKilometer(first._value - second.ToSquareKilometer()._value);
         }
 
-        public static SquareKiloMeter operator +(SquareKiloMeter first, decimal second)
+        public static SquareKilometer operator +(SquareKilometer first, decimal second)
         {
-            return new SquareKiloMeter(first._value + second);
+            return new SquareKilometer(first._value + second);
         }
 
-        public static SquareKiloMeter operator -(SquareKiloMeter first, decimal second)
+        public static SquareKilometer operator -(SquareKilometer first, decimal second)
         {
-            return new SquareKiloMeter(first._value - second);
+            return new SquareKilometer(first._value - second);
         }
 
-        public static SquareKiloMeter operator *(SquareKiloMeter first, decimal second)
+        public static SquareKilometer operator *(SquareKilometer first, decimal second)
         {
-            return new SquareKiloMeter(first._value * second);
+            return new SquareKilometer(first._value * second);
         }
 
-        public static SquareKiloMeter operator /(SquareKiloMeter first, decimal second)
+        public static SquareKilometer operator /(SquareKilometer first, decimal second)
         {
-            return new SquareKiloMeter(first._value / second);
+            return new SquareKilometer(first._value / second);
         }
 
-        public static decimal operator /(SquareKiloMeter first, IArea second)
+        public static decimal operator /(SquareKilometer first, IArea second)
         {
-            return first._value / second.ToSquareKiloMeter()._value;
+            return first._value / second.ToSquareKilometer()._value;
         }
 
-        public static SquareKiloMeter operator -(SquareKiloMeter first)
+        public static SquareKilometer operator -(SquareKilometer first)
         {
-            return new SquareKiloMeter(-first._value);
+            return new SquareKilometer(-first._value);
         }
 
-        public static bool operator>(SquareKiloMeter first, IArea second)
+        public static bool operator>(SquareKilometer first, IArea second)
         {
-            return first._value > second.ToSquareKiloMeter()._value;
+            return first._value > second.ToSquareKilometer()._value;
         }
 
-        public static bool operator >=(SquareKiloMeter first, IArea second)
+        public static bool operator >=(SquareKilometer first, IArea second)
         {
-            return first._value >= second.ToSquareKiloMeter()._value;
+            return first._value >= second.ToSquareKilometer()._value;
         }
 
-        public static bool operator <(SquareKiloMeter first, IArea second)
+        public static bool operator <(SquareKilometer first, IArea second)
         {
-            return first._value < second.ToSquareKiloMeter()._value;
+            return first._value < second.ToSquareKilometer()._value;
         }
 
-        public static bool operator <=(SquareKiloMeter first, IArea second)
+        public static bool operator <=(SquareKilometer first, IArea second)
         {
-            return first._value <= second.ToSquareKiloMeter()._value;
+            return first._value <= second.ToSquareKilometer()._value;
         }
 
-        public static bool operator ==(SquareKiloMeter first, IArea second)
+        public static bool operator ==(SquareKilometer first, IArea second)
         {
-            return first._value == second.ToSquareKiloMeter()._value;
+            return first._value == second.ToSquareKilometer()._value;
         }
 
-        public static bool operator !=(SquareKiloMeter first, IArea second)
+        public static bool operator !=(SquareKilometer first, IArea second)
         {
-            return first._value != second.ToSquareKiloMeter()._value;
+            return first._value != second.ToSquareKilometer()._value;
         }
 
-        public static bool operator>(SquareKiloMeter first, SquareKiloMeter second)
+        public static bool operator>(SquareKilometer first, SquareKilometer second)
         {
             return first._value > second._value;
         }
 
-        public static bool operator >=(SquareKiloMeter first, SquareKiloMeter second)
+        public static bool operator >=(SquareKilometer first, SquareKilometer second)
         {
             return first._value >= second._value;
         }
 
-        public static bool operator <(SquareKiloMeter first, SquareKiloMeter second)
+        public static bool operator <(SquareKilometer first, SquareKilometer second)
         {
             return first._value < second._value;
         }
 
-        public static bool operator <=(SquareKiloMeter first, SquareKiloMeter second)
+        public static bool operator <=(SquareKilometer first, SquareKilometer second)
         {
             return first._value <= second._value;
         }
 
-        public static bool operator ==(SquareKiloMeter first, SquareKiloMeter second)
+        public static bool operator ==(SquareKilometer first, SquareKilometer second)
         {
             return first._value == second._value;
         }
 
-        public static bool operator !=(SquareKiloMeter first, SquareKiloMeter second)
+        public static bool operator !=(SquareKilometer first, SquareKilometer second)
         {
             return first._value != second._value;
         }
@@ -217,7 +217,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
             if (obj == null)
                 return 1;
             if (obj is IArea conv)
-                return this._value.CompareTo(conv.ToSquareKiloMeter()._value);
+                return this._value.CompareTo(conv.ToSquareKilometer()._value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 

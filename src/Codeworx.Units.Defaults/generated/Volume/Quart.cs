@@ -25,9 +25,9 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             return new CubicMeter(_value / 1056.6882094M);
         }
 
-        public CubicCentiMeter ToCubicCentiMeter()
+        public CubicCentimeter ToCubicCentimeter()
         {
-            return new CubicCentiMeter(_value / 0.0010566882094M);
+            return new CubicCentimeter(_value / 0.0010566882094M);
         }
 
         public CubicFoot ToCubicFoot()
@@ -58,7 +58,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
                 case "m³":
                     return ToCubicMeter();
                 case "cm³":
-                    return ToCubicCentiMeter();
+                    return ToCubicCentimeter();
                 case "ft³":
                     return ToCubicFoot();
                 case "in³":
@@ -81,7 +81,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
                 case "m³":
                     return ToCubicMeter();
                 case "cm³":
-                    return ToCubicCentiMeter();
+                    return ToCubicCentimeter();
                 case "ft³":
                     return ToCubicFoot();
                 case "in³":

@@ -31,9 +31,9 @@ namespace Codeworx.Units.Defaults.TimeDimension
             return new Minute(_value / 60M);
         }
 
-        public MilliSecond ToMilliSecond()
+        public Millisecond ToMillisecond()
         {
-            return new MilliSecond(_value * 1000M);
+            return new Millisecond(_value * 1000M);
         }
 
         public ITime ToUnit(string symbol)
@@ -47,7 +47,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
                 case "min":
                     return ToMinute();
                 case "ms":
-                    return ToMilliSecond();
+                    return ToMillisecond();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
@@ -64,7 +64,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
                 case "min":
                     return ToMinute();
                 case "ms":
-                    return ToMilliSecond();
+                    return ToMillisecond();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");

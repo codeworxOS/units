@@ -11,9 +11,9 @@ namespace Codeworx.Units.Defaults
     {
         AreaDimension.SquareMeter ToSquareMeter();
         AreaDimension.Acre ToAcre();
-        AreaDimension.SquareCentiMeter ToSquareCentiMeter();
-        AreaDimension.SquareKiloMeter ToSquareKiloMeter();
-        AreaDimension.SquareMilliMeter ToSquareMilliMeter();
+        AreaDimension.SquareCentimeter ToSquareCentimeter();
+        AreaDimension.SquareKilometer ToSquareKilometer();
+        AreaDimension.SquareMillimeter ToSquareMillimeter();
         AreaDimension.SquareFeet ToSquareFeet();
         AreaDimension.SquareInch ToSquareInch();
         new IArea ToUnit(string symbol);
@@ -45,14 +45,14 @@ namespace Codeworx.Units.Defaults
                 case "Area_Acre":
                     return new AreaDimension.Acre(value);
                 case "cm²":
-                case "Area_SquareCentiMeter":
-                    return new AreaDimension.SquareCentiMeter(value);
+                case "Area_SquareCentimeter":
+                    return new AreaDimension.SquareCentimeter(value);
                 case "km²":
-                case "Area_SquareKiloMeter":
-                    return new AreaDimension.SquareKiloMeter(value);
+                case "Area_SquareKilometer":
+                    return new AreaDimension.SquareKilometer(value);
                 case "mm²":
-                case "Area_SquareMilliMeter":
-                    return new AreaDimension.SquareMilliMeter(value);
+                case "Area_SquareMillimeter":
+                    return new AreaDimension.SquareMillimeter(value);
                 case "ft²":
                 case "Area_SquareFeet":
                     return new AreaDimension.SquareFeet(value);

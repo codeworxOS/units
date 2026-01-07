@@ -7,15 +7,15 @@ namespace Codeworx.Units.Defaults.VolumeDimension
     using Codeworx.Units.Primitives;
 
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
-    public struct CubicCentiMeter : IVolume
+    public struct CubicCentimeter : IVolume
     {
         private readonly decimal _value;
         decimal IUnitBase.BaseValue => _value;
         public string Symbol => "cm³";
-        public string Key => "Volume_CubicCentiMeter";
+        public string Key => "Volume_CubicCentimeter";
         public UnitSystem System => UnitSystem.Both;
 
-        public CubicCentiMeter(decimal val)
+        public CubicCentimeter(decimal val)
         {
             _value = val;
         }
@@ -25,7 +25,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             return new CubicMeter(_value / 1000000M);
         }
 
-        public CubicCentiMeter ToCubicCentiMeter() => this;
+        public CubicCentimeter ToCubicCentimeter() => this;
         public CubicFoot ToCubicFoot()
         {
             return new CubicFoot(_value / 28316.843963146193918844491539M);
@@ -58,7 +58,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
                 case "m³":
                     return ToCubicMeter();
                 case "cm³":
-                    return ToCubicCentiMeter();
+                    return ToCubicCentimeter();
                 case "ft³":
                     return ToCubicFoot();
                 case "in³":
@@ -81,7 +81,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
                 case "m³":
                     return ToCubicMeter();
                 case "cm³":
-                    return ToCubicCentiMeter();
+                    return ToCubicCentimeter();
                 case "ft³":
                     return ToCubicFoot();
                 case "in³":
@@ -97,107 +97,107 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
-        public static implicit operator CubicCentiMeter(decimal value)
+        public static implicit operator CubicCentimeter(decimal value)
         {
-            return new CubicCentiMeter(value);
+            return new CubicCentimeter(value);
         }
 
-        public static CubicCentiMeter operator +(CubicCentiMeter first, IVolume second)
+        public static CubicCentimeter operator +(CubicCentimeter first, IVolume second)
         {
-            return new CubicCentiMeter(first._value + second.ToCubicCentiMeter()._value);
+            return new CubicCentimeter(first._value + second.ToCubicCentimeter()._value);
         }
 
-        public static CubicCentiMeter operator -(CubicCentiMeter first, IVolume second)
+        public static CubicCentimeter operator -(CubicCentimeter first, IVolume second)
         {
-            return new CubicCentiMeter(first._value - second.ToCubicCentiMeter()._value);
+            return new CubicCentimeter(first._value - second.ToCubicCentimeter()._value);
         }
 
-        public static CubicCentiMeter operator +(CubicCentiMeter first, decimal second)
+        public static CubicCentimeter operator +(CubicCentimeter first, decimal second)
         {
-            return new CubicCentiMeter(first._value + second);
+            return new CubicCentimeter(first._value + second);
         }
 
-        public static CubicCentiMeter operator -(CubicCentiMeter first, decimal second)
+        public static CubicCentimeter operator -(CubicCentimeter first, decimal second)
         {
-            return new CubicCentiMeter(first._value - second);
+            return new CubicCentimeter(first._value - second);
         }
 
-        public static CubicCentiMeter operator *(CubicCentiMeter first, decimal second)
+        public static CubicCentimeter operator *(CubicCentimeter first, decimal second)
         {
-            return new CubicCentiMeter(first._value * second);
+            return new CubicCentimeter(first._value * second);
         }
 
-        public static CubicCentiMeter operator /(CubicCentiMeter first, decimal second)
+        public static CubicCentimeter operator /(CubicCentimeter first, decimal second)
         {
-            return new CubicCentiMeter(first._value / second);
+            return new CubicCentimeter(first._value / second);
         }
 
-        public static decimal operator /(CubicCentiMeter first, IVolume second)
+        public static decimal operator /(CubicCentimeter first, IVolume second)
         {
-            return first._value / second.ToCubicCentiMeter()._value;
+            return first._value / second.ToCubicCentimeter()._value;
         }
 
-        public static CubicCentiMeter operator -(CubicCentiMeter first)
+        public static CubicCentimeter operator -(CubicCentimeter first)
         {
-            return new CubicCentiMeter(-first._value);
+            return new CubicCentimeter(-first._value);
         }
 
-        public static bool operator>(CubicCentiMeter first, IVolume second)
+        public static bool operator>(CubicCentimeter first, IVolume second)
         {
-            return first._value > second.ToCubicCentiMeter()._value;
+            return first._value > second.ToCubicCentimeter()._value;
         }
 
-        public static bool operator >=(CubicCentiMeter first, IVolume second)
+        public static bool operator >=(CubicCentimeter first, IVolume second)
         {
-            return first._value >= second.ToCubicCentiMeter()._value;
+            return first._value >= second.ToCubicCentimeter()._value;
         }
 
-        public static bool operator <(CubicCentiMeter first, IVolume second)
+        public static bool operator <(CubicCentimeter first, IVolume second)
         {
-            return first._value < second.ToCubicCentiMeter()._value;
+            return first._value < second.ToCubicCentimeter()._value;
         }
 
-        public static bool operator <=(CubicCentiMeter first, IVolume second)
+        public static bool operator <=(CubicCentimeter first, IVolume second)
         {
-            return first._value <= second.ToCubicCentiMeter()._value;
+            return first._value <= second.ToCubicCentimeter()._value;
         }
 
-        public static bool operator ==(CubicCentiMeter first, IVolume second)
+        public static bool operator ==(CubicCentimeter first, IVolume second)
         {
-            return first._value == second.ToCubicCentiMeter()._value;
+            return first._value == second.ToCubicCentimeter()._value;
         }
 
-        public static bool operator !=(CubicCentiMeter first, IVolume second)
+        public static bool operator !=(CubicCentimeter first, IVolume second)
         {
-            return first._value != second.ToCubicCentiMeter()._value;
+            return first._value != second.ToCubicCentimeter()._value;
         }
 
-        public static bool operator>(CubicCentiMeter first, CubicCentiMeter second)
+        public static bool operator>(CubicCentimeter first, CubicCentimeter second)
         {
             return first._value > second._value;
         }
 
-        public static bool operator >=(CubicCentiMeter first, CubicCentiMeter second)
+        public static bool operator >=(CubicCentimeter first, CubicCentimeter second)
         {
             return first._value >= second._value;
         }
 
-        public static bool operator <(CubicCentiMeter first, CubicCentiMeter second)
+        public static bool operator <(CubicCentimeter first, CubicCentimeter second)
         {
             return first._value < second._value;
         }
 
-        public static bool operator <=(CubicCentiMeter first, CubicCentiMeter second)
+        public static bool operator <=(CubicCentimeter first, CubicCentimeter second)
         {
             return first._value <= second._value;
         }
 
-        public static bool operator ==(CubicCentiMeter first, CubicCentiMeter second)
+        public static bool operator ==(CubicCentimeter first, CubicCentimeter second)
         {
             return first._value == second._value;
         }
 
-        public static bool operator !=(CubicCentiMeter first, CubicCentiMeter second)
+        public static bool operator !=(CubicCentimeter first, CubicCentimeter second)
         {
             return first._value != second._value;
         }
@@ -217,7 +217,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             if (obj == null)
                 return 1;
             if (obj is IVolume conv)
-                return this._value.CompareTo(conv.ToCubicCentiMeter()._value);
+                return this._value.CompareTo(conv.ToCubicCentimeter()._value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
