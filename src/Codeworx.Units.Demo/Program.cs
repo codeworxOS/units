@@ -68,7 +68,7 @@ internal class Program
 
             await context.SaveChangesAsync();
 
-            return await GetDistance(context, entry.Id);
+            return await GetMeter(context, entry.Id);
         });
 
         app.MapGet("/QueryDistance", async ([FromServices] EntityContext context, int Id) =>
