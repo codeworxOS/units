@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using Codeworx.Units.Primitives;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace Codeworx.Units.EntityFrameworkCore.Entities
     {
         public required decimal Value { get; set; }
 
+        [MaxLength(32)]
         public required string UnitId { get; set; }
 
         public UnitInformation? Unit { get; set; }

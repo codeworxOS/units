@@ -15,6 +15,9 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
+        //var test = await context.DistanceDimensionTest.OrderBy(d => (d.RequiredDistance.Value + d.RequiredDistance.Unit!.ConversionOffset) * d.RequiredDistance.Unit!.ConversionFactor / d.RequiredDistance.Unit!.ConversionDivisor)
+        //    .ToListAsync();
+
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<EntityContext>(opt => opt.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=UnitTestData;Trusted_Connection=True;"));
@@ -32,8 +35,10 @@ internal class Program
 
             await context.Database.EnsureCreatedAsync();
 
-            context.Set<UnitInformation>().Add(new UnitInformation() { ConversionDivisor = 1, ConversionFactor = 1000, ConversionOffset = 0, Id = "Distance_Kilometer" });
-            context.Set<UnitInformation>().Add(new UnitInformation() { ConversionDivisor = 1, ConversionFactor = 1, ConversionOffset = 0, Id = "Distance_Meter" });
+            foreach (var item in UnitExtensions.GetEntityInformation())
+            {
+                context.Set<UnitInformation>().Add(new UnitInformation { Id = item.Key, Symbol = item.Symbol, ConversionDivisor = item.Divisior, ConversionFactor = item.Factor, ConversionOffset = item.Offset });
+            }
 
             await context.SaveChangesAsync();
         });
@@ -96,9 +101,6 @@ internal class Program
 
     private static async Task<DistanceDTO?> GetDistance(EntityContext context, int Id)
     {
-        var test = await context.DistanceDimensionTest.OrderBy(d => (d.RequiredDistance.Value + d.RequiredDistance.Unit!.ConversionOffset) * d.RequiredDistance.Unit!.ConversionFactor / d.RequiredDistance.Unit!.ConversionDivisor)
-            .ToListAsync();
-
         var entry = await context.DistanceDimensionTest.AsNoTracking().Where(d => d.Id == Id).Select(d => new DistanceDTO
         {
             Id = d.Id,

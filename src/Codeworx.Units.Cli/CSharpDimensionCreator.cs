@@ -74,7 +74,7 @@ namespace Codeworx.Units.Cli
 
             declaration = declaration.AddMembers(addUnitConverterMethodSyntax);
 
-            var templateAddEntityInformation = "public static IEnumerable<(string Key, string Symbol, decimal Offset, decimal Factor, decimal Divisior)> AddUnitConverters() { }";
+            var templateAddEntityInformation = "public static IEnumerable<(string Key, string Symbol, decimal Offset, decimal Factor, decimal Divisior)> GetEntityInformation() { }";
 
             var templateAddEntityInformationMethodSyntax = (SyntaxFactory.ParseMemberDeclaration(templateAddEntityInformation) as MethodDeclarationSyntax)!;
 

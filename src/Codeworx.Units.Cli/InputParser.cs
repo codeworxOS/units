@@ -80,6 +80,18 @@ namespace Codeworx.Units.Cli
                         WriteWarningOutput($"Skipping Unit {unitName} in {dimensionName}, invalid or duplicated Key");
                     }
 
+                    if (unit.Key.Length > 32)
+                    {
+                        data.Units.Remove(unitName);
+                        WriteWarningOutput($"Skipping Unit {unitName} in {dimensionName}, Key {unit.Key} is too long (<=32)");
+                    }
+
+                    if (unit.Symbol.Length > 10)
+                    {
+                        data.Units.Remove(unitName);
+                        WriteWarningOutput($"Skipping Unit {unitName} in {dimensionName}, Symbol {unit.Symbol} is too long (<=10)");
+                    }
+
                     unitKeys.Add(unit.Key);
 
                     if (unitName != data.BaseUnit)
