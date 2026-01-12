@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.MassDimension
         public string Symbol => "oz";
         public string Key => "Mass_Ounce";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IMass.DefaultImperial;
+        public string DefaultMetric => IMass.DefaultMetric;
 
         public Ounce(decimal val)
         {

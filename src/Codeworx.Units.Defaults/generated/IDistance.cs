@@ -35,6 +35,9 @@ namespace Codeworx.Units.Defaults
             throw new ArgumentException($"Unit not recognizable from input string. {valueStr}");
         }
 
+        public static string DefaultImperial => "yard";
+        public static string DefaultMetric => "m";
+
         public static IDistance Parse(string symbolOrKey, decimal value)
         {
             switch (symbolOrKey)

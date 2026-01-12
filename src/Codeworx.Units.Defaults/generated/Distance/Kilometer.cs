@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         public string Symbol => "km";
         public string Key => "Distance_Kilometer";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IDistance.DefaultImperial;
+        public string DefaultMetric => IDistance.DefaultMetric;
 
         public Kilometer(decimal val)
         {

@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         public string Symbol => "m";
         public string Key => "Distance_Meter";
         public UnitSystem System => UnitSystem.Metric;
+        public string DefaultImperial => IDistance.DefaultImperial;
+        public string DefaultMetric => IDistance.DefaultMetric;
 
         public Meter(decimal val)
         {

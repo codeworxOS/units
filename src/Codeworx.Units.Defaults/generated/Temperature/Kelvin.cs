@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
         public string Symbol => "K";
         public string Key => "Temperature_Kelvin";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => ITemperature.DefaultImperial;
+        public string DefaultMetric => ITemperature.DefaultMetric;
 
         public Kelvin(decimal val)
         {

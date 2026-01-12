@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.AreaDimension
         public string Symbol => "m²";
         public string Key => "Area_SquareMeter";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IArea.DefaultImperial;
+        public string DefaultMetric => IArea.DefaultMetric;
 
         public SquareMeter(decimal val)
         {

@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
         public string Symbol => "°C";
         public string Key => "Temperature_Celsius";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => ITemperature.DefaultImperial;
+        public string DefaultMetric => ITemperature.DefaultMetric;
 
         public Celsius(decimal val)
         {

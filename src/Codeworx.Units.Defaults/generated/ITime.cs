@@ -31,6 +31,9 @@ namespace Codeworx.Units.Defaults
             throw new ArgumentException($"Unit not recognizable from input string. {valueStr}");
         }
 
+        public static string DefaultImperial => "s";
+        public static string DefaultMetric => "s";
+
         public static ITime Parse(string symbolOrKey, decimal value)
         {
             switch (symbolOrKey)

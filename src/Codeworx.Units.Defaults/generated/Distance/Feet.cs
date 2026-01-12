@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         public string Symbol => "ft";
         public string Key => "Distance_Feet";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IDistance.DefaultImperial;
+        public string DefaultMetric => IDistance.DefaultMetric;
 
         public Feet(decimal val)
         {

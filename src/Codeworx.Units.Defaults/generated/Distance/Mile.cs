@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         public string Symbol => "mi";
         public string Key => "Distance_Mile";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IDistance.DefaultImperial;
+        public string DefaultMetric => IDistance.DefaultMetric;
 
         public Mile(decimal val)
         {

@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         public string Symbol => "ft/s";
         public string Key => "Speed_FeetPerSecond";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => ISpeed.DefaultImperial;
+        public string DefaultMetric => ISpeed.DefaultMetric;
 
         public FeetPerSecond(decimal val)
         {

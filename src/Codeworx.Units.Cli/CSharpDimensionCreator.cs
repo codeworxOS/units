@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -73,6 +74,14 @@ namespace Codeworx.Units.Cli
 
             declaration = declaration.AddMembers(addUnitConverterMethodSyntax);
 
+            var templateAddEntityInformation = "public static IEnumerable<(string Key, string Symbol, decimal Offset, decimal Factor, decimal Divisior)> AddUnitConverters() { }";
+
+            var templateAddEntityInformationMethodSyntax = (SyntaxFactory.ParseMemberDeclaration(templateAddEntityInformation) as MethodDeclarationSyntax)!;
+
+            templateAddEntityInformationMethodSyntax = templateAddEntityInformationMethodSyntax.AddBodyStatements(GetEntityInfromationStatements().ToArray());
+
+            declaration = declaration.AddMembers(templateAddEntityInformationMethodSyntax);
+
             var result = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(CurrentOptions.Namespace))
               .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Collections.Generic")))
               .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Text.Json.Serialization")))
@@ -103,6 +112,21 @@ namespace Codeworx.Units.Cli
             }
         }
 
+        private IEnumerable<StatementSyntax> GetEntityInfromationStatements()
+        {
+            var statementTemplate = "yield return (\"{0}\", \"{1}\", {2}M, {3}M, {4}M);";
+            foreach ((var dimensionName, var dimensionData) in _dimensionData)
+            {
+
+                foreach ((var unitName, var unitData) in dimensionData.Units)
+                {
+                    var statement = SyntaxFactory.ParseStatement(string.Format(CultureInfo.InvariantCulture, statementTemplate, unitData.Key, unitData.Symbol, unitData.Offset, unitData.Factor, unitData.Divisor));
+
+                    yield return statement;
+                }
+            }
+        }
+
         private FileGenerationInfo GetInterface(string dimensionClassName, JsonDimension dimensionData)
         {
             string template = $"public interface tmp_Interface : IUnitBase, IComparable {{}}";
@@ -117,7 +141,7 @@ namespace Codeworx.Units.Cli
 
             interfaceDeclaration = interfaceDeclaration.AddMembers(GetInterfaceMethodDeclarations(dimensionClassName, dimensionData).ToArray());
 
-            interfaceDeclaration = interfaceDeclaration.AddMembers(GetParseMethods(dimensionClassName, dimensionData).ToArray());
+            interfaceDeclaration = interfaceDeclaration.AddMembers(GetStaticInterfaceMembers(dimensionClassName, dimensionData).ToArray());
 
             var result = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(CurrentOptions.Namespace))
                 .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")))
@@ -164,7 +188,7 @@ namespace Codeworx.Units.Cli
             {
                 var unitClassName = unitName.GetClassName();
                 var unitKey = unitData.Key;
-                string template = $"public struct tmp_Struct {{private readonly decimal _value; decimal IUnitBase.BaseValue => _value; public string Symbol => \"{unitData.Symbol}\"; public string Key => \"{unitKey}\"; public UnitSystem System => UnitSystem.{unitData.System ?? Primitives.UnitSystem.Both}; }}";
+                string template = $"public struct tmp_Struct {{private readonly decimal _value; decimal IUnitBase.BaseValue => _value; public string Symbol => \"{unitData.Symbol}\"; public string Key => \"{unitKey}\"; public UnitSystem System => UnitSystem.{unitData.System ?? Primitives.UnitSystem.Both};public string DefaultImperial => I{dimensionClassName}.DefaultImperial;public string DefaultMetric => I{dimensionClassName}.DefaultMetric; }}";
 
                 var classDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as StructDeclarationSyntax)!;
 
@@ -405,11 +429,13 @@ namespace Codeworx.Units.Cli
             }
         }
 
-        private IEnumerable<MemberDeclarationSyntax> GetParseMethods(string dimensionClassName, JsonDimension dimensionData)
+        private IEnumerable<MemberDeclarationSyntax> GetStaticInterfaceMembers(string dimensionClassName, JsonDimension dimensionData)
         {
             var parseTemplates = new List<string>
             {
-                "public static tmp_Interface Parse(string valueStr) { var idx = valueStr.IndexOf(\" \"); if (idx != -1) { var valuePart = valueStr.Substring(0, idx); if (!decimal.TryParse(valuePart, NumberStyles.Any, CultureInfo.InvariantCulture, out var val)) { throw new ArgumentException($\"Value could not be parsed. {valuePart}\"); } return Parse(valueStr.Substring(idx + 1), val); } throw new ArgumentException($\"Unit not recognizable from input string. {valueStr}\"); }"
+                "public static tmp_Interface Parse(string valueStr) { var idx = valueStr.IndexOf(\" \"); if (idx != -1) { var valuePart = valueStr.Substring(0, idx); if (!decimal.TryParse(valuePart, NumberStyles.Any, CultureInfo.InvariantCulture, out var val)) { throw new ArgumentException($\"Value could not be parsed. {valuePart}\"); } return Parse(valueStr.Substring(idx + 1), val); } throw new ArgumentException($\"Unit not recognizable from input string. {valueStr}\"); }",
+                $"public static string DefaultImperial => \"{dimensionData.Units[dimensionData.ImperialDefault].Symbol}\";",
+                $"public static string DefaultMetric => \"{dimensionData.Units[dimensionData.MetricDefault].Symbol}\";",
             };
 
 

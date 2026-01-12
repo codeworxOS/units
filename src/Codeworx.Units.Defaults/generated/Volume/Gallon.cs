@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         public string Symbol => "gal";
         public string Key => "Volume_Gallon";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IVolume.DefaultImperial;
+        public string DefaultMetric => IVolume.DefaultMetric;
 
         public Gallon(decimal val)
         {

@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.MassDimension
         public string Symbol => "kg";
         public string Key => "Mass_Kilogram";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IMass.DefaultImperial;
+        public string DefaultMetric => IMass.DefaultMetric;
 
         public Kilogram(decimal val)
         {

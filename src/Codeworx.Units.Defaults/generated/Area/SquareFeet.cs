@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.AreaDimension
         public string Symbol => "ft²";
         public string Key => "Area_SquareFeet";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IArea.DefaultImperial;
+        public string DefaultMetric => IArea.DefaultMetric;
 
         public SquareFeet(decimal val)
         {

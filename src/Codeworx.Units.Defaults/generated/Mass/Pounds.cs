@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.MassDimension
         public string Symbol => "lbs";
         public string Key => "Mass_Pounds";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IMass.DefaultImperial;
+        public string DefaultMetric => IMass.DefaultMetric;
 
         public Pounds(decimal val)
         {

@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.AreaDimension
         public string Symbol => "km²";
         public string Key => "Area_SquareKilometer";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IArea.DefaultImperial;
+        public string DefaultMetric => IArea.DefaultMetric;
 
         public SquareKilometer(decimal val)
         {

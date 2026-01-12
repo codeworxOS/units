@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.AreaDimension
         public string Symbol => "in²";
         public string Key => "Area_SquareInch";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IArea.DefaultImperial;
+        public string DefaultMetric => IArea.DefaultMetric;
 
         public SquareInch(decimal val)
         {

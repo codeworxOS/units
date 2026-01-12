@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         public string Symbol => "km/h";
         public string Key => "Speed_KilometerPerHour";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => ISpeed.DefaultImperial;
+        public string DefaultMetric => ISpeed.DefaultMetric;
 
         public KilometerPerHour(decimal val)
         {

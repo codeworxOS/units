@@ -33,6 +33,9 @@ namespace Codeworx.Units.Defaults
             throw new ArgumentException($"Unit not recognizable from input string. {valueStr}");
         }
 
+        public static string DefaultImperial => "mph";
+        public static string DefaultMetric => "km/h";
+
         public static ISpeed Parse(string symbolOrKey, decimal value)
         {
             switch (symbolOrKey)

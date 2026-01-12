@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.TimeDimension
         public string Symbol => "ms";
         public string Key => "Time_Millisecond";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => ITime.DefaultImperial;
+        public string DefaultMetric => ITime.DefaultMetric;
 
         public Millisecond(decimal val)
         {

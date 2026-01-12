@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.MassDimension
         public string Symbol => "mug";
         public string Key => "Mass_Microgram";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IMass.DefaultImperial;
+        public string DefaultMetric => IMass.DefaultMetric;
 
         public Microgram(decimal val)
         {

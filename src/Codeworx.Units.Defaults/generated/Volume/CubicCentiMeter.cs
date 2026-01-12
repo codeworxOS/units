@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         public string Symbol => "cm³";
         public string Key => "Volume_CubicCentimeter";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IVolume.DefaultImperial;
+        public string DefaultMetric => IVolume.DefaultMetric;
 
         public CubicCentimeter(decimal val)
         {

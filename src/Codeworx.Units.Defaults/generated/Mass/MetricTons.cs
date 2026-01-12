@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.MassDimension
         public string Symbol => "t";
         public string Key => "Mass_MetricTons";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IMass.DefaultImperial;
+        public string DefaultMetric => IMass.DefaultMetric;
 
         public MetricTons(decimal val)
         {

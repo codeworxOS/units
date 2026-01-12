@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.TimeDimension
         public string Symbol => "s";
         public string Key => "Time_Second";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => ITime.DefaultImperial;
+        public string DefaultMetric => ITime.DefaultMetric;
 
         public Second(decimal val)
         {

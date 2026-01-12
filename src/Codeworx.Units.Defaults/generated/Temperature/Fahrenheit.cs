@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
         public string Symbol => "F";
         public string Key => "Temperature_Fahrenheit";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => ITemperature.DefaultImperial;
+        public string DefaultMetric => ITemperature.DefaultMetric;
 
         public Fahrenheit(decimal val)
         {

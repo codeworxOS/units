@@ -36,6 +36,9 @@ namespace Codeworx.Units.Defaults
             throw new ArgumentException($"Unit not recognizable from input string. {valueStr}");
         }
 
+        public static string DefaultImperial => "lbs";
+        public static string DefaultMetric => "kg";
+
         public static IMass Parse(string symbolOrKey, decimal value)
         {
             switch (symbolOrKey)

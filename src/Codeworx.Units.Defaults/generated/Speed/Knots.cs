@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         public string Symbol => "kt";
         public string Key => "Speed_Knots";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => ISpeed.DefaultImperial;
+        public string DefaultMetric => ISpeed.DefaultMetric;
 
         public Knots(decimal val)
         {

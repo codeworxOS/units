@@ -34,6 +34,9 @@ namespace Codeworx.Units.Defaults
             throw new ArgumentException($"Unit not recognizable from input string. {valueStr}");
         }
 
+        public static string DefaultImperial => "in³";
+        public static string DefaultMetric => "m³";
+
         public static IVolume Parse(string symbolOrKey, decimal value)
         {
             switch (symbolOrKey)

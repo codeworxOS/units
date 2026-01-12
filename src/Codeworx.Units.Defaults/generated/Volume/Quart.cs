@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         public string Symbol => "qt";
         public string Key => "Volume_Quart";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IVolume.DefaultImperial;
+        public string DefaultMetric => IVolume.DefaultMetric;
 
         public Quart(decimal val)
         {

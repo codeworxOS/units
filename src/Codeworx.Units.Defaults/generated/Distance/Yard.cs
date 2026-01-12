@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         public string Symbol => "yard";
         public string Key => "Distance_Yard";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => IDistance.DefaultImperial;
+        public string DefaultMetric => IDistance.DefaultMetric;
 
         public Yard(decimal val)
         {

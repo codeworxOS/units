@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         public string Symbol => "m/s";
         public string Key => "Speed_MeterPerSecond";
         public UnitSystem System => UnitSystem.Both;
+        public string DefaultImperial => ISpeed.DefaultImperial;
+        public string DefaultMetric => ISpeed.DefaultMetric;
 
         public MeterPerSecond(decimal val)
         {
