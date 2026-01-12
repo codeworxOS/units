@@ -45,7 +45,7 @@ export abstract class I{{{DimensionName}}} implements IDimension {
         this.system = system;
     }
 {{#Units}}
-    public abstract To{{{UnitName}}}(): {{{DimensionName}}}{{{UnitName}}};
+    public abstract To{{{UnitName}}}(): {{{UnitName}}};
 {{/Units}}
 
     public abstract toJSON(): string;
@@ -80,7 +80,7 @@ export abstract class I{{{DimensionName}}} implements IDimension {
 
 {{#Units}}
             case "{{{Symbol}}}":
-                return new {{{DimensionName}}}{{{UnitName}}}(value);
+                return new {{{UnitName}}}(value);
 {{/Units}}
             default:
                 throw new Error("Symbol " + symbol + " not supported.");
@@ -115,19 +115,19 @@ export abstract class I{{{DimensionName}}} implements IDimension {
 }
 
 {{#Units}}
-export class {{{DimensionName}}}{{{UnitName}}} extends I{{{DimensionName}}} {
+export class {{{UnitName}}} extends I{{{DimensionName}}} {
     
     public constructor(val: number) {
         super(val, "{{{Symbol}}}", [{{{SystemString}}}]);
     }
 
 {{#Conversion}}
-    public To{{{ConversionUnitName}}}(): {{{DimensionName}}}{{{ConversionUnitName}}} {
+    public To{{{ConversionUnitName}}}(): {{{ConversionUnitName}}} {
         {{^HasConversion}}
             return this;
         {{/HasConversion}}
         {{#HasConversion}}
-            return new {{{DimensionName}}}{{{ConversionUnitName}}}({{{Conversion}}});
+            return new {{{ConversionUnitName}}}({{{Conversion}}});
         {{/HasConversion}}
     }
 {{/Conversion}}
