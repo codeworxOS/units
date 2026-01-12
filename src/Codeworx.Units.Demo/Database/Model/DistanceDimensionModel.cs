@@ -1,5 +1,5 @@
 ﻿using Codeworx.Units.Defaults;
-using Codeworx.Units.EntityFrameworkCore;
+using Codeworx.Units.EntityFrameworkCore.Entities;
 
 namespace Units.Demo.Database.Model
 {
@@ -9,6 +9,6 @@ namespace Units.Demo.Database.Model
 
         public required DimensionValue<IDistance> RequiredDistance { get; set; }
 
-        public DimensionValue<IDistance>? OptionalDistance { get; set; }
+        public required NullableDimensionValue<IDistance> OptionalDistance { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Codeworx.Units.Defaults;
 using Codeworx.Units.Demo.Data;
-using Codeworx.Units.EntityFrameworkCore;
+using Codeworx.Units.EntityFrameworkCore.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +31,11 @@ internal class Program
             await context.Database.EnsureDeletedAsync();
 
             await context.Database.EnsureCreatedAsync();
+
+            context.Set<UnitInformation>().Add(new UnitInformation() { ConversionDivisor = 1, ConversionFactor = 1000, ConversionOffset = 0, Id = "Distance_Kilometer" });
+            context.Set<UnitInformation>().Add(new UnitInformation() { ConversionDivisor = 1, ConversionFactor = 1, ConversionOffset = 0, Id = "Distance_Meter" });
+
+            await context.SaveChangesAsync();
         });
 
         app.MapPost("/AddDistance", async ([FromServices] EntityContext context, [FromBody] DistanceDTO data) =>
@@ -38,7 +43,7 @@ internal class Program
             var entry = new DistanceDimensionModel
             {
                 RequiredDistance = DimensionValue<IDistance>.GetEntity(data.RequiredDistance),
-                OptionalDistance = DimensionValue<IDistance>.GetEntity(data.OptionalDistance),
+                OptionalDistance = NullableDimensionValue<IDistance>.GetEntity(data.OptionalDistance),
             };
             context.DistanceDimensionTest.Add(entry);
 
@@ -91,11 +96,14 @@ internal class Program
 
     private static async Task<DistanceDTO?> GetDistance(EntityContext context, int Id)
     {
+        var test = await context.DistanceDimensionTest.OrderBy(d => (d.RequiredDistance.Value + d.RequiredDistance.Unit!.ConversionOffset) * d.RequiredDistance.Unit!.ConversionFactor / d.RequiredDistance.Unit!.ConversionDivisor)
+            .ToListAsync();
+
         var entry = await context.DistanceDimensionTest.AsNoTracking().Where(d => d.Id == Id).Select(d => new DistanceDTO
         {
             Id = d.Id,
             RequiredDistance = d.RequiredDistance.GetDimension(),
-            OptionalDistance = d.OptionalDistance != null ? d.OptionalDistance.GetDimension() : null
+            OptionalDistance = d.OptionalDistance.GetDimension()
         }).FirstOrDefaultAsync();
 
         return entry;
