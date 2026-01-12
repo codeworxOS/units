@@ -24,6 +24,8 @@ namespace Units.Demo.Database
             base.ConfigureConventions(configurationBuilder);
 
             configurationBuilder.AddUnitConversionConvention(typeof(IDistance).Assembly);
+
+            configurationBuilder.Properties<decimal>().HavePrecision(20, 10);
         }
     }
 }

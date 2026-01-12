@@ -9,7 +9,7 @@ namespace Codeworx.Units.EntityFrameworkCore
       where T : IUnitBase
     {
         public UnitEntityConverter()
-          : base(GetToDecimalExpression(), GetToUnitExpression())
+          : base(GetToDecimalExpression(), GetToUnitExpression(), new ConverterMappingHints(precision: 20, scale: 10))
         {
         }
 
