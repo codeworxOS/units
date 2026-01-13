@@ -49,12 +49,12 @@ steps:
 
 - task: DownloadSecureFile@1
   inputs:
-    secureFile: '${signKey}'
+    secureFile: '$(signKey)'
 
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Agent.TempDirectory)'
-    Contents: '${signKey}'
+    Contents: '$(signKey)'
     TargetFolder: './private'
 
 - task: DotNetCoreCLI@2
@@ -64,7 +64,7 @@ steps:
     packagesToPack: '$(projects)'
     configuration: '$(buildConfiguration)'
     versioningScheme: 'off'
-    buildProperties: 'Version=$(PackageVersion);FileVersion=$(PackageVersionFileVersion);AssemblyVersion=$(major).0.0.0;SignAssembly=true;AssemblyOriginatorKeyFile=..\..\private\${signKey}'
+    buildProperties: 'Version=$(PackageVersion);FileVersion=$(PackageVersionFileVersion);AssemblyVersion=$(major).0.0.0;SignAssembly=true;AssemblyOriginatorKeyFile=..\..\private\$(signKey)'
 
 - task: Bash@3
   displayName: "Update build version"
