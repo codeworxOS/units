@@ -189,7 +189,7 @@ namespace Codeworx.Units.Cli
             {
                 var unitClassName = unitName.GetClassName();
                 var unitKey = unitData.Key;
-                string template = $"public struct tmp_Struct {{ public decimal Value {{get;}} string IUnitBase.Symbol => tmp_Struct.Symbol; public static string Symbol => \"{unitData.Symbol}\"; string IUnitBase.Key => tmp_Struct.Key; public static string Key => \"{unitKey}\";  UnitSystem IUnitBase.System => tmp_Struct.System; public static UnitSystem System => UnitSystem.{unitData.System ?? Primitives.UnitSystem.Both}; }}";
+                string template = $"public struct tmp_Struct {{ public decimal Value {{get;}} string IUnitBase.Symbol => tmp_Struct.Symbol; public static string Symbol => \"{unitData.Symbol}\"; string IUnitBase.Key => tmp_Struct.Key; public static string Key => \"{unitKey}\";  UnitSystem IUnitBase.System => tmp_Struct.System; public static UnitSystem System => UnitSystem.{unitData.System ?? UnitSystem.Both}; }}";
 
                 var classDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as StructDeclarationSyntax)!;
 
