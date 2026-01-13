@@ -14,7 +14,7 @@ namespace Codeworx.Units.Tests
         {
             var parsed = IDistance.Parse(input);
 
-            Assert.Equal(Math.Round(parsed.BaseValue, 5), Math.Round(check.BaseValue, 5));
+            Assert.Equal(Math.Round(parsed.Value, 5), Math.Round(check.Value, 5));
             Assert.IsType(targetType, parsed);
         }
 
@@ -24,7 +24,7 @@ namespace Codeworx.Units.Tests
         {
             var parsed = IDistance.Parse(symbol, value);
 
-            Assert.Equal(Math.Round(parsed.BaseValue, 5), Math.Round(check.BaseValue, 5));
+            Assert.Equal(Math.Round(parsed.Value, 5), Math.Round(check.Value, 5));
             Assert.IsType(targetType, parsed);
         }
 

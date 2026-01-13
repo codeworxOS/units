@@ -15,7 +15,7 @@ namespace Codeworx.Units.Tests
         {
             var converted = original.ToUnit(check.Symbol);
 
-            Assert.Equal(Math.Round(converted.BaseValue, 5), Math.Round(check.BaseValue, 5));
+            Assert.Equal(Math.Round(converted.Value, 5), Math.Round(check.Value, 5));
         }
 
         [Theory]
@@ -26,7 +26,7 @@ namespace Codeworx.Units.Tests
         {
             var converted = original.ToUnit(check.Symbol);
 
-            Assert.Equal(Math.Round(converted.BaseValue, 5), Math.Round(check.BaseValue, 5));
+            Assert.Equal(Math.Round(converted.Value, 5), Math.Round(check.Value, 5));
         }
 
         public static IEnumerable<object[]> GetDistanceMeterToOtherConversionData()

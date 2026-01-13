@@ -9,53 +9,56 @@ namespace Codeworx.Units.Defaults.DistanceDimension
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
     public struct Yard : IDistance
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "yard";
-        public string Key => "Distance_Yard";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IDistance.DefaultImperial;
-        public string DefaultMetric => IDistance.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Yard.Symbol;
+        public static string Symbol => "yard";
+
+        string IUnitBase.Key => Yard.Key;
+        public static string Key => "Distance_Yard";
+
+        UnitSystem IUnitBase.System => Yard.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Yard(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Meter ToMeter()
         {
-            return new Meter(_value / 1.0936132983M);
+            return new Meter(Value / 1.0936132983M);
         }
 
         public Centimeter ToCentimeter()
         {
-            return new Centimeter(_value / 0.010936132983M);
+            return new Centimeter(Value / 0.010936132983M);
         }
 
         public Kilometer ToKilometer()
         {
-            return new Kilometer(_value / 1093.6132983000M);
+            return new Kilometer(Value / 1093.6132983000M);
         }
 
         public Mile ToMile()
         {
-            return new Mile(_value / 1759.9999999393152M);
+            return new Mile(Value / 1759.9999999393152M);
         }
 
         public Millimeter ToMillimeter()
         {
-            return new Millimeter(_value / 0.0010936132983M);
+            return new Millimeter(Value / 0.0010936132983M);
         }
 
         public Yard ToYard() => this;
         public Feet ToFeet()
         {
-            return new Feet(_value * 3M);
+            return new Feet(Value * 3M);
         }
 
         public Inch ToInch()
         {
-            return new Inch(_value * 36M);
+            return new Inch(Value * 36M);
         }
 
         public IDistance ToUnit(string symbol)
@@ -115,107 +118,107 @@ namespace Codeworx.Units.Defaults.DistanceDimension
 
         public static Yard operator +(Yard first, IDistance second)
         {
-            return new Yard(first._value + second.ToYard()._value);
+            return new Yard(first.Value + second.ToYard().Value);
         }
 
         public static Yard operator -(Yard first, IDistance second)
         {
-            return new Yard(first._value - second.ToYard()._value);
+            return new Yard(first.Value - second.ToYard().Value);
         }
 
         public static Yard operator +(Yard first, decimal second)
         {
-            return new Yard(first._value + second);
+            return new Yard(first.Value + second);
         }
 
         public static Yard operator -(Yard first, decimal second)
         {
-            return new Yard(first._value - second);
+            return new Yard(first.Value - second);
         }
 
         public static Yard operator *(Yard first, decimal second)
         {
-            return new Yard(first._value * second);
+            return new Yard(first.Value * second);
         }
 
         public static Yard operator /(Yard first, decimal second)
         {
-            return new Yard(first._value / second);
+            return new Yard(first.Value / second);
         }
 
         public static decimal operator /(Yard first, IDistance second)
         {
-            return first._value / second.ToYard()._value;
+            return first.Value / second.ToYard().Value;
         }
 
         public static Yard operator -(Yard first)
         {
-            return new Yard(-first._value);
+            return new Yard(-first.Value);
         }
 
         public static bool operator>(Yard first, IDistance second)
         {
-            return first._value > second.ToYard()._value;
+            return first.Value > second.ToYard().Value;
         }
 
         public static bool operator >=(Yard first, IDistance second)
         {
-            return first._value >= second.ToYard()._value;
+            return first.Value >= second.ToYard().Value;
         }
 
         public static bool operator <(Yard first, IDistance second)
         {
-            return first._value < second.ToYard()._value;
+            return first.Value < second.ToYard().Value;
         }
 
         public static bool operator <=(Yard first, IDistance second)
         {
-            return first._value <= second.ToYard()._value;
+            return first.Value <= second.ToYard().Value;
         }
 
         public static bool operator ==(Yard first, IDistance second)
         {
-            return first._value == second.ToYard()._value;
+            return first.Value == second.ToYard().Value;
         }
 
         public static bool operator !=(Yard first, IDistance second)
         {
-            return first._value != second.ToYard()._value;
+            return first.Value != second.ToYard().Value;
         }
 
         public static bool operator>(Yard first, Yard second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Yard first, Yard second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Yard first, Yard second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Yard first, Yard second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Yard first, Yard second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Yard first, Yard second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -228,13 +231,13 @@ namespace Codeworx.Units.Defaults.DistanceDimension
             if (obj == null)
                 return 1;
             if (obj is IDistance conv)
-                return this._value.CompareTo(conv.ToYard()._value);
+                return this.Value.CompareTo(conv.ToYard().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "yard";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "yard";
         }
     }
 }

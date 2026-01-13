@@ -15,7 +15,7 @@ namespace Codeworx.Units.EntityFrameworkCore
 
         private static Expression<Func<T, decimal>> GetToDecimalExpression()
         {
-            return d => d.BaseValue;
+            return d => d.Value;
         }
 
         private static Expression<Func<decimal, T>> GetToUnitExpression()

@@ -9,33 +9,36 @@ namespace Codeworx.Units.Defaults.TimeDimension
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
     public struct Minute : ITime
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "min";
-        public string Key => "Time_Minute";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ITime.DefaultImperial;
-        public string DefaultMetric => ITime.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Minute.Symbol;
+        public static string Symbol => "min";
+
+        string IUnitBase.Key => Minute.Key;
+        public static string Key => "Time_Minute";
+
+        UnitSystem IUnitBase.System => Minute.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Minute(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Second ToSecond()
         {
-            return new Second(_value * 60M);
+            return new Second(Value * 60M);
         }
 
         public Hour ToHour()
         {
-            return new Hour(_value / 60M);
+            return new Hour(Value / 60M);
         }
 
         public Minute ToMinute() => this;
         public Millisecond ToMillisecond()
         {
-            return new Millisecond(_value * 60000M);
+            return new Millisecond(Value * 60000M);
         }
 
         public ITime ToUnit(string symbol)
@@ -79,107 +82,107 @@ namespace Codeworx.Units.Defaults.TimeDimension
 
         public static Minute operator +(Minute first, ITime second)
         {
-            return new Minute(first._value + second.ToMinute()._value);
+            return new Minute(first.Value + second.ToMinute().Value);
         }
 
         public static Minute operator -(Minute first, ITime second)
         {
-            return new Minute(first._value - second.ToMinute()._value);
+            return new Minute(first.Value - second.ToMinute().Value);
         }
 
         public static Minute operator +(Minute first, decimal second)
         {
-            return new Minute(first._value + second);
+            return new Minute(first.Value + second);
         }
 
         public static Minute operator -(Minute first, decimal second)
         {
-            return new Minute(first._value - second);
+            return new Minute(first.Value - second);
         }
 
         public static Minute operator *(Minute first, decimal second)
         {
-            return new Minute(first._value * second);
+            return new Minute(first.Value * second);
         }
 
         public static Minute operator /(Minute first, decimal second)
         {
-            return new Minute(first._value / second);
+            return new Minute(first.Value / second);
         }
 
         public static decimal operator /(Minute first, ITime second)
         {
-            return first._value / second.ToMinute()._value;
+            return first.Value / second.ToMinute().Value;
         }
 
         public static Minute operator -(Minute first)
         {
-            return new Minute(-first._value);
+            return new Minute(-first.Value);
         }
 
         public static bool operator>(Minute first, ITime second)
         {
-            return first._value > second.ToMinute()._value;
+            return first.Value > second.ToMinute().Value;
         }
 
         public static bool operator >=(Minute first, ITime second)
         {
-            return first._value >= second.ToMinute()._value;
+            return first.Value >= second.ToMinute().Value;
         }
 
         public static bool operator <(Minute first, ITime second)
         {
-            return first._value < second.ToMinute()._value;
+            return first.Value < second.ToMinute().Value;
         }
 
         public static bool operator <=(Minute first, ITime second)
         {
-            return first._value <= second.ToMinute()._value;
+            return first.Value <= second.ToMinute().Value;
         }
 
         public static bool operator ==(Minute first, ITime second)
         {
-            return first._value == second.ToMinute()._value;
+            return first.Value == second.ToMinute().Value;
         }
 
         public static bool operator !=(Minute first, ITime second)
         {
-            return first._value != second.ToMinute()._value;
+            return first.Value != second.ToMinute().Value;
         }
 
         public static bool operator>(Minute first, Minute second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Minute first, Minute second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Minute first, Minute second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Minute first, Minute second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Minute first, Minute second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Minute first, Minute second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -192,13 +195,13 @@ namespace Codeworx.Units.Defaults.TimeDimension
             if (obj == null)
                 return 1;
             if (obj is ITime conv)
-                return this._value.CompareTo(conv.ToMinute()._value);
+                return this.Value.CompareTo(conv.ToMinute().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "min";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "min";
         }
     }
 }

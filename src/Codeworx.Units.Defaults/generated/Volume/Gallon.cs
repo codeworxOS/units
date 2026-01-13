@@ -9,48 +9,51 @@ namespace Codeworx.Units.Defaults.VolumeDimension
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
     public struct Gallon : IVolume
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "gal";
-        public string Key => "Volume_Gallon";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IVolume.DefaultImperial;
-        public string DefaultMetric => IVolume.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Gallon.Symbol;
+        public static string Symbol => "gal";
+
+        string IUnitBase.Key => Gallon.Key;
+        public static string Key => "Volume_Gallon";
+
+        UnitSystem IUnitBase.System => Gallon.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Gallon(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public CubicMeter ToCubicMeter()
         {
-            return new CubicMeter(_value / 264.17205236M);
+            return new CubicMeter(Value / 264.17205236M);
         }
 
         public CubicCentimeter ToCubicCentimeter()
         {
-            return new CubicCentimeter(_value / 0.00026417205236M);
+            return new CubicCentimeter(Value / 0.00026417205236M);
         }
 
         public CubicFoot ToCubicFoot()
         {
-            return new CubicFoot(_value / 7.4805187861022062502637006094M);
+            return new CubicFoot(Value / 7.4805187861022062502637006094M);
         }
 
         public CubicInch ToCubicInch()
         {
-            return new CubicInch(_value / 0.0043290043290156793516882619M);
+            return new CubicInch(Value / 0.0043290043290156793516882619M);
         }
 
         public Gallon ToGallon() => this;
         public Liter ToLiter()
         {
-            return new Liter(_value / 0.26417205236M);
+            return new Liter(Value / 0.26417205236M);
         }
 
         public Quart ToQuart()
         {
-            return new Quart(_value / 0.2500000000094635294602919036M);
+            return new Quart(Value / 0.2500000000094635294602919036M);
         }
 
         public IVolume ToUnit(string symbol)
@@ -106,107 +109,107 @@ namespace Codeworx.Units.Defaults.VolumeDimension
 
         public static Gallon operator +(Gallon first, IVolume second)
         {
-            return new Gallon(first._value + second.ToGallon()._value);
+            return new Gallon(first.Value + second.ToGallon().Value);
         }
 
         public static Gallon operator -(Gallon first, IVolume second)
         {
-            return new Gallon(first._value - second.ToGallon()._value);
+            return new Gallon(first.Value - second.ToGallon().Value);
         }
 
         public static Gallon operator +(Gallon first, decimal second)
         {
-            return new Gallon(first._value + second);
+            return new Gallon(first.Value + second);
         }
 
         public static Gallon operator -(Gallon first, decimal second)
         {
-            return new Gallon(first._value - second);
+            return new Gallon(first.Value - second);
         }
 
         public static Gallon operator *(Gallon first, decimal second)
         {
-            return new Gallon(first._value * second);
+            return new Gallon(first.Value * second);
         }
 
         public static Gallon operator /(Gallon first, decimal second)
         {
-            return new Gallon(first._value / second);
+            return new Gallon(first.Value / second);
         }
 
         public static decimal operator /(Gallon first, IVolume second)
         {
-            return first._value / second.ToGallon()._value;
+            return first.Value / second.ToGallon().Value;
         }
 
         public static Gallon operator -(Gallon first)
         {
-            return new Gallon(-first._value);
+            return new Gallon(-first.Value);
         }
 
         public static bool operator>(Gallon first, IVolume second)
         {
-            return first._value > second.ToGallon()._value;
+            return first.Value > second.ToGallon().Value;
         }
 
         public static bool operator >=(Gallon first, IVolume second)
         {
-            return first._value >= second.ToGallon()._value;
+            return first.Value >= second.ToGallon().Value;
         }
 
         public static bool operator <(Gallon first, IVolume second)
         {
-            return first._value < second.ToGallon()._value;
+            return first.Value < second.ToGallon().Value;
         }
 
         public static bool operator <=(Gallon first, IVolume second)
         {
-            return first._value <= second.ToGallon()._value;
+            return first.Value <= second.ToGallon().Value;
         }
 
         public static bool operator ==(Gallon first, IVolume second)
         {
-            return first._value == second.ToGallon()._value;
+            return first.Value == second.ToGallon().Value;
         }
 
         public static bool operator !=(Gallon first, IVolume second)
         {
-            return first._value != second.ToGallon()._value;
+            return first.Value != second.ToGallon().Value;
         }
 
         public static bool operator>(Gallon first, Gallon second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Gallon first, Gallon second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Gallon first, Gallon second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Gallon first, Gallon second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Gallon first, Gallon second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Gallon first, Gallon second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -219,13 +222,13 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             if (obj == null)
                 return 1;
             if (obj is IVolume conv)
-                return this._value.CompareTo(conv.ToGallon()._value);
+                return this.Value.CompareTo(conv.ToGallon().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "gal";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "gal";
         }
     }
 }

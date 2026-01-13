@@ -9,58 +9,61 @@ namespace Codeworx.Units.Defaults.MassDimension
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public struct Kilogram : IMass
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "kg";
-        public string Key => "Mass_Kilogram";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IMass.DefaultImperial;
-        public string DefaultMetric => IMass.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Kilogram.Symbol;
+        public static string Symbol => "kg";
+
+        string IUnitBase.Key => Kilogram.Key;
+        public static string Key => "Mass_Kilogram";
+
+        UnitSystem IUnitBase.System => Kilogram.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Kilogram(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Kilogram ToKilogram() => this;
         public Gram ToGram()
         {
-            return new Gram(_value * 1000M);
+            return new Gram(Value * 1000M);
         }
 
         public Pounds ToPounds()
         {
-            return new Pounds(_value * 2.2046226218M);
+            return new Pounds(Value * 2.2046226218M);
         }
 
         public TonLong ToTonLong()
         {
-            return new TonLong(_value / 1016.0469088M);
+            return new TonLong(Value / 1016.0469088M);
         }
 
         public Milligram ToMilligram()
         {
-            return new Milligram(_value * 1000000M);
+            return new Milligram(Value * 1000000M);
         }
 
         public Microgram ToMicrogram()
         {
-            return new Microgram(_value * 1000000000M);
+            return new Microgram(Value * 1000000000M);
         }
 
         public Ounce ToOunce()
         {
-            return new Ounce(_value * 35.27392M);
+            return new Ounce(Value * 35.27392M);
         }
 
         public TonShort ToTonShort()
         {
-            return new TonShort(_value / 907.18474M);
+            return new TonShort(Value / 907.18474M);
         }
 
         public MetricTons ToMetricTons()
         {
-            return new MetricTons(_value / 1000M);
+            return new MetricTons(Value / 1000M);
         }
 
         public IMass ToUnit(string symbol)
@@ -124,107 +127,107 @@ namespace Codeworx.Units.Defaults.MassDimension
 
         public static Kilogram operator +(Kilogram first, IMass second)
         {
-            return new Kilogram(first._value + second.ToKilogram()._value);
+            return new Kilogram(first.Value + second.ToKilogram().Value);
         }
 
         public static Kilogram operator -(Kilogram first, IMass second)
         {
-            return new Kilogram(first._value - second.ToKilogram()._value);
+            return new Kilogram(first.Value - second.ToKilogram().Value);
         }
 
         public static Kilogram operator +(Kilogram first, decimal second)
         {
-            return new Kilogram(first._value + second);
+            return new Kilogram(first.Value + second);
         }
 
         public static Kilogram operator -(Kilogram first, decimal second)
         {
-            return new Kilogram(first._value - second);
+            return new Kilogram(first.Value - second);
         }
 
         public static Kilogram operator *(Kilogram first, decimal second)
         {
-            return new Kilogram(first._value * second);
+            return new Kilogram(first.Value * second);
         }
 
         public static Kilogram operator /(Kilogram first, decimal second)
         {
-            return new Kilogram(first._value / second);
+            return new Kilogram(first.Value / second);
         }
 
         public static decimal operator /(Kilogram first, IMass second)
         {
-            return first._value / second.ToKilogram()._value;
+            return first.Value / second.ToKilogram().Value;
         }
 
         public static Kilogram operator -(Kilogram first)
         {
-            return new Kilogram(-first._value);
+            return new Kilogram(-first.Value);
         }
 
         public static bool operator>(Kilogram first, IMass second)
         {
-            return first._value > second.ToKilogram()._value;
+            return first.Value > second.ToKilogram().Value;
         }
 
         public static bool operator >=(Kilogram first, IMass second)
         {
-            return first._value >= second.ToKilogram()._value;
+            return first.Value >= second.ToKilogram().Value;
         }
 
         public static bool operator <(Kilogram first, IMass second)
         {
-            return first._value < second.ToKilogram()._value;
+            return first.Value < second.ToKilogram().Value;
         }
 
         public static bool operator <=(Kilogram first, IMass second)
         {
-            return first._value <= second.ToKilogram()._value;
+            return first.Value <= second.ToKilogram().Value;
         }
 
         public static bool operator ==(Kilogram first, IMass second)
         {
-            return first._value == second.ToKilogram()._value;
+            return first.Value == second.ToKilogram().Value;
         }
 
         public static bool operator !=(Kilogram first, IMass second)
         {
-            return first._value != second.ToKilogram()._value;
+            return first.Value != second.ToKilogram().Value;
         }
 
         public static bool operator>(Kilogram first, Kilogram second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Kilogram first, Kilogram second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Kilogram first, Kilogram second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Kilogram first, Kilogram second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Kilogram first, Kilogram second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Kilogram first, Kilogram second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -237,13 +240,13 @@ namespace Codeworx.Units.Defaults.MassDimension
             if (obj == null)
                 return 1;
             if (obj is IMass conv)
-                return this._value.CompareTo(conv.ToKilogram()._value);
+                return this.Value.CompareTo(conv.ToKilogram().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "kg";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "kg";
         }
     }
 }

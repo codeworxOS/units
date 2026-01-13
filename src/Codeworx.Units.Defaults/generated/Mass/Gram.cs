@@ -9,58 +9,61 @@ namespace Codeworx.Units.Defaults.MassDimension
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public struct Gram : IMass
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "g";
-        public string Key => "Mass_Gram";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IMass.DefaultImperial;
-        public string DefaultMetric => IMass.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Gram.Symbol;
+        public static string Symbol => "g";
+
+        string IUnitBase.Key => Gram.Key;
+        public static string Key => "Mass_Gram";
+
+        UnitSystem IUnitBase.System => Gram.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Gram(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Kilogram ToKilogram()
         {
-            return new Kilogram(_value / 1000M);
+            return new Kilogram(Value / 1000M);
         }
 
         public Gram ToGram() => this;
         public Pounds ToPounds()
         {
-            return new Pounds(_value / 453.59237001003542909395360719M);
+            return new Pounds(Value / 453.59237001003542909395360719M);
         }
 
         public TonLong ToTonLong()
         {
-            return new TonLong(_value / 1016046.9088000M);
+            return new TonLong(Value / 1016046.9088000M);
         }
 
         public Milligram ToMilligram()
         {
-            return new Milligram(_value / 0.001M);
+            return new Milligram(Value / 0.001M);
         }
 
         public Microgram ToMicrogram()
         {
-            return new Microgram(_value / 0.000001M);
+            return new Microgram(Value / 0.000001M);
         }
 
         public Ounce ToOunce()
         {
-            return new Ounce(_value / 28.349556839727481380011067667M);
+            return new Ounce(Value / 28.349556839727481380011067667M);
         }
 
         public TonShort ToTonShort()
         {
-            return new TonShort(_value / 907184.74000M);
+            return new TonShort(Value / 907184.74000M);
         }
 
         public MetricTons ToMetricTons()
         {
-            return new MetricTons(_value / 1000000M);
+            return new MetricTons(Value / 1000000M);
         }
 
         public IMass ToUnit(string symbol)
@@ -124,107 +127,107 @@ namespace Codeworx.Units.Defaults.MassDimension
 
         public static Gram operator +(Gram first, IMass second)
         {
-            return new Gram(first._value + second.ToGram()._value);
+            return new Gram(first.Value + second.ToGram().Value);
         }
 
         public static Gram operator -(Gram first, IMass second)
         {
-            return new Gram(first._value - second.ToGram()._value);
+            return new Gram(first.Value - second.ToGram().Value);
         }
 
         public static Gram operator +(Gram first, decimal second)
         {
-            return new Gram(first._value + second);
+            return new Gram(first.Value + second);
         }
 
         public static Gram operator -(Gram first, decimal second)
         {
-            return new Gram(first._value - second);
+            return new Gram(first.Value - second);
         }
 
         public static Gram operator *(Gram first, decimal second)
         {
-            return new Gram(first._value * second);
+            return new Gram(first.Value * second);
         }
 
         public static Gram operator /(Gram first, decimal second)
         {
-            return new Gram(first._value / second);
+            return new Gram(first.Value / second);
         }
 
         public static decimal operator /(Gram first, IMass second)
         {
-            return first._value / second.ToGram()._value;
+            return first.Value / second.ToGram().Value;
         }
 
         public static Gram operator -(Gram first)
         {
-            return new Gram(-first._value);
+            return new Gram(-first.Value);
         }
 
         public static bool operator>(Gram first, IMass second)
         {
-            return first._value > second.ToGram()._value;
+            return first.Value > second.ToGram().Value;
         }
 
         public static bool operator >=(Gram first, IMass second)
         {
-            return first._value >= second.ToGram()._value;
+            return first.Value >= second.ToGram().Value;
         }
 
         public static bool operator <(Gram first, IMass second)
         {
-            return first._value < second.ToGram()._value;
+            return first.Value < second.ToGram().Value;
         }
 
         public static bool operator <=(Gram first, IMass second)
         {
-            return first._value <= second.ToGram()._value;
+            return first.Value <= second.ToGram().Value;
         }
 
         public static bool operator ==(Gram first, IMass second)
         {
-            return first._value == second.ToGram()._value;
+            return first.Value == second.ToGram().Value;
         }
 
         public static bool operator !=(Gram first, IMass second)
         {
-            return first._value != second.ToGram()._value;
+            return first.Value != second.ToGram().Value;
         }
 
         public static bool operator>(Gram first, Gram second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Gram first, Gram second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Gram first, Gram second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Gram first, Gram second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Gram first, Gram second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Gram first, Gram second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -237,13 +240,13 @@ namespace Codeworx.Units.Defaults.MassDimension
             if (obj == null)
                 return 1;
             if (obj is IMass conv)
-                return this._value.CompareTo(conv.ToGram()._value);
+                return this.Value.CompareTo(conv.ToGram().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "g";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "g";
         }
     }
 }

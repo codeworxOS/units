@@ -9,53 +9,56 @@ namespace Codeworx.Units.Defaults.DistanceDimension
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
     public struct Centimeter : IDistance
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "cm";
-        public string Key => "Distance_Centimeter";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IDistance.DefaultImperial;
-        public string DefaultMetric => IDistance.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Centimeter.Symbol;
+        public static string Symbol => "cm";
+
+        string IUnitBase.Key => Centimeter.Key;
+        public static string Key => "Distance_Centimeter";
+
+        UnitSystem IUnitBase.System => Centimeter.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Centimeter(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Meter ToMeter()
         {
-            return new Meter(_value / 100M);
+            return new Meter(Value / 100M);
         }
 
         public Centimeter ToCentimeter() => this;
         public Kilometer ToKilometer()
         {
-            return new Kilometer(_value / 100000M);
+            return new Kilometer(Value / 100000M);
         }
 
         public Mile ToMile()
         {
-            return new Mile(_value / 160934.400M);
+            return new Mile(Value / 160934.400M);
         }
 
         public Millimeter ToMillimeter()
         {
-            return new Millimeter(_value / 0.1M);
+            return new Millimeter(Value / 0.1M);
         }
 
         public Yard ToYard()
         {
-            return new Yard(_value / 91.44000000315285120010871031M);
+            return new Yard(Value / 91.44000000315285120010871031M);
         }
 
         public Feet ToFeet()
         {
-            return new Feet(_value / 30.48000000012192000000048768M);
+            return new Feet(Value / 30.48000000012192000000048768M);
         }
 
         public Inch ToInch()
         {
-            return new Inch(_value / 2.54000000001016000000004064M);
+            return new Inch(Value / 2.54000000001016000000004064M);
         }
 
         public IDistance ToUnit(string symbol)
@@ -115,107 +118,107 @@ namespace Codeworx.Units.Defaults.DistanceDimension
 
         public static Centimeter operator +(Centimeter first, IDistance second)
         {
-            return new Centimeter(first._value + second.ToCentimeter()._value);
+            return new Centimeter(first.Value + second.ToCentimeter().Value);
         }
 
         public static Centimeter operator -(Centimeter first, IDistance second)
         {
-            return new Centimeter(first._value - second.ToCentimeter()._value);
+            return new Centimeter(first.Value - second.ToCentimeter().Value);
         }
 
         public static Centimeter operator +(Centimeter first, decimal second)
         {
-            return new Centimeter(first._value + second);
+            return new Centimeter(first.Value + second);
         }
 
         public static Centimeter operator -(Centimeter first, decimal second)
         {
-            return new Centimeter(first._value - second);
+            return new Centimeter(first.Value - second);
         }
 
         public static Centimeter operator *(Centimeter first, decimal second)
         {
-            return new Centimeter(first._value * second);
+            return new Centimeter(first.Value * second);
         }
 
         public static Centimeter operator /(Centimeter first, decimal second)
         {
-            return new Centimeter(first._value / second);
+            return new Centimeter(first.Value / second);
         }
 
         public static decimal operator /(Centimeter first, IDistance second)
         {
-            return first._value / second.ToCentimeter()._value;
+            return first.Value / second.ToCentimeter().Value;
         }
 
         public static Centimeter operator -(Centimeter first)
         {
-            return new Centimeter(-first._value);
+            return new Centimeter(-first.Value);
         }
 
         public static bool operator>(Centimeter first, IDistance second)
         {
-            return first._value > second.ToCentimeter()._value;
+            return first.Value > second.ToCentimeter().Value;
         }
 
         public static bool operator >=(Centimeter first, IDistance second)
         {
-            return first._value >= second.ToCentimeter()._value;
+            return first.Value >= second.ToCentimeter().Value;
         }
 
         public static bool operator <(Centimeter first, IDistance second)
         {
-            return first._value < second.ToCentimeter()._value;
+            return first.Value < second.ToCentimeter().Value;
         }
 
         public static bool operator <=(Centimeter first, IDistance second)
         {
-            return first._value <= second.ToCentimeter()._value;
+            return first.Value <= second.ToCentimeter().Value;
         }
 
         public static bool operator ==(Centimeter first, IDistance second)
         {
-            return first._value == second.ToCentimeter()._value;
+            return first.Value == second.ToCentimeter().Value;
         }
 
         public static bool operator !=(Centimeter first, IDistance second)
         {
-            return first._value != second.ToCentimeter()._value;
+            return first.Value != second.ToCentimeter().Value;
         }
 
         public static bool operator>(Centimeter first, Centimeter second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Centimeter first, Centimeter second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Centimeter first, Centimeter second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Centimeter first, Centimeter second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Centimeter first, Centimeter second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Centimeter first, Centimeter second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -228,13 +231,13 @@ namespace Codeworx.Units.Defaults.DistanceDimension
             if (obj == null)
                 return 1;
             if (obj is IDistance conv)
-                return this._value.CompareTo(conv.ToCentimeter()._value);
+                return this.Value.CompareTo(conv.ToCentimeter().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "cm";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "cm";
         }
     }
 }

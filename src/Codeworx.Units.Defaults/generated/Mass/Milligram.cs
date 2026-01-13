@@ -9,58 +9,61 @@ namespace Codeworx.Units.Defaults.MassDimension
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public struct Milligram : IMass
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "mg";
-        public string Key => "Mass_Milligram";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IMass.DefaultImperial;
-        public string DefaultMetric => IMass.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Milligram.Symbol;
+        public static string Symbol => "mg";
+
+        string IUnitBase.Key => Milligram.Key;
+        public static string Key => "Mass_Milligram";
+
+        UnitSystem IUnitBase.System => Milligram.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Milligram(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Kilogram ToKilogram()
         {
-            return new Kilogram(_value / 1000000M);
+            return new Kilogram(Value / 1000000M);
         }
 
         public Gram ToGram()
         {
-            return new Gram(_value / 1000M);
+            return new Gram(Value / 1000M);
         }
 
         public Pounds ToPounds()
         {
-            return new Pounds(_value / 453592.37001003542909395360719M);
+            return new Pounds(Value / 453592.37001003542909395360719M);
         }
 
         public TonLong ToTonLong()
         {
-            return new TonLong(_value / 1016046908.8000000M);
+            return new TonLong(Value / 1016046908.8000000M);
         }
 
         public Milligram ToMilligram() => this;
         public Microgram ToMicrogram()
         {
-            return new Microgram(_value / 0.001M);
+            return new Microgram(Value / 0.001M);
         }
 
         public Ounce ToOunce()
         {
-            return new Ounce(_value / 28349.556839727481380011067667M);
+            return new Ounce(Value / 28349.556839727481380011067667M);
         }
 
         public TonShort ToTonShort()
         {
-            return new TonShort(_value / 907184740.00000M);
+            return new TonShort(Value / 907184740.00000M);
         }
 
         public MetricTons ToMetricTons()
         {
-            return new MetricTons(_value / 1000000000M);
+            return new MetricTons(Value / 1000000000M);
         }
 
         public IMass ToUnit(string symbol)
@@ -124,107 +127,107 @@ namespace Codeworx.Units.Defaults.MassDimension
 
         public static Milligram operator +(Milligram first, IMass second)
         {
-            return new Milligram(first._value + second.ToMilligram()._value);
+            return new Milligram(first.Value + second.ToMilligram().Value);
         }
 
         public static Milligram operator -(Milligram first, IMass second)
         {
-            return new Milligram(first._value - second.ToMilligram()._value);
+            return new Milligram(first.Value - second.ToMilligram().Value);
         }
 
         public static Milligram operator +(Milligram first, decimal second)
         {
-            return new Milligram(first._value + second);
+            return new Milligram(first.Value + second);
         }
 
         public static Milligram operator -(Milligram first, decimal second)
         {
-            return new Milligram(first._value - second);
+            return new Milligram(first.Value - second);
         }
 
         public static Milligram operator *(Milligram first, decimal second)
         {
-            return new Milligram(first._value * second);
+            return new Milligram(first.Value * second);
         }
 
         public static Milligram operator /(Milligram first, decimal second)
         {
-            return new Milligram(first._value / second);
+            return new Milligram(first.Value / second);
         }
 
         public static decimal operator /(Milligram first, IMass second)
         {
-            return first._value / second.ToMilligram()._value;
+            return first.Value / second.ToMilligram().Value;
         }
 
         public static Milligram operator -(Milligram first)
         {
-            return new Milligram(-first._value);
+            return new Milligram(-first.Value);
         }
 
         public static bool operator>(Milligram first, IMass second)
         {
-            return first._value > second.ToMilligram()._value;
+            return first.Value > second.ToMilligram().Value;
         }
 
         public static bool operator >=(Milligram first, IMass second)
         {
-            return first._value >= second.ToMilligram()._value;
+            return first.Value >= second.ToMilligram().Value;
         }
 
         public static bool operator <(Milligram first, IMass second)
         {
-            return first._value < second.ToMilligram()._value;
+            return first.Value < second.ToMilligram().Value;
         }
 
         public static bool operator <=(Milligram first, IMass second)
         {
-            return first._value <= second.ToMilligram()._value;
+            return first.Value <= second.ToMilligram().Value;
         }
 
         public static bool operator ==(Milligram first, IMass second)
         {
-            return first._value == second.ToMilligram()._value;
+            return first.Value == second.ToMilligram().Value;
         }
 
         public static bool operator !=(Milligram first, IMass second)
         {
-            return first._value != second.ToMilligram()._value;
+            return first.Value != second.ToMilligram().Value;
         }
 
         public static bool operator>(Milligram first, Milligram second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Milligram first, Milligram second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Milligram first, Milligram second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Milligram first, Milligram second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Milligram first, Milligram second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Milligram first, Milligram second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -237,13 +240,13 @@ namespace Codeworx.Units.Defaults.MassDimension
             if (obj == null)
                 return 1;
             if (obj is IMass conv)
-                return this._value.CompareTo(conv.ToMilligram()._value);
+                return this.Value.CompareTo(conv.ToMilligram().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "mg";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "mg";
         }
     }
 }

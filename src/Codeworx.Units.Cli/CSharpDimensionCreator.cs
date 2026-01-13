@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Codeworx.Units.Cli.Data;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -188,7 +189,7 @@ namespace Codeworx.Units.Cli
             {
                 var unitClassName = unitName.GetClassName();
                 var unitKey = unitData.Key;
-                string template = $"public struct tmp_Struct {{private readonly decimal _value; decimal IUnitBase.BaseValue => _value; public string Symbol => \"{unitData.Symbol}\"; public string Key => \"{unitKey}\"; public UnitSystem System => UnitSystem.{unitData.System ?? Primitives.UnitSystem.Both};public string DefaultImperial => I{dimensionClassName}.DefaultImperial;public string DefaultMetric => I{dimensionClassName}.DefaultMetric; }}";
+                string template = $"public struct tmp_Struct {{ public decimal Value {{get;}} string IUnitBase.Symbol => tmp_Struct.Symbol; public static string Symbol => \"{unitData.Symbol}\"; string IUnitBase.Key => tmp_Struct.Key; public static string Key => \"{unitKey}\";  UnitSystem IUnitBase.System => tmp_Struct.System; public static UnitSystem System => UnitSystem.{unitData.System ?? Primitives.UnitSystem.Both}; }}";
 
                 var classDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as StructDeclarationSyntax)!;
 
@@ -198,6 +199,12 @@ namespace Codeworx.Units.Cli
                 classDeclaration = classDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list));
 
                 classDeclaration = classDeclaration.WithIdentifier(SyntaxFactory.Identifier(unitClassName));
+
+                while (classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Struct"))
+                {
+                    var identifierNode = classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Struct").First();
+                    classDeclaration = classDeclaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName(unitClassName));
+                }
 
                 classDeclaration = classDeclaration.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName("I" + dimensionClassName)));
 
@@ -222,7 +229,7 @@ namespace Codeworx.Units.Cli
 
         private ConstructorDeclarationSyntax GetImplementationConstructor(string unitName)
         {
-            string template = @"public tmp_CLASS(decimal val){_value = val;}";
+            string template = @"public tmp_CLASS(decimal val){Value = val;}";
 
             var constructorDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as ConstructorDeclarationSyntax)!;
 
@@ -343,49 +350,49 @@ namespace Codeworx.Units.Cli
             templates.AddRange(new[]
             {
                 "public static implicit operator tmp_Struct(decimal value) { return new tmp_Struct(value); }",
-                "public static tmp_Struct operator +(tmp_Struct first, tmp_Interface second) { return new tmp_Struct(first._value + second.tmp_ToStruct()._value); }",
-                "public static tmp_Struct operator -(tmp_Struct first, tmp_Interface second) { return new tmp_Struct(first._value - second.tmp_ToStruct()._value); }",
-                "public static tmp_Struct operator +(tmp_Struct first, decimal second) { return new tmp_Struct(first._value + second); }",
-                "public static tmp_Struct operator -(tmp_Struct first, decimal second) { return new tmp_Struct(first._value - second); }",
-                "public static tmp_Struct operator *(tmp_Struct first, decimal second) { return new tmp_Struct(first._value * second); }",
-                "public static tmp_Struct operator /(tmp_Struct first, decimal second) { return new tmp_Struct(first._value / second); }",
-                "public static decimal operator /(tmp_Struct first, tmp_Interface second) { return first._value / second.tmp_ToStruct()._value; }",
+                "public static tmp_Struct operator +(tmp_Struct first, tmp_Interface second) { return new tmp_Struct(first.Value + second.tmp_ToStruct().Value); }",
+                "public static tmp_Struct operator -(tmp_Struct first, tmp_Interface second) { return new tmp_Struct(first.Value - second.tmp_ToStruct().Value); }",
+                "public static tmp_Struct operator +(tmp_Struct first, decimal second) { return new tmp_Struct(first.Value + second); }",
+                "public static tmp_Struct operator -(tmp_Struct first, decimal second) { return new tmp_Struct(first.Value - second); }",
+                "public static tmp_Struct operator *(tmp_Struct first, decimal second) { return new tmp_Struct(first.Value * second); }",
+                "public static tmp_Struct operator /(tmp_Struct first, decimal second) { return new tmp_Struct(first.Value / second); }",
+                "public static decimal operator /(tmp_Struct first, tmp_Interface second) { return first.Value / second.tmp_ToStruct().Value; }",
 
-                "public static tmp_Struct operator -(tmp_Struct first) { return new tmp_Struct(-first._value); }",
+                "public static tmp_Struct operator -(tmp_Struct first) { return new tmp_Struct(-first.Value); }",
 
-                "public static bool operator >(tmp_Struct first, tmp_Interface second) { return first._value > second.tmp_ToStruct()._value; }",
-                "public static bool operator >=(tmp_Struct first, tmp_Interface second) { return first._value >= second.tmp_ToStruct()._value; }",
-                "public static bool operator <(tmp_Struct first, tmp_Interface second) { return first._value < second.tmp_ToStruct()._value; }",
-                "public static bool operator <=(tmp_Struct first, tmp_Interface second) { return first._value <= second.tmp_ToStruct()._value; }",
+                "public static bool operator >(tmp_Struct first, tmp_Interface second) { return first.Value > second.tmp_ToStruct().Value; }",
+                "public static bool operator >=(tmp_Struct first, tmp_Interface second) { return first.Value >= second.tmp_ToStruct().Value; }",
+                "public static bool operator <(tmp_Struct first, tmp_Interface second) { return first.Value < second.tmp_ToStruct().Value; }",
+                "public static bool operator <=(tmp_Struct first, tmp_Interface second) { return first.Value <= second.tmp_ToStruct().Value; }",
             });
 
 
             templates.AddRange(new[]
             {
-                "public static bool operator ==(tmp_Struct first, tmp_Interface second) { return first._value == second.tmp_ToStruct()._value; }",
-                "public static bool operator !=(tmp_Struct first, tmp_Interface second) { return first._value != second.tmp_ToStruct()._value; }",
+                "public static bool operator ==(tmp_Struct first, tmp_Interface second) { return first.Value == second.tmp_ToStruct().Value; }",
+                "public static bool operator !=(tmp_Struct first, tmp_Interface second) { return first.Value != second.tmp_ToStruct().Value; }",
             });
 
             templates.AddRange(new[]
             {
-                "public static bool operator >(tmp_Struct first, tmp_Struct second) { return first._value > second._value; }",
-                "public static bool operator >=(tmp_Struct first, tmp_Struct second) { return first._value >= second._value; }",
-                "public static bool operator <(tmp_Struct first, tmp_Struct second) { return first._value < second._value; }",
-                "public static bool operator <=(tmp_Struct first, tmp_Struct second) { return first._value <= second._value; }"
+                "public static bool operator >(tmp_Struct first, tmp_Struct second) { return first.Value > second.Value; }",
+                "public static bool operator >=(tmp_Struct first, tmp_Struct second) { return first.Value >= second.Value; }",
+                "public static bool operator <(tmp_Struct first, tmp_Struct second) { return first.Value < second.Value; }",
+                "public static bool operator <=(tmp_Struct first, tmp_Struct second) { return first.Value <= second.Value; }"
             });
 
             templates.AddRange(new[]
             {
-                "public static bool operator ==(tmp_Struct first, tmp_Struct second) { return first._value == second._value; }",
-                "public static bool operator !=(tmp_Struct first, tmp_Struct second) { return first._value != second._value; }",
-                "public override int GetHashCode() { return -1939223833 + _value.GetHashCode(); }",
+                "public static bool operator ==(tmp_Struct first, tmp_Struct second) { return first.Value == second.Value; }",
+                "public static bool operator !=(tmp_Struct first, tmp_Struct second) { return first.Value != second.Value; }",
+                "public override int GetHashCode() { return -1939223833 + Value.GetHashCode(); }",
                 "public override bool Equals(object obj) { return this.CompareTo(obj) == 0; }",
-                "public int CompareTo(object obj) { if (obj == null) return 1; if (obj is tmp_Interface conv) return this._value.CompareTo(conv.tmp_ToStruct()._value); throw new ArgumentException(\"obj is not from same dimension interface\"); }",
+                "public int CompareTo(object obj) { if (obj == null) return 1; if (obj is tmp_Interface conv) return this.Value.CompareTo(conv.tmp_ToStruct().Value); throw new ArgumentException(\"obj is not from same dimension interface\"); }",
             });
 
             templates.AddRange(new[]
             {
-                "public override string ToString() { return $\"{_value.ToString(CultureInfo.InvariantCulture)} \"+\"tmp_UnitShort\"; }",
+                "public override string ToString() { return $\"{Value.ToString(CultureInfo.InvariantCulture)} \"+\"tmp_UnitShort\"; }",
             });
 
 

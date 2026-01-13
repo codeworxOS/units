@@ -9,43 +9,46 @@ namespace Codeworx.Units.Defaults.SpeedDimension
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
     public struct FeetPerSecond : ISpeed
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "ft/s";
-        public string Key => "Speed_FeetPerSecond";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ISpeed.DefaultImperial;
-        public string DefaultMetric => ISpeed.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => FeetPerSecond.Symbol;
+        public static string Symbol => "ft/s";
+
+        string IUnitBase.Key => FeetPerSecond.Key;
+        public static string Key => "Speed_FeetPerSecond";
+
+        UnitSystem IUnitBase.System => FeetPerSecond.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public FeetPerSecond(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public MeterPerSecond ToMeterPerSecond()
         {
-            return new MeterPerSecond(_value / 3.280839895M);
+            return new MeterPerSecond(Value / 3.280839895M);
         }
 
         public FeetPerSecond ToFeetPerSecond() => this;
         public KilometerPerHour ToKilometerPerHour()
         {
-            return new KilometerPerHour(_value / 0.9113444152777777777777777778M);
+            return new KilometerPerHour(Value / 0.9113444152777777777777777778M);
         }
 
         public Knots ToKnots()
         {
-            return new Knots(_value / 1.6878098571297009170155981969M);
+            return new Knots(Value / 1.6878098571297009170155981969M);
         }
 
         public MillimeterPerSecond ToMillimeterPerSecond()
         {
-            return new MillimeterPerSecond(_value / 0.003280839895M);
+            return new MillimeterPerSecond(Value / 0.003280839895M);
         }
 
         public MilesPerHour ToMilesPerHour()
         {
-            return new MilesPerHour(_value / 1.4666666666309034666673956637M);
+            return new MilesPerHour(Value / 1.4666666666309034666673956637M);
         }
 
         public ISpeed ToUnit(string symbol)
@@ -97,107 +100,107 @@ namespace Codeworx.Units.Defaults.SpeedDimension
 
         public static FeetPerSecond operator +(FeetPerSecond first, ISpeed second)
         {
-            return new FeetPerSecond(first._value + second.ToFeetPerSecond()._value);
+            return new FeetPerSecond(first.Value + second.ToFeetPerSecond().Value);
         }
 
         public static FeetPerSecond operator -(FeetPerSecond first, ISpeed second)
         {
-            return new FeetPerSecond(first._value - second.ToFeetPerSecond()._value);
+            return new FeetPerSecond(first.Value - second.ToFeetPerSecond().Value);
         }
 
         public static FeetPerSecond operator +(FeetPerSecond first, decimal second)
         {
-            return new FeetPerSecond(first._value + second);
+            return new FeetPerSecond(first.Value + second);
         }
 
         public static FeetPerSecond operator -(FeetPerSecond first, decimal second)
         {
-            return new FeetPerSecond(first._value - second);
+            return new FeetPerSecond(first.Value - second);
         }
 
         public static FeetPerSecond operator *(FeetPerSecond first, decimal second)
         {
-            return new FeetPerSecond(first._value * second);
+            return new FeetPerSecond(first.Value * second);
         }
 
         public static FeetPerSecond operator /(FeetPerSecond first, decimal second)
         {
-            return new FeetPerSecond(first._value / second);
+            return new FeetPerSecond(first.Value / second);
         }
 
         public static decimal operator /(FeetPerSecond first, ISpeed second)
         {
-            return first._value / second.ToFeetPerSecond()._value;
+            return first.Value / second.ToFeetPerSecond().Value;
         }
 
         public static FeetPerSecond operator -(FeetPerSecond first)
         {
-            return new FeetPerSecond(-first._value);
+            return new FeetPerSecond(-first.Value);
         }
 
         public static bool operator>(FeetPerSecond first, ISpeed second)
         {
-            return first._value > second.ToFeetPerSecond()._value;
+            return first.Value > second.ToFeetPerSecond().Value;
         }
 
         public static bool operator >=(FeetPerSecond first, ISpeed second)
         {
-            return first._value >= second.ToFeetPerSecond()._value;
+            return first.Value >= second.ToFeetPerSecond().Value;
         }
 
         public static bool operator <(FeetPerSecond first, ISpeed second)
         {
-            return first._value < second.ToFeetPerSecond()._value;
+            return first.Value < second.ToFeetPerSecond().Value;
         }
 
         public static bool operator <=(FeetPerSecond first, ISpeed second)
         {
-            return first._value <= second.ToFeetPerSecond()._value;
+            return first.Value <= second.ToFeetPerSecond().Value;
         }
 
         public static bool operator ==(FeetPerSecond first, ISpeed second)
         {
-            return first._value == second.ToFeetPerSecond()._value;
+            return first.Value == second.ToFeetPerSecond().Value;
         }
 
         public static bool operator !=(FeetPerSecond first, ISpeed second)
         {
-            return first._value != second.ToFeetPerSecond()._value;
+            return first.Value != second.ToFeetPerSecond().Value;
         }
 
         public static bool operator>(FeetPerSecond first, FeetPerSecond second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(FeetPerSecond first, FeetPerSecond second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(FeetPerSecond first, FeetPerSecond second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(FeetPerSecond first, FeetPerSecond second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(FeetPerSecond first, FeetPerSecond second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(FeetPerSecond first, FeetPerSecond second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -210,13 +213,13 @@ namespace Codeworx.Units.Defaults.SpeedDimension
             if (obj == null)
                 return 1;
             if (obj is ISpeed conv)
-                return this._value.CompareTo(conv.ToFeetPerSecond()._value);
+                return this.Value.CompareTo(conv.ToFeetPerSecond().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "ft/s";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "ft/s";
         }
     }
 }

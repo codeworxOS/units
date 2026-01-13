@@ -9,28 +9,31 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
     [TypeConverter(typeof(DimensionTypeConverter<ITemperature>))]
     public struct Fahrenheit : ITemperature
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "F";
-        public string Key => "Temperature_Fahrenheit";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ITemperature.DefaultImperial;
-        public string DefaultMetric => ITemperature.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Fahrenheit.Symbol;
+        public static string Symbol => "F";
+
+        string IUnitBase.Key => Fahrenheit.Key;
+        public static string Key => "Temperature_Fahrenheit";
+
+        UnitSystem IUnitBase.System => Fahrenheit.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Fahrenheit(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Celsius ToCelsius()
         {
-            return new Celsius((_value - 32M) / 1.8M);
+            return new Celsius((Value - 32M) / 1.8M);
         }
 
         public Fahrenheit ToFahrenheit() => this;
         public Kelvin ToKelvin()
         {
-            return new Kelvin((((_value - 32M) / 1.8M) + 273.15M));
+            return new Kelvin((((Value - 32M) / 1.8M) + 273.15M));
         }
 
         public ITemperature ToUnit(string symbol)
@@ -70,107 +73,107 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
 
         public static Fahrenheit operator +(Fahrenheit first, ITemperature second)
         {
-            return new Fahrenheit(first._value + second.ToFahrenheit()._value);
+            return new Fahrenheit(first.Value + second.ToFahrenheit().Value);
         }
 
         public static Fahrenheit operator -(Fahrenheit first, ITemperature second)
         {
-            return new Fahrenheit(first._value - second.ToFahrenheit()._value);
+            return new Fahrenheit(first.Value - second.ToFahrenheit().Value);
         }
 
         public static Fahrenheit operator +(Fahrenheit first, decimal second)
         {
-            return new Fahrenheit(first._value + second);
+            return new Fahrenheit(first.Value + second);
         }
 
         public static Fahrenheit operator -(Fahrenheit first, decimal second)
         {
-            return new Fahrenheit(first._value - second);
+            return new Fahrenheit(first.Value - second);
         }
 
         public static Fahrenheit operator *(Fahrenheit first, decimal second)
         {
-            return new Fahrenheit(first._value * second);
+            return new Fahrenheit(first.Value * second);
         }
 
         public static Fahrenheit operator /(Fahrenheit first, decimal second)
         {
-            return new Fahrenheit(first._value / second);
+            return new Fahrenheit(first.Value / second);
         }
 
         public static decimal operator /(Fahrenheit first, ITemperature second)
         {
-            return first._value / second.ToFahrenheit()._value;
+            return first.Value / second.ToFahrenheit().Value;
         }
 
         public static Fahrenheit operator -(Fahrenheit first)
         {
-            return new Fahrenheit(-first._value);
+            return new Fahrenheit(-first.Value);
         }
 
         public static bool operator>(Fahrenheit first, ITemperature second)
         {
-            return first._value > second.ToFahrenheit()._value;
+            return first.Value > second.ToFahrenheit().Value;
         }
 
         public static bool operator >=(Fahrenheit first, ITemperature second)
         {
-            return first._value >= second.ToFahrenheit()._value;
+            return first.Value >= second.ToFahrenheit().Value;
         }
 
         public static bool operator <(Fahrenheit first, ITemperature second)
         {
-            return first._value < second.ToFahrenheit()._value;
+            return first.Value < second.ToFahrenheit().Value;
         }
 
         public static bool operator <=(Fahrenheit first, ITemperature second)
         {
-            return first._value <= second.ToFahrenheit()._value;
+            return first.Value <= second.ToFahrenheit().Value;
         }
 
         public static bool operator ==(Fahrenheit first, ITemperature second)
         {
-            return first._value == second.ToFahrenheit()._value;
+            return first.Value == second.ToFahrenheit().Value;
         }
 
         public static bool operator !=(Fahrenheit first, ITemperature second)
         {
-            return first._value != second.ToFahrenheit()._value;
+            return first.Value != second.ToFahrenheit().Value;
         }
 
         public static bool operator>(Fahrenheit first, Fahrenheit second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Fahrenheit first, Fahrenheit second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Fahrenheit first, Fahrenheit second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Fahrenheit first, Fahrenheit second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Fahrenheit first, Fahrenheit second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Fahrenheit first, Fahrenheit second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -183,13 +186,13 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
             if (obj == null)
                 return 1;
             if (obj is ITemperature conv)
-                return this._value.CompareTo(conv.ToFahrenheit()._value);
+                return this.Value.CompareTo(conv.ToFahrenheit().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "F";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "F";
         }
     }
 }

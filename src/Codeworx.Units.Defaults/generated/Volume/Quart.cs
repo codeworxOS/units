@@ -9,47 +9,50 @@ namespace Codeworx.Units.Defaults.VolumeDimension
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
     public struct Quart : IVolume
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "qt";
-        public string Key => "Volume_Quart";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IVolume.DefaultImperial;
-        public string DefaultMetric => IVolume.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Quart.Symbol;
+        public static string Symbol => "qt";
+
+        string IUnitBase.Key => Quart.Key;
+        public static string Key => "Volume_Quart";
+
+        UnitSystem IUnitBase.System => Quart.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Quart(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public CubicMeter ToCubicMeter()
         {
-            return new CubicMeter(_value / 1056.6882094M);
+            return new CubicMeter(Value / 1056.6882094M);
         }
 
         public CubicCentimeter ToCubicCentimeter()
         {
-            return new CubicCentimeter(_value / 0.0010566882094M);
+            return new CubicCentimeter(Value / 0.0010566882094M);
         }
 
         public CubicFoot ToCubicFoot()
         {
-            return new CubicFoot(_value / 29.922075143276151242528954681M);
+            return new CubicFoot(Value / 29.922075143276151242528954681M);
         }
 
         public CubicInch ToCubicInch()
         {
-            return new CubicInch(_value / 0.0173160173154072348467559232M);
+            return new CubicInch(Value / 0.0173160173154072348467559232M);
         }
 
         public Gallon ToGallon()
         {
-            return new Gallon(_value / 3.9999999998485835286410612796M);
+            return new Gallon(Value / 3.9999999998485835286410612796M);
         }
 
         public Liter ToLiter()
         {
-            return new Liter(_value / 1.0566882094M);
+            return new Liter(Value / 1.0566882094M);
         }
 
         public Quart ToQuart() => this;
@@ -106,107 +109,107 @@ namespace Codeworx.Units.Defaults.VolumeDimension
 
         public static Quart operator +(Quart first, IVolume second)
         {
-            return new Quart(first._value + second.ToQuart()._value);
+            return new Quart(first.Value + second.ToQuart().Value);
         }
 
         public static Quart operator -(Quart first, IVolume second)
         {
-            return new Quart(first._value - second.ToQuart()._value);
+            return new Quart(first.Value - second.ToQuart().Value);
         }
 
         public static Quart operator +(Quart first, decimal second)
         {
-            return new Quart(first._value + second);
+            return new Quart(first.Value + second);
         }
 
         public static Quart operator -(Quart first, decimal second)
         {
-            return new Quart(first._value - second);
+            return new Quart(first.Value - second);
         }
 
         public static Quart operator *(Quart first, decimal second)
         {
-            return new Quart(first._value * second);
+            return new Quart(first.Value * second);
         }
 
         public static Quart operator /(Quart first, decimal second)
         {
-            return new Quart(first._value / second);
+            return new Quart(first.Value / second);
         }
 
         public static decimal operator /(Quart first, IVolume second)
         {
-            return first._value / second.ToQuart()._value;
+            return first.Value / second.ToQuart().Value;
         }
 
         public static Quart operator -(Quart first)
         {
-            return new Quart(-first._value);
+            return new Quart(-first.Value);
         }
 
         public static bool operator>(Quart first, IVolume second)
         {
-            return first._value > second.ToQuart()._value;
+            return first.Value > second.ToQuart().Value;
         }
 
         public static bool operator >=(Quart first, IVolume second)
         {
-            return first._value >= second.ToQuart()._value;
+            return first.Value >= second.ToQuart().Value;
         }
 
         public static bool operator <(Quart first, IVolume second)
         {
-            return first._value < second.ToQuart()._value;
+            return first.Value < second.ToQuart().Value;
         }
 
         public static bool operator <=(Quart first, IVolume second)
         {
-            return first._value <= second.ToQuart()._value;
+            return first.Value <= second.ToQuart().Value;
         }
 
         public static bool operator ==(Quart first, IVolume second)
         {
-            return first._value == second.ToQuart()._value;
+            return first.Value == second.ToQuart().Value;
         }
 
         public static bool operator !=(Quart first, IVolume second)
         {
-            return first._value != second.ToQuart()._value;
+            return first.Value != second.ToQuart().Value;
         }
 
         public static bool operator>(Quart first, Quart second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Quart first, Quart second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Quart first, Quart second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Quart first, Quart second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Quart first, Quart second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Quart first, Quart second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -219,13 +222,13 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             if (obj == null)
                 return 1;
             if (obj is IVolume conv)
-                return this._value.CompareTo(conv.ToQuart()._value);
+                return this.Value.CompareTo(conv.ToQuart().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "qt";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "qt";
         }
     }
 }

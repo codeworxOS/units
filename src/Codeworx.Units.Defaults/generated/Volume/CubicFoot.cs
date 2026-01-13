@@ -9,48 +9,51 @@ namespace Codeworx.Units.Defaults.VolumeDimension
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
     public struct CubicFoot : IVolume
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "ft³";
-        public string Key => "Volume_CubicFoot";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IVolume.DefaultImperial;
-        public string DefaultMetric => IVolume.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => CubicFoot.Symbol;
+        public static string Symbol => "ft³";
+
+        string IUnitBase.Key => CubicFoot.Key;
+        public static string Key => "Volume_CubicFoot";
+
+        UnitSystem IUnitBase.System => CubicFoot.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public CubicFoot(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public CubicMeter ToCubicMeter()
         {
-            return new CubicMeter(_value / 35.31467M);
+            return new CubicMeter(Value / 35.31467M);
         }
 
         public CubicCentimeter ToCubicCentimeter()
         {
-            return new CubicCentimeter(_value / 0.00003531467M);
+            return new CubicCentimeter(Value / 0.00003531467M);
         }
 
         public CubicFoot ToCubicFoot() => this;
         public CubicInch ToCubicInch()
         {
-            return new CubicInch(_value / 0.00057870375742634118031987M);
+            return new CubicInch(Value / 0.00057870375742634118031987M);
         }
 
         public Gallon ToGallon()
         {
-            return new Gallon(_value / 0.1336805679651343115302433576M);
+            return new Gallon(Value / 0.1336805679651343115302433576M);
         }
 
         public Liter ToLiter()
         {
-            return new Liter(_value / 0.03531467M);
+            return new Liter(Value / 0.03531467M);
         }
 
         public Quart ToQuart()
         {
-            return new Quart(_value / 0.0334201419925486678757674421M);
+            return new Quart(Value / 0.0334201419925486678757674421M);
         }
 
         public IVolume ToUnit(string symbol)
@@ -106,107 +109,107 @@ namespace Codeworx.Units.Defaults.VolumeDimension
 
         public static CubicFoot operator +(CubicFoot first, IVolume second)
         {
-            return new CubicFoot(first._value + second.ToCubicFoot()._value);
+            return new CubicFoot(first.Value + second.ToCubicFoot().Value);
         }
 
         public static CubicFoot operator -(CubicFoot first, IVolume second)
         {
-            return new CubicFoot(first._value - second.ToCubicFoot()._value);
+            return new CubicFoot(first.Value - second.ToCubicFoot().Value);
         }
 
         public static CubicFoot operator +(CubicFoot first, decimal second)
         {
-            return new CubicFoot(first._value + second);
+            return new CubicFoot(first.Value + second);
         }
 
         public static CubicFoot operator -(CubicFoot first, decimal second)
         {
-            return new CubicFoot(first._value - second);
+            return new CubicFoot(first.Value - second);
         }
 
         public static CubicFoot operator *(CubicFoot first, decimal second)
         {
-            return new CubicFoot(first._value * second);
+            return new CubicFoot(first.Value * second);
         }
 
         public static CubicFoot operator /(CubicFoot first, decimal second)
         {
-            return new CubicFoot(first._value / second);
+            return new CubicFoot(first.Value / second);
         }
 
         public static decimal operator /(CubicFoot first, IVolume second)
         {
-            return first._value / second.ToCubicFoot()._value;
+            return first.Value / second.ToCubicFoot().Value;
         }
 
         public static CubicFoot operator -(CubicFoot first)
         {
-            return new CubicFoot(-first._value);
+            return new CubicFoot(-first.Value);
         }
 
         public static bool operator>(CubicFoot first, IVolume second)
         {
-            return first._value > second.ToCubicFoot()._value;
+            return first.Value > second.ToCubicFoot().Value;
         }
 
         public static bool operator >=(CubicFoot first, IVolume second)
         {
-            return first._value >= second.ToCubicFoot()._value;
+            return first.Value >= second.ToCubicFoot().Value;
         }
 
         public static bool operator <(CubicFoot first, IVolume second)
         {
-            return first._value < second.ToCubicFoot()._value;
+            return first.Value < second.ToCubicFoot().Value;
         }
 
         public static bool operator <=(CubicFoot first, IVolume second)
         {
-            return first._value <= second.ToCubicFoot()._value;
+            return first.Value <= second.ToCubicFoot().Value;
         }
 
         public static bool operator ==(CubicFoot first, IVolume second)
         {
-            return first._value == second.ToCubicFoot()._value;
+            return first.Value == second.ToCubicFoot().Value;
         }
 
         public static bool operator !=(CubicFoot first, IVolume second)
         {
-            return first._value != second.ToCubicFoot()._value;
+            return first.Value != second.ToCubicFoot().Value;
         }
 
         public static bool operator>(CubicFoot first, CubicFoot second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(CubicFoot first, CubicFoot second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(CubicFoot first, CubicFoot second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(CubicFoot first, CubicFoot second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(CubicFoot first, CubicFoot second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(CubicFoot first, CubicFoot second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -219,13 +222,13 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             if (obj == null)
                 return 1;
             if (obj is IVolume conv)
-                return this._value.CompareTo(conv.ToCubicFoot()._value);
+                return this.Value.CompareTo(conv.ToCubicFoot().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "ft³";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "ft³";
         }
     }
 }

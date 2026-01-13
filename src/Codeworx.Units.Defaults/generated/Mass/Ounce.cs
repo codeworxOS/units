@@ -9,58 +9,61 @@ namespace Codeworx.Units.Defaults.MassDimension
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public struct Ounce : IMass
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "oz";
-        public string Key => "Mass_Ounce";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IMass.DefaultImperial;
-        public string DefaultMetric => IMass.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Ounce.Symbol;
+        public static string Symbol => "oz";
+
+        string IUnitBase.Key => Ounce.Key;
+        public static string Key => "Mass_Ounce";
+
+        UnitSystem IUnitBase.System => Ounce.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Ounce(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Kilogram ToKilogram()
         {
-            return new Kilogram(_value / 35.27392M);
+            return new Kilogram(Value / 35.27392M);
         }
 
         public Gram ToGram()
         {
-            return new Gram(_value / 0.03527392M);
+            return new Gram(Value / 0.03527392M);
         }
 
         public Pounds ToPounds()
         {
-            return new Pounds(_value / 15.999980972344388923025792024M);
+            return new Pounds(Value / 15.999980972344388923025792024M);
         }
 
         public TonLong ToTonLong()
         {
-            return new TonLong(_value / 35839.957377258496M);
+            return new TonLong(Value / 35839.957377258496M);
         }
 
         public Milligram ToMilligram()
         {
-            return new Milligram(_value / 0.00003527392M);
+            return new Milligram(Value / 0.00003527392M);
         }
 
         public Microgram ToMicrogram()
         {
-            return new Microgram(_value / 0.00000003527392M);
+            return new Microgram(Value / 0.00000003527392M);
         }
 
         public Ounce ToOunce() => this;
         public TonShort ToTonShort()
         {
-            return new TonShort(_value / 31999.9619439808M);
+            return new TonShort(Value / 31999.9619439808M);
         }
 
         public MetricTons ToMetricTons()
         {
-            return new MetricTons(_value / 35273.92000M);
+            return new MetricTons(Value / 35273.92000M);
         }
 
         public IMass ToUnit(string symbol)
@@ -124,107 +127,107 @@ namespace Codeworx.Units.Defaults.MassDimension
 
         public static Ounce operator +(Ounce first, IMass second)
         {
-            return new Ounce(first._value + second.ToOunce()._value);
+            return new Ounce(first.Value + second.ToOunce().Value);
         }
 
         public static Ounce operator -(Ounce first, IMass second)
         {
-            return new Ounce(first._value - second.ToOunce()._value);
+            return new Ounce(first.Value - second.ToOunce().Value);
         }
 
         public static Ounce operator +(Ounce first, decimal second)
         {
-            return new Ounce(first._value + second);
+            return new Ounce(first.Value + second);
         }
 
         public static Ounce operator -(Ounce first, decimal second)
         {
-            return new Ounce(first._value - second);
+            return new Ounce(first.Value - second);
         }
 
         public static Ounce operator *(Ounce first, decimal second)
         {
-            return new Ounce(first._value * second);
+            return new Ounce(first.Value * second);
         }
 
         public static Ounce operator /(Ounce first, decimal second)
         {
-            return new Ounce(first._value / second);
+            return new Ounce(first.Value / second);
         }
 
         public static decimal operator /(Ounce first, IMass second)
         {
-            return first._value / second.ToOunce()._value;
+            return first.Value / second.ToOunce().Value;
         }
 
         public static Ounce operator -(Ounce first)
         {
-            return new Ounce(-first._value);
+            return new Ounce(-first.Value);
         }
 
         public static bool operator>(Ounce first, IMass second)
         {
-            return first._value > second.ToOunce()._value;
+            return first.Value > second.ToOunce().Value;
         }
 
         public static bool operator >=(Ounce first, IMass second)
         {
-            return first._value >= second.ToOunce()._value;
+            return first.Value >= second.ToOunce().Value;
         }
 
         public static bool operator <(Ounce first, IMass second)
         {
-            return first._value < second.ToOunce()._value;
+            return first.Value < second.ToOunce().Value;
         }
 
         public static bool operator <=(Ounce first, IMass second)
         {
-            return first._value <= second.ToOunce()._value;
+            return first.Value <= second.ToOunce().Value;
         }
 
         public static bool operator ==(Ounce first, IMass second)
         {
-            return first._value == second.ToOunce()._value;
+            return first.Value == second.ToOunce().Value;
         }
 
         public static bool operator !=(Ounce first, IMass second)
         {
-            return first._value != second.ToOunce()._value;
+            return first.Value != second.ToOunce().Value;
         }
 
         public static bool operator>(Ounce first, Ounce second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Ounce first, Ounce second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Ounce first, Ounce second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Ounce first, Ounce second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Ounce first, Ounce second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Ounce first, Ounce second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -237,13 +240,13 @@ namespace Codeworx.Units.Defaults.MassDimension
             if (obj == null)
                 return 1;
             if (obj is IMass conv)
-                return this._value.CompareTo(conv.ToOunce()._value);
+                return this.Value.CompareTo(conv.ToOunce().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "oz";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "oz";
         }
     }
 }

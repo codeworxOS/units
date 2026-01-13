@@ -20,7 +20,7 @@ namespace Codeworx.Units.EntityFrameworkCore.Entities
 
         public static NullableDimensionValue<T> GetEntity(T? entry)
         {
-            return new NullableDimensionValue<T> { Value = entry?.BaseValue, UnitId = entry?.Key };
+            return new NullableDimensionValue<T> { Value = entry?.Value, UnitId = entry?.Key };
         }
 
         public T? GetDimension()

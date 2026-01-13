@@ -9,48 +9,51 @@ namespace Codeworx.Units.Defaults.AreaDimension
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
     public struct Acre : IArea
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "ac";
-        public string Key => "Area_Acre";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IArea.DefaultImperial;
-        public string DefaultMetric => IArea.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Acre.Symbol;
+        public static string Symbol => "ac";
+
+        string IUnitBase.Key => Acre.Key;
+        public static string Key => "Area_Acre";
+
+        UnitSystem IUnitBase.System => Acre.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Acre(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public SquareMeter ToSquareMeter()
         {
-            return new SquareMeter(_value * 4046.8564224M);
+            return new SquareMeter(Value * 4046.8564224M);
         }
 
         public Acre ToAcre() => this;
         public SquareCentimeter ToSquareCentimeter()
         {
-            return new SquareCentimeter(_value * 40468564.2240000M);
+            return new SquareCentimeter(Value * 40468564.2240000M);
         }
 
         public SquareKilometer ToSquareKilometer()
         {
-            return new SquareKilometer(_value * 0.0040468564224M);
+            return new SquareKilometer(Value * 0.0040468564224M);
         }
 
         public SquareMillimeter ToSquareMillimeter()
         {
-            return new SquareMillimeter(_value * 4046856422.4000000M);
+            return new SquareMillimeter(Value * 4046856422.4000000M);
         }
 
         public SquareFeet ToSquareFeet()
         {
-            return new SquareFeet(_value * 43560.0000011747121408M);
+            return new SquareFeet(Value * 43560.0000011747121408M);
         }
 
         public SquareInch ToSquareInch()
         {
-            return new SquareInch(_value * 6272639.99997490944M);
+            return new SquareInch(Value * 6272639.99997490944M);
         }
 
         public IArea ToUnit(string symbol)
@@ -106,107 +109,107 @@ namespace Codeworx.Units.Defaults.AreaDimension
 
         public static Acre operator +(Acre first, IArea second)
         {
-            return new Acre(first._value + second.ToAcre()._value);
+            return new Acre(first.Value + second.ToAcre().Value);
         }
 
         public static Acre operator -(Acre first, IArea second)
         {
-            return new Acre(first._value - second.ToAcre()._value);
+            return new Acre(first.Value - second.ToAcre().Value);
         }
 
         public static Acre operator +(Acre first, decimal second)
         {
-            return new Acre(first._value + second);
+            return new Acre(first.Value + second);
         }
 
         public static Acre operator -(Acre first, decimal second)
         {
-            return new Acre(first._value - second);
+            return new Acre(first.Value - second);
         }
 
         public static Acre operator *(Acre first, decimal second)
         {
-            return new Acre(first._value * second);
+            return new Acre(first.Value * second);
         }
 
         public static Acre operator /(Acre first, decimal second)
         {
-            return new Acre(first._value / second);
+            return new Acre(first.Value / second);
         }
 
         public static decimal operator /(Acre first, IArea second)
         {
-            return first._value / second.ToAcre()._value;
+            return first.Value / second.ToAcre().Value;
         }
 
         public static Acre operator -(Acre first)
         {
-            return new Acre(-first._value);
+            return new Acre(-first.Value);
         }
 
         public static bool operator>(Acre first, IArea second)
         {
-            return first._value > second.ToAcre()._value;
+            return first.Value > second.ToAcre().Value;
         }
 
         public static bool operator >=(Acre first, IArea second)
         {
-            return first._value >= second.ToAcre()._value;
+            return first.Value >= second.ToAcre().Value;
         }
 
         public static bool operator <(Acre first, IArea second)
         {
-            return first._value < second.ToAcre()._value;
+            return first.Value < second.ToAcre().Value;
         }
 
         public static bool operator <=(Acre first, IArea second)
         {
-            return first._value <= second.ToAcre()._value;
+            return first.Value <= second.ToAcre().Value;
         }
 
         public static bool operator ==(Acre first, IArea second)
         {
-            return first._value == second.ToAcre()._value;
+            return first.Value == second.ToAcre().Value;
         }
 
         public static bool operator !=(Acre first, IArea second)
         {
-            return first._value != second.ToAcre()._value;
+            return first.Value != second.ToAcre().Value;
         }
 
         public static bool operator>(Acre first, Acre second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Acre first, Acre second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Acre first, Acre second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Acre first, Acre second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Acre first, Acre second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Acre first, Acre second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -219,13 +222,13 @@ namespace Codeworx.Units.Defaults.AreaDimension
             if (obj == null)
                 return 1;
             if (obj is IArea conv)
-                return this._value.CompareTo(conv.ToAcre()._value);
+                return this.Value.CompareTo(conv.ToAcre().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "ac";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "ac";
         }
     }
 }
