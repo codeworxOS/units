@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Codeworx.Units.Cli.Data;
 using Codeworx.Units.Cli.Typescript;
-using Codeworx.Units.Primitives;
 using HandlebarsDotNet;
 
 namespace Codeworx.Units.Cli

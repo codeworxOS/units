@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Codeworx.Units.Defaults;
 using Codeworx.Units.Defaults.DistanceDimension;
-using Codeworx.Units.Primitives;
 
 namespace Codeworx.Units.Tests
 {

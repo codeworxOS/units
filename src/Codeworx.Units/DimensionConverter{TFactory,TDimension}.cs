@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Codeworx.Units.Primitives
+namespace Codeworx.Units
 {
     public class DimensionTypeConverter<TDimension> : TypeConverter
         where TDimension : IUnitBase

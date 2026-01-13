@@ -3,7 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Linq.Expressions;
-using Codeworx.Units.Primitives;
+using Codeworx.Units;
 
 namespace Codeworx.Units.EntityFrameworkCore
 {

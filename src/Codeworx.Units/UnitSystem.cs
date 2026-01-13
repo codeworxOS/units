@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Codeworx.Units.Primitives
+namespace Codeworx.Units
 {
     [Flags]
     public enum UnitSystem : byte

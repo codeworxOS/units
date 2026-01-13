@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Codeworx.Units.Primitives;
+using Codeworx.Units;
 
 namespace Codeworx.Units.Cli.Data
 {

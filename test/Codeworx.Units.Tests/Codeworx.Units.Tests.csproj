@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Codeworx.Units.Defaults\Codeworx.Units.Defaults.csproj" />
+    <ProjectReference Include="..\..\src\Codeworx.Units.Defaults\Codeworx.Units.Defaults.csproj" />
   </ItemGroup>
 
   <ItemGroup>

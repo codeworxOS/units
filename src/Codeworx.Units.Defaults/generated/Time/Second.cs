@@ -4,7 +4,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
     using System;
     using System.Globalization;
     using System.ComponentModel;
-    using Codeworx.Units.Primitives;
+    using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
     public struct Second : ITime

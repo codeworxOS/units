@@ -10,7 +10,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Codeworx.Units.Primitives\Codeworx.Units.Primitives.csproj" />
+	  <ProjectReference Include="..\Codeworx.Units\Codeworx.Units.csproj" />
 	</ItemGroup>
 
 </Project>

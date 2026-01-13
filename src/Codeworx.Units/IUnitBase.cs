@@ -1,4 +1,4 @@
-﻿namespace Codeworx.Units.Primitives
+﻿namespace Codeworx.Units
 {
     public interface IUnitBase
     {

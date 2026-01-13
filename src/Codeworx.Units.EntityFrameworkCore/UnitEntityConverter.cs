@@ -1,7 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Codeworx.Units.Primitives;
-using System;
 
 namespace Codeworx.Units.EntityFrameworkCore
 {

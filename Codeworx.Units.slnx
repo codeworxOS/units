@@ -4,11 +4,11 @@
     <Project Path="src/Codeworx.Units.Demo/Codeworx.Units.Demo.csproj" />
   </Folder>
   <Folder Name="/Tests/">
-    <Project Path="src/Codeworx.Units.Tests/Codeworx.Units.Tests.csproj" />
+    <Project Path="test/Codeworx.Units.Tests/Codeworx.Units.Tests.csproj" />
   </Folder>
   <Folder Name="/Units/">
     <Project Path="src/Codeworx.Units.Cli/Codeworx.Units.Cli.csproj" />
     <Project Path="src/Codeworx.Units.EntityFrameworkCore/Codeworx.Units.EntityFrameworkCore.csproj" />
-    <Project Path="src/Codeworx.Units.Primitives/Codeworx.Units.Primitives.csproj" />
+    <Project Path="src/Codeworx.Units/Codeworx.Units.csproj" />
   </Folder>
 </Solution>

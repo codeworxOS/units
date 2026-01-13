@@ -4,7 +4,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
     using System;
     using System.Globalization;
     using System.ComponentModel;
-    using Codeworx.Units.Primitives;
+    using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
     public struct Gallon : IVolume

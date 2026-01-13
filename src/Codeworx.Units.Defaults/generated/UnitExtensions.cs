@@ -3,7 +3,7 @@ namespace Codeworx.Units.Defaults
 {
     using System.Collections.Generic;
     using System.Text.Json.Serialization;
-    using Codeworx.Units.Primitives;
+    using Codeworx.Units;
 
     public static class UnitExtensions
     {

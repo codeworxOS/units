@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
+using Codeworx.Units;
 using Codeworx.Units.EntityFrameworkCore;
-using Codeworx.Units.Primitives;
 
 namespace Microsoft.EntityFrameworkCore
 {

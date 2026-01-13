@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Codeworx.Units.Primitives
+namespace Codeworx.Units
 {
     public class UnitJsonConverter<TUnit> : JsonConverter<TUnit>
       where TUnit : IUnitBase

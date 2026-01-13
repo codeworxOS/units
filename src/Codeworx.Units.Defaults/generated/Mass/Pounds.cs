@@ -4,7 +4,7 @@ namespace Codeworx.Units.Defaults.MassDimension
     using System;
     using System.Globalization;
     using System.ComponentModel;
-    using Codeworx.Units.Primitives;
+    using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public struct Pounds : IMass

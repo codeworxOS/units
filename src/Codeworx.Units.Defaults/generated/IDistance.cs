@@ -3,7 +3,7 @@ namespace Codeworx.Units.Defaults
 {
     using System;
     using System.ComponentModel;
-    using Codeworx.Units.Primitives;
+    using Codeworx.Units;
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]

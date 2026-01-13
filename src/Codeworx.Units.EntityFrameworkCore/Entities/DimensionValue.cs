@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
-using Codeworx.Units.Primitives;
+using Codeworx.Units;
 using Microsoft.EntityFrameworkCore;
 
 namespace Codeworx.Units.EntityFrameworkCore.Entities
