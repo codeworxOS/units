@@ -49,7 +49,7 @@ steps:
 
 - task: DownloadSecureFile@1
   inputs:
-    secureFile: '${signKey}'
+    secureFile: units_signkey.snk
 
 - task: CopyFiles@2
   inputs:
