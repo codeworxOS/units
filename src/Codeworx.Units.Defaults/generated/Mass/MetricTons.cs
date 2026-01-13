@@ -9,57 +9,60 @@ namespace Codeworx.Units.Defaults.MassDimension
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public struct MetricTons : IMass
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "t";
-        public string Key => "Mass_MetricTons";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IMass.DefaultImperial;
-        public string DefaultMetric => IMass.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => MetricTons.Symbol;
+        public static string Symbol => "t";
+
+        string IUnitBase.Key => MetricTons.Key;
+        public static string Key => "Mass_MetricTons";
+
+        UnitSystem IUnitBase.System => MetricTons.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public MetricTons(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Kilogram ToKilogram()
         {
-            return new Kilogram(_value * 1000M);
+            return new Kilogram(Value * 1000M);
         }
 
         public Gram ToGram()
         {
-            return new Gram(_value * 1000000M);
+            return new Gram(Value * 1000000M);
         }
 
         public Pounds ToPounds()
         {
-            return new Pounds(_value * 2204.6226218000M);
+            return new Pounds(Value * 2204.6226218000M);
         }
 
         public TonLong ToTonLong()
         {
-            return new TonLong(_value * 0.9842065276110606282275616131M);
+            return new TonLong(Value * 0.9842065276110606282275616131M);
         }
 
         public Milligram ToMilligram()
         {
-            return new Milligram(_value * 1000000000M);
+            return new Milligram(Value * 1000000000M);
         }
 
         public Microgram ToMicrogram()
         {
-            return new Microgram(_value * 1000000000000M);
+            return new Microgram(Value * 1000000000000M);
         }
 
         public Ounce ToOunce()
         {
-            return new Ounce(_value * 35273.92000M);
+            return new Ounce(Value * 35273.92000M);
         }
 
         public TonShort ToTonShort()
         {
-            return new TonShort(_value * 1.1023113109243879036148690067M);
+            return new TonShort(Value * 1.1023113109243879036148690067M);
         }
 
         public MetricTons ToMetricTons() => this;
@@ -124,107 +127,107 @@ namespace Codeworx.Units.Defaults.MassDimension
 
         public static MetricTons operator +(MetricTons first, IMass second)
         {
-            return new MetricTons(first._value + second.ToMetricTons()._value);
+            return new MetricTons(first.Value + second.ToMetricTons().Value);
         }
 
         public static MetricTons operator -(MetricTons first, IMass second)
         {
-            return new MetricTons(first._value - second.ToMetricTons()._value);
+            return new MetricTons(first.Value - second.ToMetricTons().Value);
         }
 
         public static MetricTons operator +(MetricTons first, decimal second)
         {
-            return new MetricTons(first._value + second);
+            return new MetricTons(first.Value + second);
         }
 
         public static MetricTons operator -(MetricTons first, decimal second)
         {
-            return new MetricTons(first._value - second);
+            return new MetricTons(first.Value - second);
         }
 
         public static MetricTons operator *(MetricTons first, decimal second)
         {
-            return new MetricTons(first._value * second);
+            return new MetricTons(first.Value * second);
         }
 
         public static MetricTons operator /(MetricTons first, decimal second)
         {
-            return new MetricTons(first._value / second);
+            return new MetricTons(first.Value / second);
         }
 
         public static decimal operator /(MetricTons first, IMass second)
         {
-            return first._value / second.ToMetricTons()._value;
+            return first.Value / second.ToMetricTons().Value;
         }
 
         public static MetricTons operator -(MetricTons first)
         {
-            return new MetricTons(-first._value);
+            return new MetricTons(-first.Value);
         }
 
         public static bool operator>(MetricTons first, IMass second)
         {
-            return first._value > second.ToMetricTons()._value;
+            return first.Value > second.ToMetricTons().Value;
         }
 
         public static bool operator >=(MetricTons first, IMass second)
         {
-            return first._value >= second.ToMetricTons()._value;
+            return first.Value >= second.ToMetricTons().Value;
         }
 
         public static bool operator <(MetricTons first, IMass second)
         {
-            return first._value < second.ToMetricTons()._value;
+            return first.Value < second.ToMetricTons().Value;
         }
 
         public static bool operator <=(MetricTons first, IMass second)
         {
-            return first._value <= second.ToMetricTons()._value;
+            return first.Value <= second.ToMetricTons().Value;
         }
 
         public static bool operator ==(MetricTons first, IMass second)
         {
-            return first._value == second.ToMetricTons()._value;
+            return first.Value == second.ToMetricTons().Value;
         }
 
         public static bool operator !=(MetricTons first, IMass second)
         {
-            return first._value != second.ToMetricTons()._value;
+            return first.Value != second.ToMetricTons().Value;
         }
 
         public static bool operator>(MetricTons first, MetricTons second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(MetricTons first, MetricTons second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(MetricTons first, MetricTons second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(MetricTons first, MetricTons second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(MetricTons first, MetricTons second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(MetricTons first, MetricTons second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -237,13 +240,13 @@ namespace Codeworx.Units.Defaults.MassDimension
             if (obj == null)
                 return 1;
             if (obj is IMass conv)
-                return this._value.CompareTo(conv.ToMetricTons()._value);
+                return this.Value.CompareTo(conv.ToMetricTons().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "t";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "t";
         }
     }
 }

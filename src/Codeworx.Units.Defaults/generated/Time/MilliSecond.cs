@@ -9,32 +9,35 @@ namespace Codeworx.Units.Defaults.TimeDimension
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
     public struct Millisecond : ITime
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "ms";
-        public string Key => "Time_Millisecond";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ITime.DefaultImperial;
-        public string DefaultMetric => ITime.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Millisecond.Symbol;
+        public static string Symbol => "ms";
+
+        string IUnitBase.Key => Millisecond.Key;
+        public static string Key => "Time_Millisecond";
+
+        UnitSystem IUnitBase.System => Millisecond.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Millisecond(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Second ToSecond()
         {
-            return new Second(_value / 1000M);
+            return new Second(Value / 1000M);
         }
 
         public Hour ToHour()
         {
-            return new Hour(_value / 3600000M);
+            return new Hour(Value / 3600000M);
         }
 
         public Minute ToMinute()
         {
-            return new Minute(_value / 60000M);
+            return new Minute(Value / 60000M);
         }
 
         public Millisecond ToMillisecond() => this;
@@ -79,107 +82,107 @@ namespace Codeworx.Units.Defaults.TimeDimension
 
         public static Millisecond operator +(Millisecond first, ITime second)
         {
-            return new Millisecond(first._value + second.ToMillisecond()._value);
+            return new Millisecond(first.Value + second.ToMillisecond().Value);
         }
 
         public static Millisecond operator -(Millisecond first, ITime second)
         {
-            return new Millisecond(first._value - second.ToMillisecond()._value);
+            return new Millisecond(first.Value - second.ToMillisecond().Value);
         }
 
         public static Millisecond operator +(Millisecond first, decimal second)
         {
-            return new Millisecond(first._value + second);
+            return new Millisecond(first.Value + second);
         }
 
         public static Millisecond operator -(Millisecond first, decimal second)
         {
-            return new Millisecond(first._value - second);
+            return new Millisecond(first.Value - second);
         }
 
         public static Millisecond operator *(Millisecond first, decimal second)
         {
-            return new Millisecond(first._value * second);
+            return new Millisecond(first.Value * second);
         }
 
         public static Millisecond operator /(Millisecond first, decimal second)
         {
-            return new Millisecond(first._value / second);
+            return new Millisecond(first.Value / second);
         }
 
         public static decimal operator /(Millisecond first, ITime second)
         {
-            return first._value / second.ToMillisecond()._value;
+            return first.Value / second.ToMillisecond().Value;
         }
 
         public static Millisecond operator -(Millisecond first)
         {
-            return new Millisecond(-first._value);
+            return new Millisecond(-first.Value);
         }
 
         public static bool operator>(Millisecond first, ITime second)
         {
-            return first._value > second.ToMillisecond()._value;
+            return first.Value > second.ToMillisecond().Value;
         }
 
         public static bool operator >=(Millisecond first, ITime second)
         {
-            return first._value >= second.ToMillisecond()._value;
+            return first.Value >= second.ToMillisecond().Value;
         }
 
         public static bool operator <(Millisecond first, ITime second)
         {
-            return first._value < second.ToMillisecond()._value;
+            return first.Value < second.ToMillisecond().Value;
         }
 
         public static bool operator <=(Millisecond first, ITime second)
         {
-            return first._value <= second.ToMillisecond()._value;
+            return first.Value <= second.ToMillisecond().Value;
         }
 
         public static bool operator ==(Millisecond first, ITime second)
         {
-            return first._value == second.ToMillisecond()._value;
+            return first.Value == second.ToMillisecond().Value;
         }
 
         public static bool operator !=(Millisecond first, ITime second)
         {
-            return first._value != second.ToMillisecond()._value;
+            return first.Value != second.ToMillisecond().Value;
         }
 
         public static bool operator>(Millisecond first, Millisecond second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Millisecond first, Millisecond second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Millisecond first, Millisecond second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Millisecond first, Millisecond second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Millisecond first, Millisecond second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Millisecond first, Millisecond second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -192,13 +195,13 @@ namespace Codeworx.Units.Defaults.TimeDimension
             if (obj == null)
                 return 1;
             if (obj is ITime conv)
-                return this._value.CompareTo(conv.ToMillisecond()._value);
+                return this.Value.CompareTo(conv.ToMillisecond().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "ms";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "ms";
         }
     }
 }

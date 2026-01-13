@@ -9,33 +9,36 @@ namespace Codeworx.Units.Defaults.TimeDimension
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
     public struct Second : ITime
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "s";
-        public string Key => "Time_Second";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ITime.DefaultImperial;
-        public string DefaultMetric => ITime.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Second.Symbol;
+        public static string Symbol => "s";
+
+        string IUnitBase.Key => Second.Key;
+        public static string Key => "Time_Second";
+
+        UnitSystem IUnitBase.System => Second.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Second(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Second ToSecond() => this;
         public Hour ToHour()
         {
-            return new Hour(_value / 3600M);
+            return new Hour(Value / 3600M);
         }
 
         public Minute ToMinute()
         {
-            return new Minute(_value / 60M);
+            return new Minute(Value / 60M);
         }
 
         public Millisecond ToMillisecond()
         {
-            return new Millisecond(_value * 1000M);
+            return new Millisecond(Value * 1000M);
         }
 
         public ITime ToUnit(string symbol)
@@ -79,107 +82,107 @@ namespace Codeworx.Units.Defaults.TimeDimension
 
         public static Second operator +(Second first, ITime second)
         {
-            return new Second(first._value + second.ToSecond()._value);
+            return new Second(first.Value + second.ToSecond().Value);
         }
 
         public static Second operator -(Second first, ITime second)
         {
-            return new Second(first._value - second.ToSecond()._value);
+            return new Second(first.Value - second.ToSecond().Value);
         }
 
         public static Second operator +(Second first, decimal second)
         {
-            return new Second(first._value + second);
+            return new Second(first.Value + second);
         }
 
         public static Second operator -(Second first, decimal second)
         {
-            return new Second(first._value - second);
+            return new Second(first.Value - second);
         }
 
         public static Second operator *(Second first, decimal second)
         {
-            return new Second(first._value * second);
+            return new Second(first.Value * second);
         }
 
         public static Second operator /(Second first, decimal second)
         {
-            return new Second(first._value / second);
+            return new Second(first.Value / second);
         }
 
         public static decimal operator /(Second first, ITime second)
         {
-            return first._value / second.ToSecond()._value;
+            return first.Value / second.ToSecond().Value;
         }
 
         public static Second operator -(Second first)
         {
-            return new Second(-first._value);
+            return new Second(-first.Value);
         }
 
         public static bool operator>(Second first, ITime second)
         {
-            return first._value > second.ToSecond()._value;
+            return first.Value > second.ToSecond().Value;
         }
 
         public static bool operator >=(Second first, ITime second)
         {
-            return first._value >= second.ToSecond()._value;
+            return first.Value >= second.ToSecond().Value;
         }
 
         public static bool operator <(Second first, ITime second)
         {
-            return first._value < second.ToSecond()._value;
+            return first.Value < second.ToSecond().Value;
         }
 
         public static bool operator <=(Second first, ITime second)
         {
-            return first._value <= second.ToSecond()._value;
+            return first.Value <= second.ToSecond().Value;
         }
 
         public static bool operator ==(Second first, ITime second)
         {
-            return first._value == second.ToSecond()._value;
+            return first.Value == second.ToSecond().Value;
         }
 
         public static bool operator !=(Second first, ITime second)
         {
-            return first._value != second.ToSecond()._value;
+            return first.Value != second.ToSecond().Value;
         }
 
         public static bool operator>(Second first, Second second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Second first, Second second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Second first, Second second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Second first, Second second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Second first, Second second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Second first, Second second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -192,13 +195,13 @@ namespace Codeworx.Units.Defaults.TimeDimension
             if (obj == null)
                 return 1;
             if (obj is ITime conv)
-                return this._value.CompareTo(conv.ToSecond()._value);
+                return this.Value.CompareTo(conv.ToSecond().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "s";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "s";
         }
     }
 }

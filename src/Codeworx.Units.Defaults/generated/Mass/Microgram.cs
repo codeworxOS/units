@@ -9,58 +9,61 @@ namespace Codeworx.Units.Defaults.MassDimension
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public struct Microgram : IMass
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "mug";
-        public string Key => "Mass_Microgram";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IMass.DefaultImperial;
-        public string DefaultMetric => IMass.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Microgram.Symbol;
+        public static string Symbol => "mug";
+
+        string IUnitBase.Key => Microgram.Key;
+        public static string Key => "Mass_Microgram";
+
+        UnitSystem IUnitBase.System => Microgram.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Microgram(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Kilogram ToKilogram()
         {
-            return new Kilogram(_value / 1000000000M);
+            return new Kilogram(Value / 1000000000M);
         }
 
         public Gram ToGram()
         {
-            return new Gram(_value / 1000000M);
+            return new Gram(Value / 1000000M);
         }
 
         public Pounds ToPounds()
         {
-            return new Pounds(_value / 453592370.01003542909395360719M);
+            return new Pounds(Value / 453592370.01003542909395360719M);
         }
 
         public TonLong ToTonLong()
         {
-            return new TonLong(_value / 1016046908800.0000000M);
+            return new TonLong(Value / 1016046908800.0000000M);
         }
 
         public Milligram ToMilligram()
         {
-            return new Milligram(_value / 1000M);
+            return new Milligram(Value / 1000M);
         }
 
         public Microgram ToMicrogram() => this;
         public Ounce ToOunce()
         {
-            return new Ounce(_value / 28349556.839727481380011067667M);
+            return new Ounce(Value / 28349556.839727481380011067667M);
         }
 
         public TonShort ToTonShort()
         {
-            return new TonShort(_value / 907184740000.00000M);
+            return new TonShort(Value / 907184740000.00000M);
         }
 
         public MetricTons ToMetricTons()
         {
-            return new MetricTons(_value / 1000000000000M);
+            return new MetricTons(Value / 1000000000000M);
         }
 
         public IMass ToUnit(string symbol)
@@ -124,107 +127,107 @@ namespace Codeworx.Units.Defaults.MassDimension
 
         public static Microgram operator +(Microgram first, IMass second)
         {
-            return new Microgram(first._value + second.ToMicrogram()._value);
+            return new Microgram(first.Value + second.ToMicrogram().Value);
         }
 
         public static Microgram operator -(Microgram first, IMass second)
         {
-            return new Microgram(first._value - second.ToMicrogram()._value);
+            return new Microgram(first.Value - second.ToMicrogram().Value);
         }
 
         public static Microgram operator +(Microgram first, decimal second)
         {
-            return new Microgram(first._value + second);
+            return new Microgram(first.Value + second);
         }
 
         public static Microgram operator -(Microgram first, decimal second)
         {
-            return new Microgram(first._value - second);
+            return new Microgram(first.Value - second);
         }
 
         public static Microgram operator *(Microgram first, decimal second)
         {
-            return new Microgram(first._value * second);
+            return new Microgram(first.Value * second);
         }
 
         public static Microgram operator /(Microgram first, decimal second)
         {
-            return new Microgram(first._value / second);
+            return new Microgram(first.Value / second);
         }
 
         public static decimal operator /(Microgram first, IMass second)
         {
-            return first._value / second.ToMicrogram()._value;
+            return first.Value / second.ToMicrogram().Value;
         }
 
         public static Microgram operator -(Microgram first)
         {
-            return new Microgram(-first._value);
+            return new Microgram(-first.Value);
         }
 
         public static bool operator>(Microgram first, IMass second)
         {
-            return first._value > second.ToMicrogram()._value;
+            return first.Value > second.ToMicrogram().Value;
         }
 
         public static bool operator >=(Microgram first, IMass second)
         {
-            return first._value >= second.ToMicrogram()._value;
+            return first.Value >= second.ToMicrogram().Value;
         }
 
         public static bool operator <(Microgram first, IMass second)
         {
-            return first._value < second.ToMicrogram()._value;
+            return first.Value < second.ToMicrogram().Value;
         }
 
         public static bool operator <=(Microgram first, IMass second)
         {
-            return first._value <= second.ToMicrogram()._value;
+            return first.Value <= second.ToMicrogram().Value;
         }
 
         public static bool operator ==(Microgram first, IMass second)
         {
-            return first._value == second.ToMicrogram()._value;
+            return first.Value == second.ToMicrogram().Value;
         }
 
         public static bool operator !=(Microgram first, IMass second)
         {
-            return first._value != second.ToMicrogram()._value;
+            return first.Value != second.ToMicrogram().Value;
         }
 
         public static bool operator>(Microgram first, Microgram second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Microgram first, Microgram second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Microgram first, Microgram second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Microgram first, Microgram second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Microgram first, Microgram second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Microgram first, Microgram second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -237,13 +240,13 @@ namespace Codeworx.Units.Defaults.MassDimension
             if (obj == null)
                 return 1;
             if (obj is IMass conv)
-                return this._value.CompareTo(conv.ToMicrogram()._value);
+                return this.Value.CompareTo(conv.ToMicrogram().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "mug";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "mug";
         }
     }
 }

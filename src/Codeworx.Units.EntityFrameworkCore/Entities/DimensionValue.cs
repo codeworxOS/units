@@ -20,7 +20,7 @@ namespace Codeworx.Units.EntityFrameworkCore.Entities
 
         public static DimensionValue<T> GetEntity(T entry)
         {
-            return new DimensionValue<T> { Value = entry.BaseValue, UnitId = entry.Key };
+            return new DimensionValue<T> { Value = entry.Value, UnitId = entry.Key };
         }
 
         public T GetDimension()

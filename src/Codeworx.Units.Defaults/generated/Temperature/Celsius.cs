@@ -9,28 +9,31 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
     [TypeConverter(typeof(DimensionTypeConverter<ITemperature>))]
     public struct Celsius : ITemperature
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "°C";
-        public string Key => "Temperature_Celsius";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ITemperature.DefaultImperial;
-        public string DefaultMetric => ITemperature.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Celsius.Symbol;
+        public static string Symbol => "°C";
+
+        string IUnitBase.Key => Celsius.Key;
+        public static string Key => "Temperature_Celsius";
+
+        UnitSystem IUnitBase.System => Celsius.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Celsius(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Celsius ToCelsius() => this;
         public Fahrenheit ToFahrenheit()
         {
-            return new Fahrenheit(((_value * 1.8M) + 32M));
+            return new Fahrenheit(((Value * 1.8M) + 32M));
         }
 
         public Kelvin ToKelvin()
         {
-            return new Kelvin((_value + 273.15M));
+            return new Kelvin((Value + 273.15M));
         }
 
         public ITemperature ToUnit(string symbol)
@@ -70,107 +73,107 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
 
         public static Celsius operator +(Celsius first, ITemperature second)
         {
-            return new Celsius(first._value + second.ToCelsius()._value);
+            return new Celsius(first.Value + second.ToCelsius().Value);
         }
 
         public static Celsius operator -(Celsius first, ITemperature second)
         {
-            return new Celsius(first._value - second.ToCelsius()._value);
+            return new Celsius(first.Value - second.ToCelsius().Value);
         }
 
         public static Celsius operator +(Celsius first, decimal second)
         {
-            return new Celsius(first._value + second);
+            return new Celsius(first.Value + second);
         }
 
         public static Celsius operator -(Celsius first, decimal second)
         {
-            return new Celsius(first._value - second);
+            return new Celsius(first.Value - second);
         }
 
         public static Celsius operator *(Celsius first, decimal second)
         {
-            return new Celsius(first._value * second);
+            return new Celsius(first.Value * second);
         }
 
         public static Celsius operator /(Celsius first, decimal second)
         {
-            return new Celsius(first._value / second);
+            return new Celsius(first.Value / second);
         }
 
         public static decimal operator /(Celsius first, ITemperature second)
         {
-            return first._value / second.ToCelsius()._value;
+            return first.Value / second.ToCelsius().Value;
         }
 
         public static Celsius operator -(Celsius first)
         {
-            return new Celsius(-first._value);
+            return new Celsius(-first.Value);
         }
 
         public static bool operator>(Celsius first, ITemperature second)
         {
-            return first._value > second.ToCelsius()._value;
+            return first.Value > second.ToCelsius().Value;
         }
 
         public static bool operator >=(Celsius first, ITemperature second)
         {
-            return first._value >= second.ToCelsius()._value;
+            return first.Value >= second.ToCelsius().Value;
         }
 
         public static bool operator <(Celsius first, ITemperature second)
         {
-            return first._value < second.ToCelsius()._value;
+            return first.Value < second.ToCelsius().Value;
         }
 
         public static bool operator <=(Celsius first, ITemperature second)
         {
-            return first._value <= second.ToCelsius()._value;
+            return first.Value <= second.ToCelsius().Value;
         }
 
         public static bool operator ==(Celsius first, ITemperature second)
         {
-            return first._value == second.ToCelsius()._value;
+            return first.Value == second.ToCelsius().Value;
         }
 
         public static bool operator !=(Celsius first, ITemperature second)
         {
-            return first._value != second.ToCelsius()._value;
+            return first.Value != second.ToCelsius().Value;
         }
 
         public static bool operator>(Celsius first, Celsius second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Celsius first, Celsius second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Celsius first, Celsius second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Celsius first, Celsius second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Celsius first, Celsius second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Celsius first, Celsius second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -183,13 +186,13 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
             if (obj == null)
                 return 1;
             if (obj is ITemperature conv)
-                return this._value.CompareTo(conv.ToCelsius()._value);
+                return this.Value.CompareTo(conv.ToCelsius().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "°C";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "°C";
         }
     }
 }

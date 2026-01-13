@@ -9,48 +9,51 @@ namespace Codeworx.Units.Defaults.VolumeDimension
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
     public struct Liter : IVolume
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "l";
-        public string Key => "Volume_Liter";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IVolume.DefaultImperial;
-        public string DefaultMetric => IVolume.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Liter.Symbol;
+        public static string Symbol => "l";
+
+        string IUnitBase.Key => Liter.Key;
+        public static string Key => "Volume_Liter";
+
+        UnitSystem IUnitBase.System => Liter.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Liter(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public CubicMeter ToCubicMeter()
         {
-            return new CubicMeter(_value / 1000M);
+            return new CubicMeter(Value / 1000M);
         }
 
         public CubicCentimeter ToCubicCentimeter()
         {
-            return new CubicCentimeter(_value / 0.001M);
+            return new CubicCentimeter(Value / 0.001M);
         }
 
         public CubicFoot ToCubicFoot()
         {
-            return new CubicFoot(_value / 28.316843963146193918844491539M);
+            return new CubicFoot(Value / 28.316843963146193918844491539M);
         }
 
         public CubicInch ToCubicInch()
         {
-            return new CubicInch(_value / 0.0163870639999281086392671954M);
+            return new CubicInch(Value / 0.0163870639999281086392671954M);
         }
 
         public Gallon ToGallon()
         {
-            return new Gallon(_value / 3.7854117839734680100435132948M);
+            return new Gallon(Value / 3.7854117839734680100435132948M);
         }
 
         public Liter ToLiter() => this;
         public Quart ToQuart()
         {
-            return new Quart(_value / 0.9463529460291903584478473693M);
+            return new Quart(Value / 0.9463529460291903584478473693M);
         }
 
         public IVolume ToUnit(string symbol)
@@ -106,107 +109,107 @@ namespace Codeworx.Units.Defaults.VolumeDimension
 
         public static Liter operator +(Liter first, IVolume second)
         {
-            return new Liter(first._value + second.ToLiter()._value);
+            return new Liter(first.Value + second.ToLiter().Value);
         }
 
         public static Liter operator -(Liter first, IVolume second)
         {
-            return new Liter(first._value - second.ToLiter()._value);
+            return new Liter(first.Value - second.ToLiter().Value);
         }
 
         public static Liter operator +(Liter first, decimal second)
         {
-            return new Liter(first._value + second);
+            return new Liter(first.Value + second);
         }
 
         public static Liter operator -(Liter first, decimal second)
         {
-            return new Liter(first._value - second);
+            return new Liter(first.Value - second);
         }
 
         public static Liter operator *(Liter first, decimal second)
         {
-            return new Liter(first._value * second);
+            return new Liter(first.Value * second);
         }
 
         public static Liter operator /(Liter first, decimal second)
         {
-            return new Liter(first._value / second);
+            return new Liter(first.Value / second);
         }
 
         public static decimal operator /(Liter first, IVolume second)
         {
-            return first._value / second.ToLiter()._value;
+            return first.Value / second.ToLiter().Value;
         }
 
         public static Liter operator -(Liter first)
         {
-            return new Liter(-first._value);
+            return new Liter(-first.Value);
         }
 
         public static bool operator>(Liter first, IVolume second)
         {
-            return first._value > second.ToLiter()._value;
+            return first.Value > second.ToLiter().Value;
         }
 
         public static bool operator >=(Liter first, IVolume second)
         {
-            return first._value >= second.ToLiter()._value;
+            return first.Value >= second.ToLiter().Value;
         }
 
         public static bool operator <(Liter first, IVolume second)
         {
-            return first._value < second.ToLiter()._value;
+            return first.Value < second.ToLiter().Value;
         }
 
         public static bool operator <=(Liter first, IVolume second)
         {
-            return first._value <= second.ToLiter()._value;
+            return first.Value <= second.ToLiter().Value;
         }
 
         public static bool operator ==(Liter first, IVolume second)
         {
-            return first._value == second.ToLiter()._value;
+            return first.Value == second.ToLiter().Value;
         }
 
         public static bool operator !=(Liter first, IVolume second)
         {
-            return first._value != second.ToLiter()._value;
+            return first.Value != second.ToLiter().Value;
         }
 
         public static bool operator>(Liter first, Liter second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Liter first, Liter second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Liter first, Liter second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Liter first, Liter second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Liter first, Liter second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Liter first, Liter second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -219,13 +222,13 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             if (obj == null)
                 return 1;
             if (obj is IVolume conv)
-                return this._value.CompareTo(conv.ToLiter()._value);
+                return this.Value.CompareTo(conv.ToLiter().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "l";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "l";
         }
     }
 }

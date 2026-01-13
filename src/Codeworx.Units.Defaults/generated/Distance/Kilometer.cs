@@ -9,53 +9,56 @@ namespace Codeworx.Units.Defaults.DistanceDimension
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
     public struct Kilometer : IDistance
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "km";
-        public string Key => "Distance_Kilometer";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IDistance.DefaultImperial;
-        public string DefaultMetric => IDistance.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Kilometer.Symbol;
+        public static string Symbol => "km";
+
+        string IUnitBase.Key => Kilometer.Key;
+        public static string Key => "Distance_Kilometer";
+
+        UnitSystem IUnitBase.System => Kilometer.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Kilometer(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Meter ToMeter()
         {
-            return new Meter(_value * 1000M);
+            return new Meter(Value * 1000M);
         }
 
         public Centimeter ToCentimeter()
         {
-            return new Centimeter(_value * 100000M);
+            return new Centimeter(Value * 100000M);
         }
 
         public Kilometer ToKilometer() => this;
         public Mile ToMile()
         {
-            return new Mile(_value * 0.6213711922373339696174341844M);
+            return new Mile(Value * 0.6213711922373339696174341844M);
         }
 
         public Millimeter ToMillimeter()
         {
-            return new Millimeter(_value * 1000000M);
+            return new Millimeter(Value * 1000000M);
         }
 
         public Yard ToYard()
         {
-            return new Yard(_value * 1093.6132983000M);
+            return new Yard(Value * 1093.6132983000M);
         }
 
         public Feet ToFeet()
         {
-            return new Feet(_value * 3280.839895000M);
+            return new Feet(Value * 3280.839895000M);
         }
 
         public Inch ToInch()
         {
-            return new Inch(_value * 39370.07874000M);
+            return new Inch(Value * 39370.07874000M);
         }
 
         public IDistance ToUnit(string symbol)
@@ -115,107 +118,107 @@ namespace Codeworx.Units.Defaults.DistanceDimension
 
         public static Kilometer operator +(Kilometer first, IDistance second)
         {
-            return new Kilometer(first._value + second.ToKilometer()._value);
+            return new Kilometer(first.Value + second.ToKilometer().Value);
         }
 
         public static Kilometer operator -(Kilometer first, IDistance second)
         {
-            return new Kilometer(first._value - second.ToKilometer()._value);
+            return new Kilometer(first.Value - second.ToKilometer().Value);
         }
 
         public static Kilometer operator +(Kilometer first, decimal second)
         {
-            return new Kilometer(first._value + second);
+            return new Kilometer(first.Value + second);
         }
 
         public static Kilometer operator -(Kilometer first, decimal second)
         {
-            return new Kilometer(first._value - second);
+            return new Kilometer(first.Value - second);
         }
 
         public static Kilometer operator *(Kilometer first, decimal second)
         {
-            return new Kilometer(first._value * second);
+            return new Kilometer(first.Value * second);
         }
 
         public static Kilometer operator /(Kilometer first, decimal second)
         {
-            return new Kilometer(first._value / second);
+            return new Kilometer(first.Value / second);
         }
 
         public static decimal operator /(Kilometer first, IDistance second)
         {
-            return first._value / second.ToKilometer()._value;
+            return first.Value / second.ToKilometer().Value;
         }
 
         public static Kilometer operator -(Kilometer first)
         {
-            return new Kilometer(-first._value);
+            return new Kilometer(-first.Value);
         }
 
         public static bool operator>(Kilometer first, IDistance second)
         {
-            return first._value > second.ToKilometer()._value;
+            return first.Value > second.ToKilometer().Value;
         }
 
         public static bool operator >=(Kilometer first, IDistance second)
         {
-            return first._value >= second.ToKilometer()._value;
+            return first.Value >= second.ToKilometer().Value;
         }
 
         public static bool operator <(Kilometer first, IDistance second)
         {
-            return first._value < second.ToKilometer()._value;
+            return first.Value < second.ToKilometer().Value;
         }
 
         public static bool operator <=(Kilometer first, IDistance second)
         {
-            return first._value <= second.ToKilometer()._value;
+            return first.Value <= second.ToKilometer().Value;
         }
 
         public static bool operator ==(Kilometer first, IDistance second)
         {
-            return first._value == second.ToKilometer()._value;
+            return first.Value == second.ToKilometer().Value;
         }
 
         public static bool operator !=(Kilometer first, IDistance second)
         {
-            return first._value != second.ToKilometer()._value;
+            return first.Value != second.ToKilometer().Value;
         }
 
         public static bool operator>(Kilometer first, Kilometer second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Kilometer first, Kilometer second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Kilometer first, Kilometer second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Kilometer first, Kilometer second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Kilometer first, Kilometer second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Kilometer first, Kilometer second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -228,13 +231,13 @@ namespace Codeworx.Units.Defaults.DistanceDimension
             if (obj == null)
                 return 1;
             if (obj is IDistance conv)
-                return this._value.CompareTo(conv.ToKilometer()._value);
+                return this.Value.CompareTo(conv.ToKilometer().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "km";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "km";
         }
     }
 }

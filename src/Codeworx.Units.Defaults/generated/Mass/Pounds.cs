@@ -9,58 +9,61 @@ namespace Codeworx.Units.Defaults.MassDimension
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public struct Pounds : IMass
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "lbs";
-        public string Key => "Mass_Pounds";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IMass.DefaultImperial;
-        public string DefaultMetric => IMass.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Pounds.Symbol;
+        public static string Symbol => "lbs";
+
+        string IUnitBase.Key => Pounds.Key;
+        public static string Key => "Mass_Pounds";
+
+        UnitSystem IUnitBase.System => Pounds.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Pounds(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Kilogram ToKilogram()
         {
-            return new Kilogram(_value / 2.2046226218M);
+            return new Kilogram(Value / 2.2046226218M);
         }
 
         public Gram ToGram()
         {
-            return new Gram(_value / 0.0022046226218M);
+            return new Gram(Value / 0.0022046226218M);
         }
 
         public Pounds ToPounds() => this;
         public TonLong ToTonLong()
         {
-            return new TonLong(_value / 2239.99999995044149184M);
+            return new TonLong(Value / 2239.99999995044149184M);
         }
 
         public Milligram ToMilligram()
         {
-            return new Milligram(_value / 0.0000022046226218M);
+            return new Milligram(Value / 0.0000022046226218M);
         }
 
         public Microgram ToMicrogram()
         {
-            return new Microgram(_value / 0.0000000022046226218M);
+            return new Microgram(Value / 0.0000000022046226218M);
         }
 
         public Ounce ToOunce()
         {
-            return new Ounce(_value / 0.0625000743268681223975106821M);
+            return new Ounce(Value / 0.0625000743268681223975106821M);
         }
 
         public TonShort ToTonShort()
         {
-            return new TonShort(_value / 1999.999999955751332M);
+            return new TonShort(Value / 1999.999999955751332M);
         }
 
         public MetricTons ToMetricTons()
         {
-            return new MetricTons(_value / 2204.6226218000M);
+            return new MetricTons(Value / 2204.6226218000M);
         }
 
         public IMass ToUnit(string symbol)
@@ -124,107 +127,107 @@ namespace Codeworx.Units.Defaults.MassDimension
 
         public static Pounds operator +(Pounds first, IMass second)
         {
-            return new Pounds(first._value + second.ToPounds()._value);
+            return new Pounds(first.Value + second.ToPounds().Value);
         }
 
         public static Pounds operator -(Pounds first, IMass second)
         {
-            return new Pounds(first._value - second.ToPounds()._value);
+            return new Pounds(first.Value - second.ToPounds().Value);
         }
 
         public static Pounds operator +(Pounds first, decimal second)
         {
-            return new Pounds(first._value + second);
+            return new Pounds(first.Value + second);
         }
 
         public static Pounds operator -(Pounds first, decimal second)
         {
-            return new Pounds(first._value - second);
+            return new Pounds(first.Value - second);
         }
 
         public static Pounds operator *(Pounds first, decimal second)
         {
-            return new Pounds(first._value * second);
+            return new Pounds(first.Value * second);
         }
 
         public static Pounds operator /(Pounds first, decimal second)
         {
-            return new Pounds(first._value / second);
+            return new Pounds(first.Value / second);
         }
 
         public static decimal operator /(Pounds first, IMass second)
         {
-            return first._value / second.ToPounds()._value;
+            return first.Value / second.ToPounds().Value;
         }
 
         public static Pounds operator -(Pounds first)
         {
-            return new Pounds(-first._value);
+            return new Pounds(-first.Value);
         }
 
         public static bool operator>(Pounds first, IMass second)
         {
-            return first._value > second.ToPounds()._value;
+            return first.Value > second.ToPounds().Value;
         }
 
         public static bool operator >=(Pounds first, IMass second)
         {
-            return first._value >= second.ToPounds()._value;
+            return first.Value >= second.ToPounds().Value;
         }
 
         public static bool operator <(Pounds first, IMass second)
         {
-            return first._value < second.ToPounds()._value;
+            return first.Value < second.ToPounds().Value;
         }
 
         public static bool operator <=(Pounds first, IMass second)
         {
-            return first._value <= second.ToPounds()._value;
+            return first.Value <= second.ToPounds().Value;
         }
 
         public static bool operator ==(Pounds first, IMass second)
         {
-            return first._value == second.ToPounds()._value;
+            return first.Value == second.ToPounds().Value;
         }
 
         public static bool operator !=(Pounds first, IMass second)
         {
-            return first._value != second.ToPounds()._value;
+            return first.Value != second.ToPounds().Value;
         }
 
         public static bool operator>(Pounds first, Pounds second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Pounds first, Pounds second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Pounds first, Pounds second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Pounds first, Pounds second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Pounds first, Pounds second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Pounds first, Pounds second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -237,13 +240,13 @@ namespace Codeworx.Units.Defaults.MassDimension
             if (obj == null)
                 return 1;
             if (obj is IMass conv)
-                return this._value.CompareTo(conv.ToPounds()._value);
+                return this.Value.CompareTo(conv.ToPounds().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "lbs";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "lbs";
         }
     }
 }

@@ -9,52 +9,55 @@ namespace Codeworx.Units.Defaults.DistanceDimension
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
     public struct Inch : IDistance
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "inch";
-        public string Key => "Distance_Inch";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IDistance.DefaultImperial;
-        public string DefaultMetric => IDistance.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Inch.Symbol;
+        public static string Symbol => "inch";
+
+        string IUnitBase.Key => Inch.Key;
+        public static string Key => "Distance_Inch";
+
+        UnitSystem IUnitBase.System => Inch.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Inch(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Meter ToMeter()
         {
-            return new Meter(_value / 39.37007874M);
+            return new Meter(Value / 39.37007874M);
         }
 
         public Centimeter ToCentimeter()
         {
-            return new Centimeter(_value / 0.3937007874M);
+            return new Centimeter(Value / 0.3937007874M);
         }
 
         public Kilometer ToKilometer()
         {
-            return new Kilometer(_value / 39370.07874000M);
+            return new Kilometer(Value / 39370.07874000M);
         }
 
         public Mile ToMile()
         {
-            return new Mile(_value / 63359.99999974656M);
+            return new Mile(Value / 63359.99999974656M);
         }
 
         public Millimeter ToMillimeter()
         {
-            return new Millimeter(_value / 0.03937007874M);
+            return new Millimeter(Value / 0.03937007874M);
         }
 
         public Yard ToYard()
         {
-            return new Yard(_value / 36M);
+            return new Yard(Value / 36M);
         }
 
         public Feet ToFeet()
         {
-            return new Feet(_value / 12M);
+            return new Feet(Value / 12M);
         }
 
         public Inch ToInch() => this;
@@ -115,107 +118,107 @@ namespace Codeworx.Units.Defaults.DistanceDimension
 
         public static Inch operator +(Inch first, IDistance second)
         {
-            return new Inch(first._value + second.ToInch()._value);
+            return new Inch(first.Value + second.ToInch().Value);
         }
 
         public static Inch operator -(Inch first, IDistance second)
         {
-            return new Inch(first._value - second.ToInch()._value);
+            return new Inch(first.Value - second.ToInch().Value);
         }
 
         public static Inch operator +(Inch first, decimal second)
         {
-            return new Inch(first._value + second);
+            return new Inch(first.Value + second);
         }
 
         public static Inch operator -(Inch first, decimal second)
         {
-            return new Inch(first._value - second);
+            return new Inch(first.Value - second);
         }
 
         public static Inch operator *(Inch first, decimal second)
         {
-            return new Inch(first._value * second);
+            return new Inch(first.Value * second);
         }
 
         public static Inch operator /(Inch first, decimal second)
         {
-            return new Inch(first._value / second);
+            return new Inch(first.Value / second);
         }
 
         public static decimal operator /(Inch first, IDistance second)
         {
-            return first._value / second.ToInch()._value;
+            return first.Value / second.ToInch().Value;
         }
 
         public static Inch operator -(Inch first)
         {
-            return new Inch(-first._value);
+            return new Inch(-first.Value);
         }
 
         public static bool operator>(Inch first, IDistance second)
         {
-            return first._value > second.ToInch()._value;
+            return first.Value > second.ToInch().Value;
         }
 
         public static bool operator >=(Inch first, IDistance second)
         {
-            return first._value >= second.ToInch()._value;
+            return first.Value >= second.ToInch().Value;
         }
 
         public static bool operator <(Inch first, IDistance second)
         {
-            return first._value < second.ToInch()._value;
+            return first.Value < second.ToInch().Value;
         }
 
         public static bool operator <=(Inch first, IDistance second)
         {
-            return first._value <= second.ToInch()._value;
+            return first.Value <= second.ToInch().Value;
         }
 
         public static bool operator ==(Inch first, IDistance second)
         {
-            return first._value == second.ToInch()._value;
+            return first.Value == second.ToInch().Value;
         }
 
         public static bool operator !=(Inch first, IDistance second)
         {
-            return first._value != second.ToInch()._value;
+            return first.Value != second.ToInch().Value;
         }
 
         public static bool operator>(Inch first, Inch second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Inch first, Inch second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Inch first, Inch second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Inch first, Inch second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Inch first, Inch second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Inch first, Inch second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -228,13 +231,13 @@ namespace Codeworx.Units.Defaults.DistanceDimension
             if (obj == null)
                 return 1;
             if (obj is IDistance conv)
-                return this._value.CompareTo(conv.ToInch()._value);
+                return this.Value.CompareTo(conv.ToInch().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "inch";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "inch";
         }
     }
 }

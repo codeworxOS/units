@@ -9,43 +9,46 @@ namespace Codeworx.Units.Defaults.SpeedDimension
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
     public struct MillimeterPerSecond : ISpeed
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "mm/s";
-        public string Key => "Speed_MillimeterPerSecond";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ISpeed.DefaultImperial;
-        public string DefaultMetric => ISpeed.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => MillimeterPerSecond.Symbol;
+        public static string Symbol => "mm/s";
+
+        string IUnitBase.Key => MillimeterPerSecond.Key;
+        public static string Key => "Speed_MillimeterPerSecond";
+
+        UnitSystem IUnitBase.System => MillimeterPerSecond.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public MillimeterPerSecond(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public MeterPerSecond ToMeterPerSecond()
         {
-            return new MeterPerSecond(_value / 1000M);
+            return new MeterPerSecond(Value / 1000M);
         }
 
         public FeetPerSecond ToFeetPerSecond()
         {
-            return new FeetPerSecond(_value / 304.8000000012192000000048768M);
+            return new FeetPerSecond(Value / 304.8000000012192000000048768M);
         }
 
         public KilometerPerHour ToKilometerPerHour()
         {
-            return new KilometerPerHour(_value / 277.77777777777777777777777778M);
+            return new KilometerPerHour(Value / 277.77777777777777777777777778M);
         }
 
         public Knots ToKnots()
         {
-            return new Knots(_value / 514.44444445519061728417509289M);
+            return new Knots(Value / 514.44444445519061728417509289M);
         }
 
         public MillimeterPerSecond ToMillimeterPerSecond() => this;
         public MilesPerHour ToMilesPerHour()
         {
-            return new MilesPerHour(_value / 447.03999999088753664018574845M);
+            return new MilesPerHour(Value / 447.03999999088753664018574845M);
         }
 
         public ISpeed ToUnit(string symbol)
@@ -97,107 +100,107 @@ namespace Codeworx.Units.Defaults.SpeedDimension
 
         public static MillimeterPerSecond operator +(MillimeterPerSecond first, ISpeed second)
         {
-            return new MillimeterPerSecond(first._value + second.ToMillimeterPerSecond()._value);
+            return new MillimeterPerSecond(first.Value + second.ToMillimeterPerSecond().Value);
         }
 
         public static MillimeterPerSecond operator -(MillimeterPerSecond first, ISpeed second)
         {
-            return new MillimeterPerSecond(first._value - second.ToMillimeterPerSecond()._value);
+            return new MillimeterPerSecond(first.Value - second.ToMillimeterPerSecond().Value);
         }
 
         public static MillimeterPerSecond operator +(MillimeterPerSecond first, decimal second)
         {
-            return new MillimeterPerSecond(first._value + second);
+            return new MillimeterPerSecond(first.Value + second);
         }
 
         public static MillimeterPerSecond operator -(MillimeterPerSecond first, decimal second)
         {
-            return new MillimeterPerSecond(first._value - second);
+            return new MillimeterPerSecond(first.Value - second);
         }
 
         public static MillimeterPerSecond operator *(MillimeterPerSecond first, decimal second)
         {
-            return new MillimeterPerSecond(first._value * second);
+            return new MillimeterPerSecond(first.Value * second);
         }
 
         public static MillimeterPerSecond operator /(MillimeterPerSecond first, decimal second)
         {
-            return new MillimeterPerSecond(first._value / second);
+            return new MillimeterPerSecond(first.Value / second);
         }
 
         public static decimal operator /(MillimeterPerSecond first, ISpeed second)
         {
-            return first._value / second.ToMillimeterPerSecond()._value;
+            return first.Value / second.ToMillimeterPerSecond().Value;
         }
 
         public static MillimeterPerSecond operator -(MillimeterPerSecond first)
         {
-            return new MillimeterPerSecond(-first._value);
+            return new MillimeterPerSecond(-first.Value);
         }
 
         public static bool operator>(MillimeterPerSecond first, ISpeed second)
         {
-            return first._value > second.ToMillimeterPerSecond()._value;
+            return first.Value > second.ToMillimeterPerSecond().Value;
         }
 
         public static bool operator >=(MillimeterPerSecond first, ISpeed second)
         {
-            return first._value >= second.ToMillimeterPerSecond()._value;
+            return first.Value >= second.ToMillimeterPerSecond().Value;
         }
 
         public static bool operator <(MillimeterPerSecond first, ISpeed second)
         {
-            return first._value < second.ToMillimeterPerSecond()._value;
+            return first.Value < second.ToMillimeterPerSecond().Value;
         }
 
         public static bool operator <=(MillimeterPerSecond first, ISpeed second)
         {
-            return first._value <= second.ToMillimeterPerSecond()._value;
+            return first.Value <= second.ToMillimeterPerSecond().Value;
         }
 
         public static bool operator ==(MillimeterPerSecond first, ISpeed second)
         {
-            return first._value == second.ToMillimeterPerSecond()._value;
+            return first.Value == second.ToMillimeterPerSecond().Value;
         }
 
         public static bool operator !=(MillimeterPerSecond first, ISpeed second)
         {
-            return first._value != second.ToMillimeterPerSecond()._value;
+            return first.Value != second.ToMillimeterPerSecond().Value;
         }
 
         public static bool operator>(MillimeterPerSecond first, MillimeterPerSecond second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(MillimeterPerSecond first, MillimeterPerSecond second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(MillimeterPerSecond first, MillimeterPerSecond second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(MillimeterPerSecond first, MillimeterPerSecond second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(MillimeterPerSecond first, MillimeterPerSecond second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(MillimeterPerSecond first, MillimeterPerSecond second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -210,13 +213,13 @@ namespace Codeworx.Units.Defaults.SpeedDimension
             if (obj == null)
                 return 1;
             if (obj is ISpeed conv)
-                return this._value.CompareTo(conv.ToMillimeterPerSecond()._value);
+                return this.Value.CompareTo(conv.ToMillimeterPerSecond().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "mm/s";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "mm/s";
         }
     }
 }

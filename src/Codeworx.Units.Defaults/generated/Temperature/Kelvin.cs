@@ -9,27 +9,30 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
     [TypeConverter(typeof(DimensionTypeConverter<ITemperature>))]
     public struct Kelvin : ITemperature
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "K";
-        public string Key => "Temperature_Kelvin";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ITemperature.DefaultImperial;
-        public string DefaultMetric => ITemperature.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Kelvin.Symbol;
+        public static string Symbol => "K";
+
+        string IUnitBase.Key => Kelvin.Key;
+        public static string Key => "Temperature_Kelvin";
+
+        UnitSystem IUnitBase.System => Kelvin.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Kelvin(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Celsius ToCelsius()
         {
-            return new Celsius((_value - 273.15M));
+            return new Celsius((Value - 273.15M));
         }
 
         public Fahrenheit ToFahrenheit()
         {
-            return new Fahrenheit((((_value - 273.15M) * 1.8M) + 32M));
+            return new Fahrenheit((((Value - 273.15M) * 1.8M) + 32M));
         }
 
         public Kelvin ToKelvin() => this;
@@ -70,107 +73,107 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
 
         public static Kelvin operator +(Kelvin first, ITemperature second)
         {
-            return new Kelvin(first._value + second.ToKelvin()._value);
+            return new Kelvin(first.Value + second.ToKelvin().Value);
         }
 
         public static Kelvin operator -(Kelvin first, ITemperature second)
         {
-            return new Kelvin(first._value - second.ToKelvin()._value);
+            return new Kelvin(first.Value - second.ToKelvin().Value);
         }
 
         public static Kelvin operator +(Kelvin first, decimal second)
         {
-            return new Kelvin(first._value + second);
+            return new Kelvin(first.Value + second);
         }
 
         public static Kelvin operator -(Kelvin first, decimal second)
         {
-            return new Kelvin(first._value - second);
+            return new Kelvin(first.Value - second);
         }
 
         public static Kelvin operator *(Kelvin first, decimal second)
         {
-            return new Kelvin(first._value * second);
+            return new Kelvin(first.Value * second);
         }
 
         public static Kelvin operator /(Kelvin first, decimal second)
         {
-            return new Kelvin(first._value / second);
+            return new Kelvin(first.Value / second);
         }
 
         public static decimal operator /(Kelvin first, ITemperature second)
         {
-            return first._value / second.ToKelvin()._value;
+            return first.Value / second.ToKelvin().Value;
         }
 
         public static Kelvin operator -(Kelvin first)
         {
-            return new Kelvin(-first._value);
+            return new Kelvin(-first.Value);
         }
 
         public static bool operator>(Kelvin first, ITemperature second)
         {
-            return first._value > second.ToKelvin()._value;
+            return first.Value > second.ToKelvin().Value;
         }
 
         public static bool operator >=(Kelvin first, ITemperature second)
         {
-            return first._value >= second.ToKelvin()._value;
+            return first.Value >= second.ToKelvin().Value;
         }
 
         public static bool operator <(Kelvin first, ITemperature second)
         {
-            return first._value < second.ToKelvin()._value;
+            return first.Value < second.ToKelvin().Value;
         }
 
         public static bool operator <=(Kelvin first, ITemperature second)
         {
-            return first._value <= second.ToKelvin()._value;
+            return first.Value <= second.ToKelvin().Value;
         }
 
         public static bool operator ==(Kelvin first, ITemperature second)
         {
-            return first._value == second.ToKelvin()._value;
+            return first.Value == second.ToKelvin().Value;
         }
 
         public static bool operator !=(Kelvin first, ITemperature second)
         {
-            return first._value != second.ToKelvin()._value;
+            return first.Value != second.ToKelvin().Value;
         }
 
         public static bool operator>(Kelvin first, Kelvin second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Kelvin first, Kelvin second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Kelvin first, Kelvin second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Kelvin first, Kelvin second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Kelvin first, Kelvin second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Kelvin first, Kelvin second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -183,13 +186,13 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
             if (obj == null)
                 return 1;
             if (obj is ITemperature conv)
-                return this._value.CompareTo(conv.ToKelvin()._value);
+                return this.Value.CompareTo(conv.ToKelvin().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "K";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "K";
         }
     }
 }

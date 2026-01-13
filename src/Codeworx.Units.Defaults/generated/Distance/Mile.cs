@@ -9,53 +9,56 @@ namespace Codeworx.Units.Defaults.DistanceDimension
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
     public struct Mile : IDistance
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "mi";
-        public string Key => "Distance_Mile";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => IDistance.DefaultImperial;
-        public string DefaultMetric => IDistance.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Mile.Symbol;
+        public static string Symbol => "mi";
+
+        string IUnitBase.Key => Mile.Key;
+        public static string Key => "Distance_Mile";
+
+        UnitSystem IUnitBase.System => Mile.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Mile(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public Meter ToMeter()
         {
-            return new Meter(_value * 1609.344M);
+            return new Meter(Value * 1609.344M);
         }
 
         public Centimeter ToCentimeter()
         {
-            return new Centimeter(_value * 160934.400M);
+            return new Centimeter(Value * 160934.400M);
         }
 
         public Kilometer ToKilometer()
         {
-            return new Kilometer(_value * 1.609344M);
+            return new Kilometer(Value * 1.609344M);
         }
 
         public Mile ToMile() => this;
         public Millimeter ToMillimeter()
         {
-            return new Millimeter(_value * 1609344.000M);
+            return new Millimeter(Value * 1609344.000M);
         }
 
         public Yard ToYard()
         {
-            return new Yard(_value * 1759.9999999393152M);
+            return new Yard(Value * 1759.9999999393152M);
         }
 
         public Feet ToFeet()
         {
-            return new Feet(_value * 5279.999999978880M);
+            return new Feet(Value * 5279.999999978880M);
         }
 
         public Inch ToInch()
         {
-            return new Inch(_value * 63359.99999974656M);
+            return new Inch(Value * 63359.99999974656M);
         }
 
         public IDistance ToUnit(string symbol)
@@ -115,107 +118,107 @@ namespace Codeworx.Units.Defaults.DistanceDimension
 
         public static Mile operator +(Mile first, IDistance second)
         {
-            return new Mile(first._value + second.ToMile()._value);
+            return new Mile(first.Value + second.ToMile().Value);
         }
 
         public static Mile operator -(Mile first, IDistance second)
         {
-            return new Mile(first._value - second.ToMile()._value);
+            return new Mile(first.Value - second.ToMile().Value);
         }
 
         public static Mile operator +(Mile first, decimal second)
         {
-            return new Mile(first._value + second);
+            return new Mile(first.Value + second);
         }
 
         public static Mile operator -(Mile first, decimal second)
         {
-            return new Mile(first._value - second);
+            return new Mile(first.Value - second);
         }
 
         public static Mile operator *(Mile first, decimal second)
         {
-            return new Mile(first._value * second);
+            return new Mile(first.Value * second);
         }
 
         public static Mile operator /(Mile first, decimal second)
         {
-            return new Mile(first._value / second);
+            return new Mile(first.Value / second);
         }
 
         public static decimal operator /(Mile first, IDistance second)
         {
-            return first._value / second.ToMile()._value;
+            return first.Value / second.ToMile().Value;
         }
 
         public static Mile operator -(Mile first)
         {
-            return new Mile(-first._value);
+            return new Mile(-first.Value);
         }
 
         public static bool operator>(Mile first, IDistance second)
         {
-            return first._value > second.ToMile()._value;
+            return first.Value > second.ToMile().Value;
         }
 
         public static bool operator >=(Mile first, IDistance second)
         {
-            return first._value >= second.ToMile()._value;
+            return first.Value >= second.ToMile().Value;
         }
 
         public static bool operator <(Mile first, IDistance second)
         {
-            return first._value < second.ToMile()._value;
+            return first.Value < second.ToMile().Value;
         }
 
         public static bool operator <=(Mile first, IDistance second)
         {
-            return first._value <= second.ToMile()._value;
+            return first.Value <= second.ToMile().Value;
         }
 
         public static bool operator ==(Mile first, IDistance second)
         {
-            return first._value == second.ToMile()._value;
+            return first.Value == second.ToMile().Value;
         }
 
         public static bool operator !=(Mile first, IDistance second)
         {
-            return first._value != second.ToMile()._value;
+            return first.Value != second.ToMile().Value;
         }
 
         public static bool operator>(Mile first, Mile second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Mile first, Mile second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Mile first, Mile second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Mile first, Mile second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Mile first, Mile second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Mile first, Mile second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -228,13 +231,13 @@ namespace Codeworx.Units.Defaults.DistanceDimension
             if (obj == null)
                 return 1;
             if (obj is IDistance conv)
-                return this._value.CompareTo(conv.ToMile()._value);
+                return this.Value.CompareTo(conv.ToMile().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "mi";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "mi";
         }
     }
 }

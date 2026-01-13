@@ -2,7 +2,7 @@
 {
     public interface IUnitBase
     {
-        decimal BaseValue { get; }
+        decimal Value { get; }
 
         string Symbol { get; }
 

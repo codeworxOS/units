@@ -43,7 +43,7 @@ namespace Codeworx.Units.Cli.Data
 
         public static ExpressionSyntax GetConversionExpression(this JsonUnit[] conversionPath)
         {
-            ExpressionSyntax conversionExpression = SyntaxFactory.IdentifierName("_value");
+            ExpressionSyntax conversionExpression = SyntaxFactory.IdentifierName("Value");
 
             for (int idx = 1; idx < conversionPath.Length; idx++)
             {

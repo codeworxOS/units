@@ -9,43 +9,46 @@ namespace Codeworx.Units.Defaults.SpeedDimension
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
     public struct Knots : ISpeed
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "kt";
-        public string Key => "Speed_Knots";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ISpeed.DefaultImperial;
-        public string DefaultMetric => ISpeed.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => Knots.Symbol;
+        public static string Symbol => "kt";
+
+        string IUnitBase.Key => Knots.Key;
+        public static string Key => "Speed_Knots";
+
+        UnitSystem IUnitBase.System => Knots.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public Knots(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public MeterPerSecond ToMeterPerSecond()
         {
-            return new MeterPerSecond(_value / 1.9438444924M);
+            return new MeterPerSecond(Value / 1.9438444924M);
         }
 
         public FeetPerSecond ToFeetPerSecond()
         {
-            return new FeetPerSecond(_value / 0.5924838012858899352051435597M);
+            return new FeetPerSecond(Value / 0.5924838012858899352051435597M);
         }
 
         public KilometerPerHour ToKilometerPerHour()
         {
-            return new KilometerPerHour(_value / 0.5399568034444444444444444444M);
+            return new KilometerPerHour(Value / 0.5399568034444444444444444444M);
         }
 
         public Knots ToKnots() => this;
         public MillimeterPerSecond ToMillimeterPerSecond()
         {
-            return new MillimeterPerSecond(_value / 0.0019438444924M);
+            return new MillimeterPerSecond(Value / 0.0019438444924M);
         }
 
         public MilesPerHour ToMilesPerHour()
         {
-            return new MilesPerHour(_value / 0.8689762418647827882858282676M);
+            return new MilesPerHour(Value / 0.8689762418647827882858282676M);
         }
 
         public ISpeed ToUnit(string symbol)
@@ -97,107 +100,107 @@ namespace Codeworx.Units.Defaults.SpeedDimension
 
         public static Knots operator +(Knots first, ISpeed second)
         {
-            return new Knots(first._value + second.ToKnots()._value);
+            return new Knots(first.Value + second.ToKnots().Value);
         }
 
         public static Knots operator -(Knots first, ISpeed second)
         {
-            return new Knots(first._value - second.ToKnots()._value);
+            return new Knots(first.Value - second.ToKnots().Value);
         }
 
         public static Knots operator +(Knots first, decimal second)
         {
-            return new Knots(first._value + second);
+            return new Knots(first.Value + second);
         }
 
         public static Knots operator -(Knots first, decimal second)
         {
-            return new Knots(first._value - second);
+            return new Knots(first.Value - second);
         }
 
         public static Knots operator *(Knots first, decimal second)
         {
-            return new Knots(first._value * second);
+            return new Knots(first.Value * second);
         }
 
         public static Knots operator /(Knots first, decimal second)
         {
-            return new Knots(first._value / second);
+            return new Knots(first.Value / second);
         }
 
         public static decimal operator /(Knots first, ISpeed second)
         {
-            return first._value / second.ToKnots()._value;
+            return first.Value / second.ToKnots().Value;
         }
 
         public static Knots operator -(Knots first)
         {
-            return new Knots(-first._value);
+            return new Knots(-first.Value);
         }
 
         public static bool operator>(Knots first, ISpeed second)
         {
-            return first._value > second.ToKnots()._value;
+            return first.Value > second.ToKnots().Value;
         }
 
         public static bool operator >=(Knots first, ISpeed second)
         {
-            return first._value >= second.ToKnots()._value;
+            return first.Value >= second.ToKnots().Value;
         }
 
         public static bool operator <(Knots first, ISpeed second)
         {
-            return first._value < second.ToKnots()._value;
+            return first.Value < second.ToKnots().Value;
         }
 
         public static bool operator <=(Knots first, ISpeed second)
         {
-            return first._value <= second.ToKnots()._value;
+            return first.Value <= second.ToKnots().Value;
         }
 
         public static bool operator ==(Knots first, ISpeed second)
         {
-            return first._value == second.ToKnots()._value;
+            return first.Value == second.ToKnots().Value;
         }
 
         public static bool operator !=(Knots first, ISpeed second)
         {
-            return first._value != second.ToKnots()._value;
+            return first.Value != second.ToKnots().Value;
         }
 
         public static bool operator>(Knots first, Knots second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(Knots first, Knots second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(Knots first, Knots second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(Knots first, Knots second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(Knots first, Knots second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(Knots first, Knots second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -210,13 +213,13 @@ namespace Codeworx.Units.Defaults.SpeedDimension
             if (obj == null)
                 return 1;
             if (obj is ISpeed conv)
-                return this._value.CompareTo(conv.ToKnots()._value);
+                return this.Value.CompareTo(conv.ToKnots().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "kt";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "kt";
         }
     }
 }

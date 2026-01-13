@@ -140,7 +140,7 @@ export class {{{UnitName}}} extends I{{{DimensionName}}} {
 {{/Dimensions}}
 
 export class DimensionHelper {
-  constructor(public parse: (value: string) => IDimension, public parseWithSymbol: (symbol: string, value: number) => IDimension, public getSymbols: () => string[], public defaultSymbol: string) { }
+  constructor(public parse: (value: string) => IDimension, public parseWithSymbol: (symbol: string, value: number) => IDimension, public getSymbols: () => string[], public defaultSymbol: string, public metricSymbol: string, public imperialSymbol: string) { }
 
   public static GetHelper(
     dimensionName: DimensionName
@@ -150,7 +150,7 @@ export class DimensionHelper {
     
 {{#Dimensions}}
       case '{{{DimensionName}}}':
-        return new DimensionHelper(I{{{DimensionName}}}.parse, I{{{DimensionName}}}.parseWithSymbol, I{{{DimensionName}}}.getSymbols, I{{{DimensionName}}}.DefaultSymbol);
+        return new DimensionHelper(I{{{DimensionName}}}.parse, I{{{DimensionName}}}.parseWithSymbol, I{{{DimensionName}}}.getSymbols, I{{{DimensionName}}}.DefaultSymbol, I{{{DimensionName}}}.MetricSymbol, I{{{DimensionName}}}.ImperialSymbol);
 {{/Dimensions}}
     }
 

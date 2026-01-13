@@ -9,43 +9,46 @@ namespace Codeworx.Units.Defaults.SpeedDimension
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
     public struct KilometerPerHour : ISpeed
     {
-        private readonly decimal _value;
-        decimal IUnitBase.BaseValue => _value;
-        public string Symbol => "km/h";
-        public string Key => "Speed_KilometerPerHour";
-        public UnitSystem System => UnitSystem.Both;
-        public string DefaultImperial => ISpeed.DefaultImperial;
-        public string DefaultMetric => ISpeed.DefaultMetric;
+        public decimal Value { get; }
+
+        string IUnitBase.Symbol => KilometerPerHour.Symbol;
+        public static string Symbol => "km/h";
+
+        string IUnitBase.Key => KilometerPerHour.Key;
+        public static string Key => "Speed_KilometerPerHour";
+
+        UnitSystem IUnitBase.System => KilometerPerHour.System;
+        public static UnitSystem System => UnitSystem.Both;
 
         public KilometerPerHour(decimal val)
         {
-            _value = val;
+            Value = val;
         }
 
         public MeterPerSecond ToMeterPerSecond()
         {
-            return new MeterPerSecond(_value / 3.6M);
+            return new MeterPerSecond(Value / 3.6M);
         }
 
         public FeetPerSecond ToFeetPerSecond()
         {
-            return new FeetPerSecond(_value / 1.0972800000043891200000175565M);
+            return new FeetPerSecond(Value / 1.0972800000043891200000175565M);
         }
 
         public KilometerPerHour ToKilometerPerHour() => this;
         public Knots ToKnots()
         {
-            return new Knots(_value / 1.8520000000386862222230303344M);
+            return new Knots(Value / 1.8520000000386862222230303344M);
         }
 
         public MillimeterPerSecond ToMillimeterPerSecond()
         {
-            return new MillimeterPerSecond(_value / 0.0036M);
+            return new MillimeterPerSecond(Value / 0.0036M);
         }
 
         public MilesPerHour ToMilesPerHour()
         {
-            return new MilesPerHour(_value / 1.6093439999671951319046686944M);
+            return new MilesPerHour(Value / 1.6093439999671951319046686944M);
         }
 
         public ISpeed ToUnit(string symbol)
@@ -97,107 +100,107 @@ namespace Codeworx.Units.Defaults.SpeedDimension
 
         public static KilometerPerHour operator +(KilometerPerHour first, ISpeed second)
         {
-            return new KilometerPerHour(first._value + second.ToKilometerPerHour()._value);
+            return new KilometerPerHour(first.Value + second.ToKilometerPerHour().Value);
         }
 
         public static KilometerPerHour operator -(KilometerPerHour first, ISpeed second)
         {
-            return new KilometerPerHour(first._value - second.ToKilometerPerHour()._value);
+            return new KilometerPerHour(first.Value - second.ToKilometerPerHour().Value);
         }
 
         public static KilometerPerHour operator +(KilometerPerHour first, decimal second)
         {
-            return new KilometerPerHour(first._value + second);
+            return new KilometerPerHour(first.Value + second);
         }
 
         public static KilometerPerHour operator -(KilometerPerHour first, decimal second)
         {
-            return new KilometerPerHour(first._value - second);
+            return new KilometerPerHour(first.Value - second);
         }
 
         public static KilometerPerHour operator *(KilometerPerHour first, decimal second)
         {
-            return new KilometerPerHour(first._value * second);
+            return new KilometerPerHour(first.Value * second);
         }
 
         public static KilometerPerHour operator /(KilometerPerHour first, decimal second)
         {
-            return new KilometerPerHour(first._value / second);
+            return new KilometerPerHour(first.Value / second);
         }
 
         public static decimal operator /(KilometerPerHour first, ISpeed second)
         {
-            return first._value / second.ToKilometerPerHour()._value;
+            return first.Value / second.ToKilometerPerHour().Value;
         }
 
         public static KilometerPerHour operator -(KilometerPerHour first)
         {
-            return new KilometerPerHour(-first._value);
+            return new KilometerPerHour(-first.Value);
         }
 
         public static bool operator>(KilometerPerHour first, ISpeed second)
         {
-            return first._value > second.ToKilometerPerHour()._value;
+            return first.Value > second.ToKilometerPerHour().Value;
         }
 
         public static bool operator >=(KilometerPerHour first, ISpeed second)
         {
-            return first._value >= second.ToKilometerPerHour()._value;
+            return first.Value >= second.ToKilometerPerHour().Value;
         }
 
         public static bool operator <(KilometerPerHour first, ISpeed second)
         {
-            return first._value < second.ToKilometerPerHour()._value;
+            return first.Value < second.ToKilometerPerHour().Value;
         }
 
         public static bool operator <=(KilometerPerHour first, ISpeed second)
         {
-            return first._value <= second.ToKilometerPerHour()._value;
+            return first.Value <= second.ToKilometerPerHour().Value;
         }
 
         public static bool operator ==(KilometerPerHour first, ISpeed second)
         {
-            return first._value == second.ToKilometerPerHour()._value;
+            return first.Value == second.ToKilometerPerHour().Value;
         }
 
         public static bool operator !=(KilometerPerHour first, ISpeed second)
         {
-            return first._value != second.ToKilometerPerHour()._value;
+            return first.Value != second.ToKilometerPerHour().Value;
         }
 
         public static bool operator>(KilometerPerHour first, KilometerPerHour second)
         {
-            return first._value > second._value;
+            return first.Value > second.Value;
         }
 
         public static bool operator >=(KilometerPerHour first, KilometerPerHour second)
         {
-            return first._value >= second._value;
+            return first.Value >= second.Value;
         }
 
         public static bool operator <(KilometerPerHour first, KilometerPerHour second)
         {
-            return first._value < second._value;
+            return first.Value < second.Value;
         }
 
         public static bool operator <=(KilometerPerHour first, KilometerPerHour second)
         {
-            return first._value <= second._value;
+            return first.Value <= second.Value;
         }
 
         public static bool operator ==(KilometerPerHour first, KilometerPerHour second)
         {
-            return first._value == second._value;
+            return first.Value == second.Value;
         }
 
         public static bool operator !=(KilometerPerHour first, KilometerPerHour second)
         {
-            return first._value != second._value;
+            return first.Value != second.Value;
         }
 
         public override int GetHashCode()
         {
-            return -1939223833 + _value.GetHashCode();
+            return -1939223833 + Value.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -210,13 +213,13 @@ namespace Codeworx.Units.Defaults.SpeedDimension
             if (obj == null)
                 return 1;
             if (obj is ISpeed conv)
-                return this._value.CompareTo(conv.ToKilometerPerHour()._value);
+                return this.Value.CompareTo(conv.ToKilometerPerHour().Value);
             throw new ArgumentException("obj is not from same dimension interface");
         }
 
         public override string ToString()
         {
-            return $"{_value.ToString(CultureInfo.InvariantCulture)} " + "km/h";
+            return $"{Value.ToString(CultureInfo.InvariantCulture)} " + "km/h";
         }
     }
 }
