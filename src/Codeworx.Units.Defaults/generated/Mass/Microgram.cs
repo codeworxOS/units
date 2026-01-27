@@ -120,6 +120,16 @@ namespace Codeworx.Units.Defaults.MassDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IMass Add(IMass addition)
+        {
+            return new Microgram(Value + addition.ToMicrogram().Value);
+        }
+
+        public IMass Subtract(IMass subtraction)
+        {
+            return new Microgram(Value - subtraction.ToMicrogram().Value);
+        }
+
         public static implicit operator Microgram(decimal value)
         {
             return new Microgram(value);

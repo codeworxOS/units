@@ -17,6 +17,8 @@ namespace Codeworx.Units.Defaults
         VolumeDimension.Liter ToLiter();
         VolumeDimension.Quart ToQuart();
         new IVolume ToUnit(string symbol);
+        public IVolume Add(IVolume addition);
+        public IVolume Subtract(IVolume subtract);
         public static IVolume Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");
@@ -36,6 +38,16 @@ namespace Codeworx.Units.Defaults
 
         public static string DefaultImperial => "in³";
         public static string DefaultMetric => "m³";
+
+        public static IVolume operator +(IVolume first, IVolume second)
+        {
+            return first.Add(second);
+        }
+
+        public static IVolume operator -(IVolume first, IVolume second)
+        {
+            return first.Subtract(second);
+        }
 
         public static IVolume Parse(string symbolOrKey, decimal value)
         {

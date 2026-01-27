@@ -75,6 +75,16 @@ namespace Codeworx.Units.Defaults.TimeDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public ITime Add(ITime addition)
+        {
+            return new Hour(Value + addition.ToHour().Value);
+        }
+
+        public ITime Subtract(ITime subtraction)
+        {
+            return new Hour(Value - subtraction.ToHour().Value);
+        }
+
         public static implicit operator Hour(decimal value)
         {
             return new Hour(value);

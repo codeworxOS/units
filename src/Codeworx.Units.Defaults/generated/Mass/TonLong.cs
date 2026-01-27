@@ -120,6 +120,16 @@ namespace Codeworx.Units.Defaults.MassDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IMass Add(IMass addition)
+        {
+            return new TonLong(Value + addition.ToTonLong().Value);
+        }
+
+        public IMass Subtract(IMass subtraction)
+        {
+            return new TonLong(Value - subtraction.ToTonLong().Value);
+        }
+
         public static implicit operator TonLong(decimal value)
         {
             return new TonLong(value);

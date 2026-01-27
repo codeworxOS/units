@@ -93,6 +93,16 @@ namespace Codeworx.Units.Defaults.SpeedDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public ISpeed Add(ISpeed addition)
+        {
+            return new MilesPerHour(Value + addition.ToMilesPerHour().Value);
+        }
+
+        public ISpeed Subtract(ISpeed subtraction)
+        {
+            return new MilesPerHour(Value - subtraction.ToMilesPerHour().Value);
+        }
+
         public static implicit operator MilesPerHour(decimal value)
         {
             return new MilesPerHour(value);

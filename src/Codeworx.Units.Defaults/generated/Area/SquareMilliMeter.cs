@@ -102,6 +102,16 @@ namespace Codeworx.Units.Defaults.AreaDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IArea Add(IArea addition)
+        {
+            return new SquareMillimeter(Value + addition.ToSquareMillimeter().Value);
+        }
+
+        public IArea Subtract(IArea subtraction)
+        {
+            return new SquareMillimeter(Value - subtraction.ToSquareMillimeter().Value);
+        }
+
         public static implicit operator SquareMillimeter(decimal value)
         {
             return new SquareMillimeter(value);

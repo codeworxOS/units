@@ -120,6 +120,16 @@ namespace Codeworx.Units.Defaults.MassDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IMass Add(IMass addition)
+        {
+            return new Ounce(Value + addition.ToOunce().Value);
+        }
+
+        public IMass Subtract(IMass subtraction)
+        {
+            return new Ounce(Value - subtraction.ToOunce().Value);
+        }
+
         public static implicit operator Ounce(decimal value)
         {
             return new Ounce(value);

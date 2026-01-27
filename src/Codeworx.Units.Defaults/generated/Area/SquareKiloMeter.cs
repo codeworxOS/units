@@ -102,6 +102,16 @@ namespace Codeworx.Units.Defaults.AreaDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IArea Add(IArea addition)
+        {
+            return new SquareKilometer(Value + addition.ToSquareKilometer().Value);
+        }
+
+        public IArea Subtract(IArea subtraction)
+        {
+            return new SquareKilometer(Value - subtraction.ToSquareKilometer().Value);
+        }
+
         public static implicit operator SquareKilometer(decimal value)
         {
             return new SquareKilometer(value);

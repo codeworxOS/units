@@ -102,6 +102,16 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IVolume Add(IVolume addition)
+        {
+            return new Gallon(Value + addition.ToGallon().Value);
+        }
+
+        public IVolume Subtract(IVolume subtraction)
+        {
+            return new Gallon(Value - subtraction.ToGallon().Value);
+        }
+
         public static implicit operator Gallon(decimal value)
         {
             return new Gallon(value);

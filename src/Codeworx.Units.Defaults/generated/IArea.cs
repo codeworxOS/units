@@ -17,6 +17,8 @@ namespace Codeworx.Units.Defaults
         AreaDimension.SquareFeet ToSquareFeet();
         AreaDimension.SquareInch ToSquareInch();
         new IArea ToUnit(string symbol);
+        public IArea Add(IArea addition);
+        public IArea Subtract(IArea subtract);
         public static IArea Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");
@@ -36,6 +38,16 @@ namespace Codeworx.Units.Defaults
 
         public static string DefaultImperial => "in²";
         public static string DefaultMetric => "m²";
+
+        public static IArea operator +(IArea first, IArea second)
+        {
+            return first.Add(second);
+        }
+
+        public static IArea operator -(IArea first, IArea second)
+        {
+            return first.Subtract(second);
+        }
 
         public static IArea Parse(string symbolOrKey, decimal value)
         {

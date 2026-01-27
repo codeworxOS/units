@@ -14,6 +14,8 @@ namespace Codeworx.Units.Defaults
         TimeDimension.Minute ToMinute();
         TimeDimension.Millisecond ToMillisecond();
         new ITime ToUnit(string symbol);
+        public ITime Add(ITime addition);
+        public ITime Subtract(ITime subtract);
         public static ITime Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");
@@ -33,6 +35,16 @@ namespace Codeworx.Units.Defaults
 
         public static string DefaultImperial => "s";
         public static string DefaultMetric => "s";
+
+        public static ITime operator +(ITime first, ITime second)
+        {
+            return first.Add(second);
+        }
+
+        public static ITime operator -(ITime first, ITime second)
+        {
+            return first.Subtract(second);
+        }
 
         public static ITime Parse(string symbolOrKey, decimal value)
         {

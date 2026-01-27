@@ -66,6 +66,16 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public ITemperature Add(ITemperature addition)
+        {
+            return new Kelvin(Value + addition.ToKelvin().Value);
+        }
+
+        public ITemperature Subtract(ITemperature subtraction)
+        {
+            return new Kelvin(Value - subtraction.ToKelvin().Value);
+        }
+
         public static implicit operator Kelvin(decimal value)
         {
             return new Kelvin(value);

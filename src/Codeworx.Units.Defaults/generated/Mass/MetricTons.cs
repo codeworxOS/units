@@ -120,6 +120,16 @@ namespace Codeworx.Units.Defaults.MassDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IMass Add(IMass addition)
+        {
+            return new MetricTons(Value + addition.ToMetricTons().Value);
+        }
+
+        public IMass Subtract(IMass subtraction)
+        {
+            return new MetricTons(Value - subtraction.ToMetricTons().Value);
+        }
+
         public static implicit operator MetricTons(decimal value)
         {
             return new MetricTons(value);

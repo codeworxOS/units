@@ -111,6 +111,16 @@ namespace Codeworx.Units.Defaults.DistanceDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IDistance Add(IDistance addition)
+        {
+            return new Centimeter(Value + addition.ToCentimeter().Value);
+        }
+
+        public IDistance Subtract(IDistance subtraction)
+        {
+            return new Centimeter(Value - subtraction.ToCentimeter().Value);
+        }
+
         public static implicit operator Centimeter(decimal value)
         {
             return new Centimeter(value);

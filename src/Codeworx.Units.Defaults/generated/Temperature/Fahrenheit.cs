@@ -66,6 +66,16 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public ITemperature Add(ITemperature addition)
+        {
+            return new Fahrenheit(Value + addition.ToFahrenheit().Value);
+        }
+
+        public ITemperature Subtract(ITemperature subtraction)
+        {
+            return new Fahrenheit(Value - subtraction.ToFahrenheit().Value);
+        }
+
         public static implicit operator Fahrenheit(decimal value)
         {
             return new Fahrenheit(value);

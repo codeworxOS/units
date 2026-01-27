@@ -102,6 +102,16 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IVolume Add(IVolume addition)
+        {
+            return new CubicInch(Value + addition.ToCubicInch().Value);
+        }
+
+        public IVolume Subtract(IVolume subtraction)
+        {
+            return new CubicInch(Value - subtraction.ToCubicInch().Value);
+        }
+
         public static implicit operator CubicInch(decimal value)
         {
             return new CubicInch(value);

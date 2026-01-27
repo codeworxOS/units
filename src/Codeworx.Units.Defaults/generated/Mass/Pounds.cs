@@ -120,6 +120,16 @@ namespace Codeworx.Units.Defaults.MassDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IMass Add(IMass addition)
+        {
+            return new Pounds(Value + addition.ToPounds().Value);
+        }
+
+        public IMass Subtract(IMass subtraction)
+        {
+            return new Pounds(Value - subtraction.ToPounds().Value);
+        }
+
         public static implicit operator Pounds(decimal value)
         {
             return new Pounds(value);

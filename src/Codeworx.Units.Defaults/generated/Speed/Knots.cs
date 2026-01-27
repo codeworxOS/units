@@ -93,6 +93,16 @@ namespace Codeworx.Units.Defaults.SpeedDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public ISpeed Add(ISpeed addition)
+        {
+            return new Knots(Value + addition.ToKnots().Value);
+        }
+
+        public ISpeed Subtract(ISpeed subtraction)
+        {
+            return new Knots(Value - subtraction.ToKnots().Value);
+        }
+
         public static implicit operator Knots(decimal value)
         {
             return new Knots(value);

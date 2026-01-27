@@ -18,6 +18,8 @@ namespace Codeworx.Units.Defaults
         DistanceDimension.Feet ToFeet();
         DistanceDimension.Inch ToInch();
         new IDistance ToUnit(string symbol);
+        public IDistance Add(IDistance addition);
+        public IDistance Subtract(IDistance subtract);
         public static IDistance Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");
@@ -37,6 +39,16 @@ namespace Codeworx.Units.Defaults
 
         public static string DefaultImperial => "yard";
         public static string DefaultMetric => "m";
+
+        public static IDistance operator +(IDistance first, IDistance second)
+        {
+            return first.Add(second);
+        }
+
+        public static IDistance operator -(IDistance first, IDistance second)
+        {
+            return first.Subtract(second);
+        }
 
         public static IDistance Parse(string symbolOrKey, decimal value)
         {

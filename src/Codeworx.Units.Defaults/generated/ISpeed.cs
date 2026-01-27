@@ -16,6 +16,8 @@ namespace Codeworx.Units.Defaults
         SpeedDimension.MillimeterPerSecond ToMillimeterPerSecond();
         SpeedDimension.MilesPerHour ToMilesPerHour();
         new ISpeed ToUnit(string symbol);
+        public ISpeed Add(ISpeed addition);
+        public ISpeed Subtract(ISpeed subtract);
         public static ISpeed Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");
@@ -35,6 +37,16 @@ namespace Codeworx.Units.Defaults
 
         public static string DefaultImperial => "mph";
         public static string DefaultMetric => "km/h";
+
+        public static ISpeed operator +(ISpeed first, ISpeed second)
+        {
+            return first.Add(second);
+        }
+
+        public static ISpeed operator -(ISpeed first, ISpeed second)
+        {
+            return first.Subtract(second);
+        }
 
         public static ISpeed Parse(string symbolOrKey, decimal value)
         {

@@ -19,6 +19,8 @@ namespace Codeworx.Units.Defaults
         MassDimension.TonShort ToTonShort();
         MassDimension.MetricTons ToMetricTons();
         new IMass ToUnit(string symbol);
+        public IMass Add(IMass addition);
+        public IMass Subtract(IMass subtract);
         public static IMass Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");
@@ -38,6 +40,16 @@ namespace Codeworx.Units.Defaults
 
         public static string DefaultImperial => "lbs";
         public static string DefaultMetric => "kg";
+
+        public static IMass operator +(IMass first, IMass second)
+        {
+            return first.Add(second);
+        }
+
+        public static IMass operator -(IMass first, IMass second)
+        {
+            return first.Subtract(second);
+        }
 
         public static IMass Parse(string symbolOrKey, decimal value)
         {

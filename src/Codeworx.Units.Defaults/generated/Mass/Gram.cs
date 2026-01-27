@@ -120,6 +120,16 @@ namespace Codeworx.Units.Defaults.MassDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IMass Add(IMass addition)
+        {
+            return new Gram(Value + addition.ToGram().Value);
+        }
+
+        public IMass Subtract(IMass subtraction)
+        {
+            return new Gram(Value - subtraction.ToGram().Value);
+        }
+
         public static implicit operator Gram(decimal value)
         {
             return new Gram(value);

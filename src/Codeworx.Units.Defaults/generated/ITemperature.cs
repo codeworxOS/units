@@ -13,6 +13,8 @@ namespace Codeworx.Units.Defaults
         TemperatureDimension.Fahrenheit ToFahrenheit();
         TemperatureDimension.Kelvin ToKelvin();
         new ITemperature ToUnit(string symbol);
+        public ITemperature Add(ITemperature addition);
+        public ITemperature Subtract(ITemperature subtract);
         public static ITemperature Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");
@@ -32,6 +34,16 @@ namespace Codeworx.Units.Defaults
 
         public static string DefaultImperial => "F";
         public static string DefaultMetric => "°C";
+
+        public static ITemperature operator +(ITemperature first, ITemperature second)
+        {
+            return first.Add(second);
+        }
+
+        public static ITemperature operator -(ITemperature first, ITemperature second)
+        {
+            return first.Subtract(second);
+        }
 
         public static ITemperature Parse(string symbolOrKey, decimal value)
         {

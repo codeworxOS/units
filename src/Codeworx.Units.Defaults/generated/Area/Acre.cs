@@ -102,6 +102,16 @@ namespace Codeworx.Units.Defaults.AreaDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IArea Add(IArea addition)
+        {
+            return new Acre(Value + addition.ToAcre().Value);
+        }
+
+        public IArea Subtract(IArea subtraction)
+        {
+            return new Acre(Value - subtraction.ToAcre().Value);
+        }
+
         public static implicit operator Acre(decimal value)
         {
             return new Acre(value);

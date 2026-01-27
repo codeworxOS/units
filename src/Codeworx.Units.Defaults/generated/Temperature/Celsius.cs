@@ -66,6 +66,16 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public ITemperature Add(ITemperature addition)
+        {
+            return new Celsius(Value + addition.ToCelsius().Value);
+        }
+
+        public ITemperature Subtract(ITemperature subtraction)
+        {
+            return new Celsius(Value - subtraction.ToCelsius().Value);
+        }
+
         public static implicit operator Celsius(decimal value)
         {
             return new Celsius(value);

@@ -93,6 +93,16 @@ namespace Codeworx.Units.Defaults.SpeedDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public ISpeed Add(ISpeed addition)
+        {
+            return new FeetPerSecond(Value + addition.ToFeetPerSecond().Value);
+        }
+
+        public ISpeed Subtract(ISpeed subtraction)
+        {
+            return new FeetPerSecond(Value - subtraction.ToFeetPerSecond().Value);
+        }
+
         public static implicit operator FeetPerSecond(decimal value)
         {
             return new FeetPerSecond(value);

@@ -102,6 +102,16 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IVolume Add(IVolume addition)
+        {
+            return new Quart(Value + addition.ToQuart().Value);
+        }
+
+        public IVolume Subtract(IVolume subtraction)
+        {
+            return new Quart(Value - subtraction.ToQuart().Value);
+        }
+
         public static implicit operator Quart(decimal value)
         {
             return new Quart(value);

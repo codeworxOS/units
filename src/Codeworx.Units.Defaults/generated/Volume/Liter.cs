@@ -102,6 +102,16 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             throw new NotSupportedException($"Symbol {symbol} not supported.");
         }
 
+        public IVolume Add(IVolume addition)
+        {
+            return new Liter(Value + addition.ToLiter().Value);
+        }
+
+        public IVolume Subtract(IVolume subtraction)
+        {
+            return new Liter(Value - subtraction.ToLiter().Value);
+        }
+
         public static implicit operator Liter(decimal value)
         {
             return new Liter(value);
