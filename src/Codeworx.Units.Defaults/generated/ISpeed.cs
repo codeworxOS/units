@@ -9,12 +9,12 @@ namespace Codeworx.Units.Defaults
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
     public partial interface ISpeed : IUnitBase, IComparable
     {
-        SpeedDimension.MeterPerSecond ToMeterPerSecond();
-        SpeedDimension.FeetPerSecond ToFeetPerSecond();
-        SpeedDimension.KilometerPerHour ToKilometerPerHour();
-        SpeedDimension.Knots ToKnots();
         SpeedDimension.MillimeterPerSecond ToMillimeterPerSecond();
+        SpeedDimension.MeterPerSecond ToMeterPerSecond();
+        SpeedDimension.KilometerPerHour ToKilometerPerHour();
+        SpeedDimension.FeetPerSecond ToFeetPerSecond();
         SpeedDimension.MilesPerHour ToMilesPerHour();
+        SpeedDimension.Knots ToKnots();
         new ISpeed ToUnit(string symbol);
         ISpeed Add(ISpeed addition);
         ISpeed Subtract(ISpeed subtract);
@@ -52,24 +52,24 @@ namespace Codeworx.Units.Defaults
         {
             switch (symbolOrKey)
             {
-                case "m/s":
-                case "Speed_MeterPerSecond":
-                    return new SpeedDimension.MeterPerSecond(value);
-                case "ft/s":
-                case "Speed_FeetPerSecond":
-                    return new SpeedDimension.FeetPerSecond(value);
-                case "km/h":
-                case "Speed_KilometerPerHour":
-                    return new SpeedDimension.KilometerPerHour(value);
-                case "kt":
-                case "Speed_Knots":
-                    return new SpeedDimension.Knots(value);
                 case "mm/s":
                 case "Speed_MillimeterPerSecond":
                     return new SpeedDimension.MillimeterPerSecond(value);
+                case "m/s":
+                case "Speed_MeterPerSecond":
+                    return new SpeedDimension.MeterPerSecond(value);
+                case "km/h":
+                case "Speed_KilometerPerHour":
+                    return new SpeedDimension.KilometerPerHour(value);
+                case "ft/s":
+                case "Speed_FeetPerSecond":
+                    return new SpeedDimension.FeetPerSecond(value);
                 case "mph":
                 case "Speed_MilesPerHour":
                     return new SpeedDimension.MilesPerHour(value);
+                case "kt":
+                case "Speed_Knots":
+                    return new SpeedDimension.Knots(value);
             }
 
             throw new NotSupportedException($"Symbol {symbolOrKey} not supported.");

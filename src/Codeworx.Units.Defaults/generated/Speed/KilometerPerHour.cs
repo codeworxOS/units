@@ -18,27 +18,11 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         public static string Key => "Speed_KilometerPerHour";
 
         UnitSystem IUnitBase.System => KilometerPerHour.System;
-        public static UnitSystem System => UnitSystem.Both;
+        public static UnitSystem System => UnitSystem.Metric;
 
         public KilometerPerHour(decimal val)
         {
             Value = val;
-        }
-
-        public MeterPerSecond ToMeterPerSecond()
-        {
-            return new MeterPerSecond(Value / 3.6M);
-        }
-
-        public FeetPerSecond ToFeetPerSecond()
-        {
-            return new FeetPerSecond(Value / 1.0972800000043891200000175565M);
-        }
-
-        public KilometerPerHour ToKilometerPerHour() => this;
-        public Knots ToKnots()
-        {
-            return new Knots(Value / 1.8520000000386862222230303344M);
         }
 
         public MillimeterPerSecond ToMillimeterPerSecond()
@@ -46,27 +30,43 @@ namespace Codeworx.Units.Defaults.SpeedDimension
             return new MillimeterPerSecond(Value / 0.0036M);
         }
 
+        public MeterPerSecond ToMeterPerSecond()
+        {
+            return new MeterPerSecond(Value / 3.6M);
+        }
+
+        public KilometerPerHour ToKilometerPerHour() => this;
+        public FeetPerSecond ToFeetPerSecond()
+        {
+            return new FeetPerSecond(Value / 1.0972800000043891200000175565M);
+        }
+
         public MilesPerHour ToMilesPerHour()
         {
             return new MilesPerHour(Value / 1.6093439999671951319046686944M);
+        }
+
+        public Knots ToKnots()
+        {
+            return new Knots(Value / 1.8520000000386862222230303344M);
         }
 
         public ISpeed ToUnit(string symbol)
         {
             switch (symbol)
             {
-                case "m/s":
-                    return ToMeterPerSecond();
-                case "ft/s":
-                    return ToFeetPerSecond();
-                case "km/h":
-                    return ToKilometerPerHour();
-                case "kt":
-                    return ToKnots();
                 case "mm/s":
                     return ToMillimeterPerSecond();
+                case "m/s":
+                    return ToMeterPerSecond();
+                case "km/h":
+                    return ToKilometerPerHour();
+                case "ft/s":
+                    return ToFeetPerSecond();
                 case "mph":
                     return ToMilesPerHour();
+                case "kt":
+                    return ToKnots();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
@@ -76,18 +76,18 @@ namespace Codeworx.Units.Defaults.SpeedDimension
         {
             switch (symbol)
             {
-                case "m/s":
-                    return ToMeterPerSecond();
-                case "ft/s":
-                    return ToFeetPerSecond();
-                case "km/h":
-                    return ToKilometerPerHour();
-                case "kt":
-                    return ToKnots();
                 case "mm/s":
                     return ToMillimeterPerSecond();
+                case "m/s":
+                    return ToMeterPerSecond();
+                case "km/h":
+                    return ToKilometerPerHour();
+                case "ft/s":
+                    return ToFeetPerSecond();
                 case "mph":
                     return ToMilesPerHour();
+                case "kt":
+                    return ToKnots();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");

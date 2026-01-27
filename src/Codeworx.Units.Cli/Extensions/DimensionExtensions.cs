@@ -38,7 +38,14 @@ namespace Codeworx.Units.Cli.Data
                 conversionPaths = newPaths;
             }
 
-            return conversionPaths.FirstOrDefault(c => c.Last() == targetUnit);
+            conversionPaths = conversionPaths.Where(c => c.Last() == targetUnit).ToList();
+
+            return conversionPaths.OrderBy(d =>
+            {
+                var flag = d.Select(c => c.System ?? UnitSystem.Both).Aggregate((f, s) => f | s);
+                return flag;
+            }
+            ).FirstOrDefault();
         }
 
         public static ExpressionSyntax GetConversionExpression(this JsonUnit[] conversionPath)

@@ -18,31 +18,11 @@ namespace Codeworx.Units.Defaults.AreaDimension
         public static string Key => "Area_SquareFeet";
 
         UnitSystem IUnitBase.System => SquareFeet.System;
-        public static UnitSystem System => UnitSystem.Both;
+        public static UnitSystem System => UnitSystem.Imperial;
 
         public SquareFeet(decimal val)
         {
             Value = val;
-        }
-
-        public SquareMeter ToSquareMeter()
-        {
-            return new SquareMeter(Value / 10.763910417M);
-        }
-
-        public Acre ToAcre()
-        {
-            return new Acre(Value / 43560.0000011747121408M);
-        }
-
-        public SquareCentimeter ToSquareCentimeter()
-        {
-            return new SquareCentimeter(Value / 0.0010763910417M);
-        }
-
-        public SquareKilometer ToSquareKilometer()
-        {
-            return new SquareKilometer(Value / 10763910.417000000M);
         }
 
         public SquareMillimeter ToSquareMillimeter()
@@ -50,30 +30,50 @@ namespace Codeworx.Units.Defaults.AreaDimension
             return new SquareMillimeter(Value / 0.000010763910417M);
         }
 
-        public SquareFeet ToSquareFeet() => this;
+        public SquareCentimeter ToSquareCentimeter()
+        {
+            return new SquareCentimeter(Value / 0.0010763910417M);
+        }
+
+        public SquareMeter ToSquareMeter()
+        {
+            return new SquareMeter(Value / 10.763910417M);
+        }
+
+        public SquareKilometer ToSquareKilometer()
+        {
+            return new SquareKilometer(Value / 10763910.417000000M);
+        }
+
         public SquareInch ToSquareInch()
         {
             return new SquareInch(Value / 0.006944444444659497777778638M);
+        }
+
+        public SquareFeet ToSquareFeet() => this;
+        public Acre ToAcre()
+        {
+            return new Acre(Value / 43560.0000011747121408M);
         }
 
         public IArea ToUnit(string symbol)
         {
             switch (symbol)
             {
-                case "m²":
-                    return ToSquareMeter();
-                case "ac":
-                    return ToAcre();
-                case "cm²":
-                    return ToSquareCentimeter();
-                case "km²":
-                    return ToSquareKilometer();
                 case "mm²":
                     return ToSquareMillimeter();
-                case "ft²":
-                    return ToSquareFeet();
+                case "cm²":
+                    return ToSquareCentimeter();
+                case "m²":
+                    return ToSquareMeter();
+                case "km²":
+                    return ToSquareKilometer();
                 case "in²":
                     return ToSquareInch();
+                case "ft²":
+                    return ToSquareFeet();
+                case "ac":
+                    return ToAcre();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
@@ -83,20 +83,20 @@ namespace Codeworx.Units.Defaults.AreaDimension
         {
             switch (symbol)
             {
-                case "m²":
-                    return ToSquareMeter();
-                case "ac":
-                    return ToAcre();
-                case "cm²":
-                    return ToSquareCentimeter();
-                case "km²":
-                    return ToSquareKilometer();
                 case "mm²":
                     return ToSquareMillimeter();
-                case "ft²":
-                    return ToSquareFeet();
+                case "cm²":
+                    return ToSquareCentimeter();
+                case "m²":
+                    return ToSquareMeter();
+                case "km²":
+                    return ToSquareKilometer();
                 case "in²":
                     return ToSquareInch();
+                case "ft²":
+                    return ToSquareFeet();
+                case "ac":
+                    return ToAcre();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");

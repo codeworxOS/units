@@ -9,12 +9,12 @@ namespace Codeworx.Units.Defaults
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
     public partial interface IVolume : IUnitBase, IComparable
     {
-        VolumeDimension.CubicMeter ToCubicMeter();
         VolumeDimension.CubicCentimeter ToCubicCentimeter();
-        VolumeDimension.CubicFoot ToCubicFoot();
-        VolumeDimension.CubicInch ToCubicInch();
-        VolumeDimension.Gallon ToGallon();
         VolumeDimension.Liter ToLiter();
+        VolumeDimension.CubicMeter ToCubicMeter();
+        VolumeDimension.CubicInch ToCubicInch();
+        VolumeDimension.CubicFoot ToCubicFoot();
+        VolumeDimension.Gallon ToGallon();
         VolumeDimension.Quart ToQuart();
         new IVolume ToUnit(string symbol);
         IVolume Add(IVolume addition);
@@ -53,24 +53,24 @@ namespace Codeworx.Units.Defaults
         {
             switch (symbolOrKey)
             {
-                case "m³":
-                case "Volume_CubicMeter":
-                    return new VolumeDimension.CubicMeter(value);
                 case "cm³":
                 case "Volume_CubicCentimeter":
                     return new VolumeDimension.CubicCentimeter(value);
-                case "ft³":
-                case "Volume_CubicFoot":
-                    return new VolumeDimension.CubicFoot(value);
-                case "in³":
-                case "Volume_CubicInch":
-                    return new VolumeDimension.CubicInch(value);
-                case "gal":
-                case "Volume_Gallon":
-                    return new VolumeDimension.Gallon(value);
                 case "l":
                 case "Volume_Liter":
                     return new VolumeDimension.Liter(value);
+                case "m³":
+                case "Volume_CubicMeter":
+                    return new VolumeDimension.CubicMeter(value);
+                case "in³":
+                case "Volume_CubicInch":
+                    return new VolumeDimension.CubicInch(value);
+                case "ft³":
+                case "Volume_CubicFoot":
+                    return new VolumeDimension.CubicFoot(value);
+                case "gal":
+                case "Volume_Gallon":
+                    return new VolumeDimension.Gallon(value);
                 case "qt":
                 case "Volume_Quart":
                     return new VolumeDimension.Quart(value);

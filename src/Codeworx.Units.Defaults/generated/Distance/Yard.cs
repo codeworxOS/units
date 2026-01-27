@@ -18,42 +18,31 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         public static string Key => "Distance_Yard";
 
         UnitSystem IUnitBase.System => Yard.System;
-        public static UnitSystem System => UnitSystem.Both;
+        public static UnitSystem System => UnitSystem.Imperial;
 
         public Yard(decimal val)
         {
             Value = val;
         }
 
-        public Meter ToMeter()
+        public Millimeter ToMillimeter()
         {
-            return new Meter(Value / 1.0936132983M);
+            return new Millimeter(Value * 914.4000M);
         }
 
         public Centimeter ToCentimeter()
         {
-            return new Centimeter(Value / 0.010936132983M);
+            return new Centimeter(Value * 91.4400M);
+        }
+
+        public Meter ToMeter()
+        {
+            return new Meter(Value * 0.9144M);
         }
 
         public Kilometer ToKilometer()
         {
-            return new Kilometer(Value / 1093.6132983000M);
-        }
-
-        public Mile ToMile()
-        {
-            return new Mile(Value / 1759.9999999393152M);
-        }
-
-        public Millimeter ToMillimeter()
-        {
-            return new Millimeter(Value / 0.0010936132983M);
-        }
-
-        public Yard ToYard() => this;
-        public Feet ToFeet()
-        {
-            return new Feet(Value * 3M);
+            return new Kilometer(Value * 0.0009144M);
         }
 
         public Inch ToInch()
@@ -61,26 +50,37 @@ namespace Codeworx.Units.Defaults.DistanceDimension
             return new Inch(Value * 36M);
         }
 
+        public Feet ToFeet()
+        {
+            return new Feet(Value * 3M);
+        }
+
+        public Yard ToYard() => this;
+        public Mile ToMile()
+        {
+            return new Mile(Value / 1760M);
+        }
+
         public IDistance ToUnit(string symbol)
         {
             switch (symbol)
             {
-                case "m":
-                    return ToMeter();
-                case "cm":
-                    return ToCentimeter();
-                case "km":
-                    return ToKilometer();
-                case "mi":
-                    return ToMile();
                 case "mm":
                     return ToMillimeter();
-                case "yard":
-                    return ToYard();
+                case "cm":
+                    return ToCentimeter();
+                case "m":
+                    return ToMeter();
+                case "km":
+                    return ToKilometer();
+                case "in":
+                    return ToInch();
                 case "ft":
                     return ToFeet();
-                case "inch":
-                    return ToInch();
+                case "yard":
+                    return ToYard();
+                case "mi":
+                    return ToMile();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
@@ -90,22 +90,22 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         {
             switch (symbol)
             {
-                case "m":
-                    return ToMeter();
-                case "cm":
-                    return ToCentimeter();
-                case "km":
-                    return ToKilometer();
-                case "mi":
-                    return ToMile();
                 case "mm":
                     return ToMillimeter();
-                case "yard":
-                    return ToYard();
+                case "cm":
+                    return ToCentimeter();
+                case "m":
+                    return ToMeter();
+                case "km":
+                    return ToKilometer();
+                case "in":
+                    return ToInch();
                 case "ft":
                     return ToFeet();
-                case "inch":
-                    return ToInch();
+                case "yard":
+                    return ToYard();
+                case "mi":
+                    return ToMile();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");

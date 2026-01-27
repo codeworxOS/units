@@ -18,7 +18,7 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
         public static string Key => "Temperature_Celsius";
 
         UnitSystem IUnitBase.System => Celsius.System;
-        public static UnitSystem System => UnitSystem.Both;
+        public static UnitSystem System => UnitSystem.Metric;
 
         public Celsius(decimal val)
         {

@@ -18,31 +18,11 @@ namespace Codeworx.Units.Defaults.AreaDimension
         public static string Key => "Area_SquareInch";
 
         UnitSystem IUnitBase.System => SquareInch.System;
-        public static UnitSystem System => UnitSystem.Both;
+        public static UnitSystem System => UnitSystem.Imperial;
 
         public SquareInch(decimal val)
         {
             Value = val;
-        }
-
-        public SquareMeter ToSquareMeter()
-        {
-            return new SquareMeter(Value / 1550.0031M);
-        }
-
-        public Acre ToAcre()
-        {
-            return new Acre(Value / 6272639.99997490944M);
-        }
-
-        public SquareCentimeter ToSquareCentimeter()
-        {
-            return new SquareCentimeter(Value / 0.15500031M);
-        }
-
-        public SquareKilometer ToSquareKilometer()
-        {
-            return new SquareKilometer(Value / 1550003100.0000M);
         }
 
         public SquareMillimeter ToSquareMillimeter()
@@ -50,30 +30,50 @@ namespace Codeworx.Units.Defaults.AreaDimension
             return new SquareMillimeter(Value / 0.0015500031M);
         }
 
+        public SquareCentimeter ToSquareCentimeter()
+        {
+            return new SquareCentimeter(Value / 0.15500031M);
+        }
+
+        public SquareMeter ToSquareMeter()
+        {
+            return new SquareMeter(Value / 1550.0031M);
+        }
+
+        public SquareKilometer ToSquareKilometer()
+        {
+            return new SquareKilometer(Value / 1550003100.0000M);
+        }
+
+        public SquareInch ToSquareInch() => this;
         public SquareFeet ToSquareFeet()
         {
             return new SquareFeet(Value / 143.99999999554065408012025821M);
         }
 
-        public SquareInch ToSquareInch() => this;
+        public Acre ToAcre()
+        {
+            return new Acre(Value / 6272639.99997490944M);
+        }
+
         public IArea ToUnit(string symbol)
         {
             switch (symbol)
             {
-                case "m²":
-                    return ToSquareMeter();
-                case "ac":
-                    return ToAcre();
-                case "cm²":
-                    return ToSquareCentimeter();
-                case "km²":
-                    return ToSquareKilometer();
                 case "mm²":
                     return ToSquareMillimeter();
-                case "ft²":
-                    return ToSquareFeet();
+                case "cm²":
+                    return ToSquareCentimeter();
+                case "m²":
+                    return ToSquareMeter();
+                case "km²":
+                    return ToSquareKilometer();
                 case "in²":
                     return ToSquareInch();
+                case "ft²":
+                    return ToSquareFeet();
+                case "ac":
+                    return ToAcre();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
@@ -83,20 +83,20 @@ namespace Codeworx.Units.Defaults.AreaDimension
         {
             switch (symbol)
             {
-                case "m²":
-                    return ToSquareMeter();
-                case "ac":
-                    return ToAcre();
-                case "cm²":
-                    return ToSquareCentimeter();
-                case "km²":
-                    return ToSquareKilometer();
                 case "mm²":
                     return ToSquareMillimeter();
-                case "ft²":
-                    return ToSquareFeet();
+                case "cm²":
+                    return ToSquareCentimeter();
+                case "m²":
+                    return ToSquareMeter();
+                case "km²":
+                    return ToSquareKilometer();
                 case "in²":
                     return ToSquareInch();
+                case "ft²":
+                    return ToSquareFeet();
+                case "ac":
+                    return ToAcre();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");

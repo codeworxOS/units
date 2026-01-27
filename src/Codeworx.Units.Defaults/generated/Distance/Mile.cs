@@ -25,9 +25,9 @@ namespace Codeworx.Units.Defaults.DistanceDimension
             Value = val;
         }
 
-        public Meter ToMeter()
+        public Millimeter ToMillimeter()
         {
-            return new Meter(Value * 1609.344M);
+            return new Millimeter(Value * 1609344.000M);
         }
 
         public Centimeter ToCentimeter()
@@ -35,52 +35,52 @@ namespace Codeworx.Units.Defaults.DistanceDimension
             return new Centimeter(Value * 160934.400M);
         }
 
+        public Meter ToMeter()
+        {
+            return new Meter(Value * 1609.344M);
+        }
+
         public Kilometer ToKilometer()
         {
             return new Kilometer(Value * 1.609344M);
         }
 
-        public Mile ToMile() => this;
-        public Millimeter ToMillimeter()
+        public Inch ToInch()
         {
-            return new Millimeter(Value * 1609344.000M);
-        }
-
-        public Yard ToYard()
-        {
-            return new Yard(Value * 1759.9999999393152M);
+            return new Inch(Value * 63360M);
         }
 
         public Feet ToFeet()
         {
-            return new Feet(Value * 5279.999999978880M);
+            return new Feet(Value * 5280M);
         }
 
-        public Inch ToInch()
+        public Yard ToYard()
         {
-            return new Inch(Value * 63359.99999974656M);
+            return new Yard(Value * 1760M);
         }
 
+        public Mile ToMile() => this;
         public IDistance ToUnit(string symbol)
         {
             switch (symbol)
             {
-                case "m":
-                    return ToMeter();
-                case "cm":
-                    return ToCentimeter();
-                case "km":
-                    return ToKilometer();
-                case "mi":
-                    return ToMile();
                 case "mm":
                     return ToMillimeter();
-                case "yard":
-                    return ToYard();
+                case "cm":
+                    return ToCentimeter();
+                case "m":
+                    return ToMeter();
+                case "km":
+                    return ToKilometer();
+                case "in":
+                    return ToInch();
                 case "ft":
                     return ToFeet();
-                case "inch":
-                    return ToInch();
+                case "yard":
+                    return ToYard();
+                case "mi":
+                    return ToMile();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
@@ -90,22 +90,22 @@ namespace Codeworx.Units.Defaults.DistanceDimension
         {
             switch (symbol)
             {
-                case "m":
-                    return ToMeter();
-                case "cm":
-                    return ToCentimeter();
-                case "km":
-                    return ToKilometer();
-                case "mi":
-                    return ToMile();
                 case "mm":
                     return ToMillimeter();
-                case "yard":
-                    return ToYard();
+                case "cm":
+                    return ToCentimeter();
+                case "m":
+                    return ToMeter();
+                case "km":
+                    return ToKilometer();
+                case "in":
+                    return ToInch();
                 case "ft":
                     return ToFeet();
-                case "inch":
-                    return ToInch();
+                case "yard":
+                    return ToYard();
+                case "mi":
+                    return ToMile();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");

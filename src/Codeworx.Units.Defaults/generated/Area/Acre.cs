@@ -18,27 +18,11 @@ namespace Codeworx.Units.Defaults.AreaDimension
         public static string Key => "Area_Acre";
 
         UnitSystem IUnitBase.System => Acre.System;
-        public static UnitSystem System => UnitSystem.Both;
+        public static UnitSystem System => UnitSystem.Imperial;
 
         public Acre(decimal val)
         {
             Value = val;
-        }
-
-        public SquareMeter ToSquareMeter()
-        {
-            return new SquareMeter(Value * 4046.8564224M);
-        }
-
-        public Acre ToAcre() => this;
-        public SquareCentimeter ToSquareCentimeter()
-        {
-            return new SquareCentimeter(Value * 40468564.2240000M);
-        }
-
-        public SquareKilometer ToSquareKilometer()
-        {
-            return new SquareKilometer(Value * 0.0040468564224M);
         }
 
         public SquareMillimeter ToSquareMillimeter()
@@ -46,9 +30,19 @@ namespace Codeworx.Units.Defaults.AreaDimension
             return new SquareMillimeter(Value * 4046856422.4000000M);
         }
 
-        public SquareFeet ToSquareFeet()
+        public SquareCentimeter ToSquareCentimeter()
         {
-            return new SquareFeet(Value * 43560.0000011747121408M);
+            return new SquareCentimeter(Value * 40468564.2240000M);
+        }
+
+        public SquareMeter ToSquareMeter()
+        {
+            return new SquareMeter(Value * 4046.8564224M);
+        }
+
+        public SquareKilometer ToSquareKilometer()
+        {
+            return new SquareKilometer(Value * 0.0040468564224M);
         }
 
         public SquareInch ToSquareInch()
@@ -56,24 +50,30 @@ namespace Codeworx.Units.Defaults.AreaDimension
             return new SquareInch(Value * 6272639.99997490944M);
         }
 
+        public SquareFeet ToSquareFeet()
+        {
+            return new SquareFeet(Value * 43560.0000011747121408M);
+        }
+
+        public Acre ToAcre() => this;
         public IArea ToUnit(string symbol)
         {
             switch (symbol)
             {
-                case "m²":
-                    return ToSquareMeter();
-                case "ac":
-                    return ToAcre();
-                case "cm²":
-                    return ToSquareCentimeter();
-                case "km²":
-                    return ToSquareKilometer();
                 case "mm²":
                     return ToSquareMillimeter();
-                case "ft²":
-                    return ToSquareFeet();
+                case "cm²":
+                    return ToSquareCentimeter();
+                case "m²":
+                    return ToSquareMeter();
+                case "km²":
+                    return ToSquareKilometer();
                 case "in²":
                     return ToSquareInch();
+                case "ft²":
+                    return ToSquareFeet();
+                case "ac":
+                    return ToAcre();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
@@ -83,20 +83,20 @@ namespace Codeworx.Units.Defaults.AreaDimension
         {
             switch (symbol)
             {
-                case "m²":
-                    return ToSquareMeter();
-                case "ac":
-                    return ToAcre();
-                case "cm²":
-                    return ToSquareCentimeter();
-                case "km²":
-                    return ToSquareKilometer();
                 case "mm²":
                     return ToSquareMillimeter();
-                case "ft²":
-                    return ToSquareFeet();
+                case "cm²":
+                    return ToSquareCentimeter();
+                case "m²":
+                    return ToSquareMeter();
+                case "km²":
+                    return ToSquareKilometer();
                 case "in²":
                     return ToSquareInch();
+                case "ft²":
+                    return ToSquareFeet();
+                case "ac":
+                    return ToAcre();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");

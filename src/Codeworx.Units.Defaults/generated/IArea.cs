@@ -9,13 +9,13 @@ namespace Codeworx.Units.Defaults
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
     public partial interface IArea : IUnitBase, IComparable
     {
-        AreaDimension.SquareMeter ToSquareMeter();
-        AreaDimension.Acre ToAcre();
-        AreaDimension.SquareCentimeter ToSquareCentimeter();
-        AreaDimension.SquareKilometer ToSquareKilometer();
         AreaDimension.SquareMillimeter ToSquareMillimeter();
-        AreaDimension.SquareFeet ToSquareFeet();
+        AreaDimension.SquareCentimeter ToSquareCentimeter();
+        AreaDimension.SquareMeter ToSquareMeter();
+        AreaDimension.SquareKilometer ToSquareKilometer();
         AreaDimension.SquareInch ToSquareInch();
+        AreaDimension.SquareFeet ToSquareFeet();
+        AreaDimension.Acre ToAcre();
         new IArea ToUnit(string symbol);
         IArea Add(IArea addition);
         IArea Subtract(IArea subtract);
@@ -53,27 +53,27 @@ namespace Codeworx.Units.Defaults
         {
             switch (symbolOrKey)
             {
-                case "m²":
-                case "Area_SquareMeter":
-                    return new AreaDimension.SquareMeter(value);
-                case "ac":
-                case "Area_Acre":
-                    return new AreaDimension.Acre(value);
-                case "cm²":
-                case "Area_SquareCentimeter":
-                    return new AreaDimension.SquareCentimeter(value);
-                case "km²":
-                case "Area_SquareKilometer":
-                    return new AreaDimension.SquareKilometer(value);
                 case "mm²":
                 case "Area_SquareMillimeter":
                     return new AreaDimension.SquareMillimeter(value);
-                case "ft²":
-                case "Area_SquareFeet":
-                    return new AreaDimension.SquareFeet(value);
+                case "cm²":
+                case "Area_SquareCentimeter":
+                    return new AreaDimension.SquareCentimeter(value);
+                case "m²":
+                case "Area_SquareMeter":
+                    return new AreaDimension.SquareMeter(value);
+                case "km²":
+                case "Area_SquareKilometer":
+                    return new AreaDimension.SquareKilometer(value);
                 case "in²":
                 case "Area_SquareInch":
                     return new AreaDimension.SquareInch(value);
+                case "ft²":
+                case "Area_SquareFeet":
+                    return new AreaDimension.SquareFeet(value);
+                case "ac":
+                case "Area_Acre":
+                    return new AreaDimension.Acre(value);
             }
 
             throw new NotSupportedException($"Symbol {symbolOrKey} not supported.");

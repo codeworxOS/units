@@ -33,40 +33,58 @@
     "MetricDefault": "Kilogram",
     "ImperialDefault": "Pounds",
     "Units": {
-      "Kilogram": {
-        "Symbol": "kg"
-      },
-      "Gram": {
-        "Symbol": "g",
-        "Divisor": 1000
-      },
-      "Pounds": {
-        "Symbol": "lbs",
-        "Divisor": 2.2046226218
-      },
-      "ton (long)": {
-        "Symbol": "ln tn",
-        "Factor": 1016.0469088
+      "Microgram": {
+        "Symbol": "mug",
+        "Divisor": 1000000000,
+        "System": "Metric"
       },
       "Milligram": {
         "Symbol": "mg",
-        "Divisor": 1000000
+        "Divisor": 1000000,
+        "System": "Metric"
       },
-      "Microgram": {
-        "Symbol": "mug",
-        "Divisor": 1000000000
+      "Gram": {
+        "Symbol": "g",
+        "Divisor": 1000,
+        "System": "Metric"
       },
-      "Ounce": {
-        "Symbol": "oz",
-        "Divisor": 35.27392
-      },
-      "Ton (short)": {
-        "Symbol": "sh tn",
-        "Factor": 907.18474
+      "Kilogram": {
+        "Symbol": "kg",
+        "System": "Metric"
       },
       "MetricTons": {
         "Symbol": "t",
-        "Factor": 1000
+        "Factor": 1000,
+        "System": "Metric"
+      },
+      "Ounce": {
+        "Symbol": "oz",
+        "Divisor": 35.27392,
+        "System": "Imperial"
+      },
+      "Pounds": {
+        "Symbol": "lbs",
+        "Divisor": 2.2046226218,
+        "System": "Imperial",
+        "Conversions": {
+          "Ounce": 16
+        }
+      },
+      "Ton (short)": {
+        "Symbol": "sh tn",
+        "Factor": 907.18474,
+        "System": "Imperial",
+        "Conversions": {
+          "Pounds": 2000
+        }
+      },
+      "ton (long)": {
+        "Symbol": "ln tn",
+        "Factor": 1016.0469088,
+        "System": "Imperial",
+        "Conversions": {
+          "Pounds": 2240
+        }
       }
     }
   },
@@ -77,12 +95,14 @@
     "ImperialDefault": "Fahrenheit",
     "Units": {
       "Celsius": {
-        "Symbol": "°C"
+        "Symbol": "°C",
+        "System": "Metric"
       },
       "Fahrenheit": {
         "Symbol": "F",
         "Divisor": 1.8,
-        "Offset": -32
+        "Offset": -32,
+        "System": "Imperial"
       },
       "Kelvin": {
         "Symbol": "K",
@@ -96,32 +116,39 @@
     "MetricDefault": "SquareMeter",
     "ImperialDefault": "SquareInch",
     "Units": {
-      "SquareMeter": {
-        "Symbol": "m²"
-      },
-      "Acre": {
-        "Symbol": "ac",
-        "Factor": 4046.8564224
+      "SquareMillimeter": {
+        "Symbol": "mm²",
+        "Divisor": 1000000,
+        "System": "Metric"
       },
       "SquareCentimeter": {
         "Symbol": "cm²",
-        "Divisor": 10000
+        "Divisor": 10000,
+        "System": "Metric"
+      },
+      "SquareMeter": {
+        "Symbol": "m²",
+        "System": "Metric"
       },
       "SquareKilometer": {
         "Symbol": "km²",
-        "Factor": 1000000
-      },
-      "SquareMillimeter": {
-        "Symbol": "mm²",
-        "Divisor": 1000000
-      },
-      "SquareFeet": {
-        "Symbol": "ft²",
-        "Divisor": 10.763910417
+        "Factor": 1000000,
+        "System": "Metric"
       },
       "SquareInch": {
         "Symbol": "in²",
-        "Divisor": 1550.0031
+        "Divisor": 1550.0031,
+        "System": "Imperial"
+      },
+      "SquareFeet": {
+        "Symbol": "ft²",
+        "Divisor": 10.763910417,
+        "System": "Imperial"
+      },
+      "Acre": {
+        "Symbol": "ac",
+        "Factor": 4046.8564224,
+        "System": "Imperial"
       }
     }
   },
@@ -131,32 +158,39 @@
     "MetricDefault": "CubicMeter",
     "ImperialDefault": "CubicInch",
     "Units": {
-      "CubicMeter": {
-        "Symbol": "m³"
-      },
       "CubicCentimeter": {
         "Symbol": "cm³",
-        "Divisor": 1000000
-      },
-      "CubicFoot": {
-        "Symbol": "ft³",
-        "Divisor": 35.31467
-      },
-      "CubicInch": {
-        "Symbol": "in³",
-        "Divisor": 61023.744095
-      },
-      "Gallon": {
-        "Symbol": "gal",
-        "Divisor": 264.17205236
+        "Divisor": 1000000,
+        "System": "Metric"
       },
       "Liter": {
         "Symbol": "l",
-        "Divisor": 1000
+        "Divisor": 1000,
+        "System": "Metric"
+      },
+      "CubicMeter": {
+        "Symbol": "m³",
+        "System": "Metric"
+      },
+      "CubicInch": {
+        "Symbol": "in³",
+        "Divisor": 61023.744095,
+        "System": "Imperial"
+      },
+      "CubicFoot": {
+        "Symbol": "ft³",
+        "Divisor": 35.31467,
+        "System": "Imperial"
+      },
+      "Gallon": {
+        "Symbol": "gal",
+        "Divisor": 264.17205236,
+        "System": "Imperial"
       },
       "Quart": {
         "Symbol": "qt",
-        "Divisor": 1056.6882094
+        "Divisor": 1056.6882094,
+        "System": "Imperial"
       }
     }
   },
@@ -166,28 +200,34 @@
     "MetricDefault": "KilometerPerHour",
     "ImperialDefault": "MilesPerHour",
     "Units": {
-      "MeterPerSecond": {
-        "Symbol": "m/s"
+      "MillimeterPerSecond": {
+        "Symbol": "mm/s",
+        "Divisor": 1000,
+        "System": "Metric"
       },
-      "FeetPerSecond": {
-        "Symbol": "ft/s",
-        "Divisor": 3.280839895
+      "MeterPerSecond": {
+        "Symbol": "m/s",
+        "System": "Metric"
       },
       "KilometerPerHour": {
         "Symbol": "km/h",
-        "Divisor": 3.6
+        "Divisor": 3.6,
+        "System": "Metric"
       },
-      "Knots": {
-        "Symbol": "kt",
-        "Divisor": 1.9438444924
-      },
-      "MillimeterPerSecond": {
-        "Symbol": "mm/s",
-        "Divisor": 1000
+      "FeetPerSecond": {
+        "Symbol": "ft/s",
+        "Divisor": 3.280839895,
+        "System": "Imperial"
       },
       "MilesPerHour": {
         "Symbol": "mph",
-        "Divisor": 2.2369362921
+        "Divisor": 2.2369362921,
+        "System": "Imperial"
+      },
+      "Knots": {
+        "Symbol": "kt",
+        "Divisor": 1.9438444924,
+        "System": "Imperial"
       }
     }
   },
@@ -197,44 +237,53 @@
     "MetricDefault": "Meter",
     "ImperialDefault": "Yard",
     "Units": {
-      "Meter": {
-        "Symbol": "m",
+      "Millimeter": {
+        "Symbol": "mm",
+        "Divisor": 1000,
         "System": "Metric"
       },
       "Centimeter": {
         "Symbol": "cm",
-        "Divisor": 100
+        "Divisor": 100,
+        "System": "Metric"
+      },
+      "Meter": {
+        "Symbol": "m",
+        "System": "Metric"
       },
       "Kilometer": {
         "Symbol": "km",
-        "Factor": 1000
+        "Factor": 1000,
+        "System": "Metric"
       },
-      "Mile": {
-        "Symbol": "mi",
-        "Factor": 1609.344
+      "Inch": {
+        "Symbol": "in",
+        "System": "Imperial",
+        "Factor": 0.0254
       },
-      "Millimeter": {
-        "Symbol": "mm",
-        "Divisor": 1000
+      "Feet": {
+        "Symbol": "ft",
+        "System": "Imperial",
+        "Factor": 0.3048,
+        "Conversions": {
+          "Inch": 12
+        }
       },
       "Yard": {
         "Symbol": "yard",
-        "Divisor": 1.0936132983,
+        "System": "Imperial",
+        "Factor": 0.9144,
         "Conversions": {
           "Inch": 36,
           "Feet": 3
         }
       },
-      "Feet": {
-        "Symbol": "ft",
-        "Divisor": 3.280839895,
+      "Mile": {
+        "Symbol": "mi",
+        "Factor": 1609.344,
         "Conversions": {
-          "Inch": 12
+          "Yard": 1760
         }
-      },
-      "Inch": {
-        "Symbol": "inch",
-        "Divisor": 39.37007874
       }
     }
   }

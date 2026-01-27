@@ -18,7 +18,7 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
         public static string Key => "Temperature_Fahrenheit";
 
         UnitSystem IUnitBase.System => Fahrenheit.System;
-        public static UnitSystem System => UnitSystem.Both;
+        public static UnitSystem System => UnitSystem.Imperial;
 
         public Fahrenheit(decimal val)
         {

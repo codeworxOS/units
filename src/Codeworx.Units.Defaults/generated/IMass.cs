@@ -9,15 +9,15 @@ namespace Codeworx.Units.Defaults
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public partial interface IMass : IUnitBase, IComparable
     {
-        MassDimension.Kilogram ToKilogram();
-        MassDimension.Gram ToGram();
-        MassDimension.Pounds ToPounds();
-        MassDimension.TonLong ToTonLong();
-        MassDimension.Milligram ToMilligram();
         MassDimension.Microgram ToMicrogram();
-        MassDimension.Ounce ToOunce();
-        MassDimension.TonShort ToTonShort();
+        MassDimension.Milligram ToMilligram();
+        MassDimension.Gram ToGram();
+        MassDimension.Kilogram ToKilogram();
         MassDimension.MetricTons ToMetricTons();
+        MassDimension.Ounce ToOunce();
+        MassDimension.Pounds ToPounds();
+        MassDimension.TonShort ToTonShort();
+        MassDimension.TonLong ToTonLong();
         new IMass ToUnit(string symbol);
         IMass Add(IMass addition);
         IMass Subtract(IMass subtract);
@@ -55,33 +55,33 @@ namespace Codeworx.Units.Defaults
         {
             switch (symbolOrKey)
             {
-                case "kg":
-                case "Mass_Kilogram":
-                    return new MassDimension.Kilogram(value);
-                case "g":
-                case "Mass_Gram":
-                    return new MassDimension.Gram(value);
-                case "lbs":
-                case "Mass_Pounds":
-                    return new MassDimension.Pounds(value);
-                case "ln tn":
-                case "Mass_TonLong":
-                    return new MassDimension.TonLong(value);
-                case "mg":
-                case "Mass_Milligram":
-                    return new MassDimension.Milligram(value);
                 case "mug":
                 case "Mass_Microgram":
                     return new MassDimension.Microgram(value);
-                case "oz":
-                case "Mass_Ounce":
-                    return new MassDimension.Ounce(value);
-                case "sh tn":
-                case "Mass_TonShort":
-                    return new MassDimension.TonShort(value);
+                case "mg":
+                case "Mass_Milligram":
+                    return new MassDimension.Milligram(value);
+                case "g":
+                case "Mass_Gram":
+                    return new MassDimension.Gram(value);
+                case "kg":
+                case "Mass_Kilogram":
+                    return new MassDimension.Kilogram(value);
                 case "t":
                 case "Mass_MetricTons":
                     return new MassDimension.MetricTons(value);
+                case "oz":
+                case "Mass_Ounce":
+                    return new MassDimension.Ounce(value);
+                case "lbs":
+                case "Mass_Pounds":
+                    return new MassDimension.Pounds(value);
+                case "sh tn":
+                case "Mass_TonShort":
+                    return new MassDimension.TonShort(value);
+                case "ln tn":
+                case "Mass_TonLong":
+                    return new MassDimension.TonLong(value);
             }
 
             throw new NotSupportedException($"Symbol {symbolOrKey} not supported.");

@@ -18,16 +18,11 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         public static string Key => "Volume_Liter";
 
         UnitSystem IUnitBase.System => Liter.System;
-        public static UnitSystem System => UnitSystem.Both;
+        public static UnitSystem System => UnitSystem.Metric;
 
         public Liter(decimal val)
         {
             Value = val;
-        }
-
-        public CubicMeter ToCubicMeter()
-        {
-            return new CubicMeter(Value / 1000M);
         }
 
         public CubicCentimeter ToCubicCentimeter()
@@ -35,9 +30,10 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             return new CubicCentimeter(Value / 0.001M);
         }
 
-        public CubicFoot ToCubicFoot()
+        public Liter ToLiter() => this;
+        public CubicMeter ToCubicMeter()
         {
-            return new CubicFoot(Value / 28.316843963146193918844491539M);
+            return new CubicMeter(Value / 1000M);
         }
 
         public CubicInch ToCubicInch()
@@ -45,12 +41,16 @@ namespace Codeworx.Units.Defaults.VolumeDimension
             return new CubicInch(Value / 0.0163870639999281086392671954M);
         }
 
+        public CubicFoot ToCubicFoot()
+        {
+            return new CubicFoot(Value / 28.316843963146193918844491539M);
+        }
+
         public Gallon ToGallon()
         {
             return new Gallon(Value / 3.7854117839734680100435132948M);
         }
 
-        public Liter ToLiter() => this;
         public Quart ToQuart()
         {
             return new Quart(Value / 0.9463529460291903584478473693M);
@@ -60,18 +60,18 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         {
             switch (symbol)
             {
-                case "m³":
-                    return ToCubicMeter();
                 case "cm³":
                     return ToCubicCentimeter();
-                case "ft³":
-                    return ToCubicFoot();
-                case "in³":
-                    return ToCubicInch();
-                case "gal":
-                    return ToGallon();
                 case "l":
                     return ToLiter();
+                case "m³":
+                    return ToCubicMeter();
+                case "in³":
+                    return ToCubicInch();
+                case "ft³":
+                    return ToCubicFoot();
+                case "gal":
+                    return ToGallon();
                 case "qt":
                     return ToQuart();
             }
@@ -83,18 +83,18 @@ namespace Codeworx.Units.Defaults.VolumeDimension
         {
             switch (symbol)
             {
-                case "m³":
-                    return ToCubicMeter();
                 case "cm³":
                     return ToCubicCentimeter();
-                case "ft³":
-                    return ToCubicFoot();
-                case "in³":
-                    return ToCubicInch();
-                case "gal":
-                    return ToGallon();
                 case "l":
                     return ToLiter();
+                case "m³":
+                    return ToCubicMeter();
+                case "in³":
+                    return ToCubicInch();
+                case "ft³":
+                    return ToCubicFoot();
+                case "gal":
+                    return ToGallon();
                 case "qt":
                     return ToQuart();
             }

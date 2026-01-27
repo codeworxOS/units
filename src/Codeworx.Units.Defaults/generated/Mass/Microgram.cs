@@ -18,16 +18,17 @@ namespace Codeworx.Units.Defaults.MassDimension
         public static string Key => "Mass_Microgram";
 
         UnitSystem IUnitBase.System => Microgram.System;
-        public static UnitSystem System => UnitSystem.Both;
+        public static UnitSystem System => UnitSystem.Metric;
 
         public Microgram(decimal val)
         {
             Value = val;
         }
 
-        public Kilogram ToKilogram()
+        public Microgram ToMicrogram() => this;
+        public Milligram ToMilligram()
         {
-            return new Kilogram(Value / 1000000000M);
+            return new Milligram(Value / 1000M);
         }
 
         public Gram ToGram()
@@ -35,30 +36,9 @@ namespace Codeworx.Units.Defaults.MassDimension
             return new Gram(Value / 1000000M);
         }
 
-        public Pounds ToPounds()
+        public Kilogram ToKilogram()
         {
-            return new Pounds(Value / 453592370.01003542909395360719M);
-        }
-
-        public TonLong ToTonLong()
-        {
-            return new TonLong(Value / 1016046908800.0000000M);
-        }
-
-        public Milligram ToMilligram()
-        {
-            return new Milligram(Value / 1000M);
-        }
-
-        public Microgram ToMicrogram() => this;
-        public Ounce ToOunce()
-        {
-            return new Ounce(Value / 28349556.839727481380011067667M);
-        }
-
-        public TonShort ToTonShort()
-        {
-            return new TonShort(Value / 907184740000.00000M);
+            return new Kilogram(Value / 1000000000M);
         }
 
         public MetricTons ToMetricTons()
@@ -66,28 +46,48 @@ namespace Codeworx.Units.Defaults.MassDimension
             return new MetricTons(Value / 1000000000000M);
         }
 
+        public Ounce ToOunce()
+        {
+            return new Ounce(Value / 28349556.839727481380011067667M);
+        }
+
+        public Pounds ToPounds()
+        {
+            return new Pounds(Value / 453592370.01003542909395360719M);
+        }
+
+        public TonShort ToTonShort()
+        {
+            return new TonShort(Value / 907184740000.00000M);
+        }
+
+        public TonLong ToTonLong()
+        {
+            return new TonLong(Value / 1016046908800.0000000M);
+        }
+
         public IMass ToUnit(string symbol)
         {
             switch (symbol)
             {
-                case "kg":
-                    return ToKilogram();
-                case "g":
-                    return ToGram();
-                case "lbs":
-                    return ToPounds();
-                case "ln tn":
-                    return ToTonLong();
-                case "mg":
-                    return ToMilligram();
                 case "mug":
                     return ToMicrogram();
-                case "oz":
-                    return ToOunce();
-                case "sh tn":
-                    return ToTonShort();
+                case "mg":
+                    return ToMilligram();
+                case "g":
+                    return ToGram();
+                case "kg":
+                    return ToKilogram();
                 case "t":
                     return ToMetricTons();
+                case "oz":
+                    return ToOunce();
+                case "lbs":
+                    return ToPounds();
+                case "sh tn":
+                    return ToTonShort();
+                case "ln tn":
+                    return ToTonLong();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");
@@ -97,24 +97,24 @@ namespace Codeworx.Units.Defaults.MassDimension
         {
             switch (symbol)
             {
-                case "kg":
-                    return ToKilogram();
-                case "g":
-                    return ToGram();
-                case "lbs":
-                    return ToPounds();
-                case "ln tn":
-                    return ToTonLong();
-                case "mg":
-                    return ToMilligram();
                 case "mug":
                     return ToMicrogram();
-                case "oz":
-                    return ToOunce();
-                case "sh tn":
-                    return ToTonShort();
+                case "mg":
+                    return ToMilligram();
+                case "g":
+                    return ToGram();
+                case "kg":
+                    return ToKilogram();
                 case "t":
                     return ToMetricTons();
+                case "oz":
+                    return ToOunce();
+                case "lbs":
+                    return ToPounds();
+                case "sh tn":
+                    return ToTonShort();
+                case "ln tn":
+                    return ToTonLong();
             }
 
             throw new NotSupportedException($"Symbol {symbol} not supported.");

@@ -9,14 +9,14 @@ namespace Codeworx.Units.Defaults
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
     public partial interface IDistance : IUnitBase, IComparable
     {
-        DistanceDimension.Meter ToMeter();
-        DistanceDimension.Centimeter ToCentimeter();
-        DistanceDimension.Kilometer ToKilometer();
-        DistanceDimension.Mile ToMile();
         DistanceDimension.Millimeter ToMillimeter();
-        DistanceDimension.Yard ToYard();
-        DistanceDimension.Feet ToFeet();
+        DistanceDimension.Centimeter ToCentimeter();
+        DistanceDimension.Meter ToMeter();
+        DistanceDimension.Kilometer ToKilometer();
         DistanceDimension.Inch ToInch();
+        DistanceDimension.Feet ToFeet();
+        DistanceDimension.Yard ToYard();
+        DistanceDimension.Mile ToMile();
         new IDistance ToUnit(string symbol);
         IDistance Add(IDistance addition);
         IDistance Subtract(IDistance subtract);
@@ -54,30 +54,30 @@ namespace Codeworx.Units.Defaults
         {
             switch (symbolOrKey)
             {
-                case "m":
-                case "Distance_Meter":
-                    return new DistanceDimension.Meter(value);
-                case "cm":
-                case "Distance_Centimeter":
-                    return new DistanceDimension.Centimeter(value);
-                case "km":
-                case "Distance_Kilometer":
-                    return new DistanceDimension.Kilometer(value);
-                case "mi":
-                case "Distance_Mile":
-                    return new DistanceDimension.Mile(value);
                 case "mm":
                 case "Distance_Millimeter":
                     return new DistanceDimension.Millimeter(value);
-                case "yard":
-                case "Distance_Yard":
-                    return new DistanceDimension.Yard(value);
+                case "cm":
+                case "Distance_Centimeter":
+                    return new DistanceDimension.Centimeter(value);
+                case "m":
+                case "Distance_Meter":
+                    return new DistanceDimension.Meter(value);
+                case "km":
+                case "Distance_Kilometer":
+                    return new DistanceDimension.Kilometer(value);
+                case "in":
+                case "Distance_Inch":
+                    return new DistanceDimension.Inch(value);
                 case "ft":
                 case "Distance_Feet":
                     return new DistanceDimension.Feet(value);
-                case "inch":
-                case "Distance_Inch":
-                    return new DistanceDimension.Inch(value);
+                case "yard":
+                case "Distance_Yard":
+                    return new DistanceDimension.Yard(value);
+                case "mi":
+                case "Distance_Mile":
+                    return new DistanceDimension.Mile(value);
             }
 
             throw new NotSupportedException($"Symbol {symbolOrKey} not supported.");
