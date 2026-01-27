@@ -58,7 +58,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
 
         public Mile ToMile()
         {
-            return new Mile(Value * 0.0001893939393939393939393939M);
+            return new Mile(Value / 5280M);
         }
 
         public IDistance ToUnit(string symbol)

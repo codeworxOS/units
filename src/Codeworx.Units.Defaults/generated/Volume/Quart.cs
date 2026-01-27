@@ -42,17 +42,17 @@ namespace Codeworx.Units.Defaults.VolumeDimension
 
         public CubicInch ToCubicInch()
         {
-            return new CubicInch(Value / 0.0173160173154072348467559232M);
+            return new CubicInch(Value / 0.0173160173154832016M);
         }
 
         public CubicFoot ToCubicFoot()
         {
-            return new CubicFoot(Value / 29.922075143276151242528954681M);
+            return new CubicFoot(Value / 29.9220779211549723648M);
         }
 
         public Gallon ToGallon()
         {
-            return new Gallon(Value / 3.9999999998485835286410612796M);
+            return new Gallon(Value / 4M);
         }
 
         public Quart ToQuart() => this;

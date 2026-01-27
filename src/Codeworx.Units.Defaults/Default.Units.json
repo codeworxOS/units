@@ -10,12 +10,7 @@
       },
       "Hour": {
         "Symbol": "h",
-        "Factor": 3600,
-        "Conversions": {
-          "Minute": {
-            "Factor": 60
-          }
-        }
+        "Factor": 3600
       },
       "Minute": {
         "Symbol": "min",
@@ -137,18 +132,24 @@
       },
       "SquareInch": {
         "Symbol": "in²",
-        "Divisor": 1550.0031,
+        "Factor": 0.00064516,
         "System": "Imperial"
       },
       "SquareFeet": {
         "Symbol": "ft²",
-        "Divisor": 10.763910417,
-        "System": "Imperial"
+        "Factor": 0.09290304,
+        "System": "Imperial",
+        "Conversions": {
+          "SquareInch": 144
+        }
       },
       "Acre": {
         "Symbol": "ac",
         "Factor": 4046.8564224,
-        "System": "Imperial"
+        "System": "Imperial",
+        "Conversions": {
+          "SquareFeet": 43560
+        }
       }
     }
   },
@@ -174,18 +175,21 @@
       },
       "CubicInch": {
         "Symbol": "in³",
-        "Divisor": 61023.744095,
+        "Factor": 0.000016387064,
         "System": "Imperial"
       },
       "CubicFoot": {
         "Symbol": "ft³",
-        "Divisor": 35.31467,
+        "Factor": 0.028316846592,
         "System": "Imperial"
       },
       "Gallon": {
         "Symbol": "gal",
         "Divisor": 264.17205236,
-        "System": "Imperial"
+        "System": "Imperial",
+        "Conversions": {
+          "Quart": 4
+        }
       },
       "Quart": {
         "Symbol": "qt",

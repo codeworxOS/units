@@ -17,35 +17,43 @@ namespace Codeworx.Units.Cli.Data
             };
 
             var units = dimension.Units.Values.ToList();
-
-            while (conversionPaths.Any() && !conversionPaths.Any(c => c.Last() == targetUnit))
+            List<JsonUnit[]> successPaths = new List<JsonUnit[]>();
+            while (conversionPaths.Any())
             {
                 List<JsonUnit[]> newPaths = new List<JsonUnit[]>();
-                var validLookups = units.Except(conversionPaths.SelectMany(c => c)).ToList();
 
                 foreach (var path in conversionPaths)
                 {
+                    var validLookups = units.Except(path).ToList();
+
                     var lastEntry = path.Last();
 
                     foreach (var possibleConversion in validLookups.Where(d => (d.Conversions?.ContainsKey(lastEntry.Name) ?? false) || (lastEntry.Conversions?.ContainsKey(d.Name) ?? false)))
                     {
                         var newPath = path.ToList();
                         newPath.Add(possibleConversion);
-                        newPaths.Add(newPath.ToArray());
+                        if (newPath.Last() == targetUnit)
+                        {
+                            successPaths.Add(newPath.ToArray());
+                        }
+                        else
+                        {
+                            newPaths.Add(newPath.ToArray());
+                        }
                     }
                 }
 
                 conversionPaths = newPaths;
             }
 
-            conversionPaths = conversionPaths.Where(c => c.Last() == targetUnit).ToList();
+            //conversionPaths = conversionPaths.Where(c => c.Last() == targetUnit).ToList();
 
-            return conversionPaths.OrderBy(d =>
+            return successPaths.OrderBy(d =>
             {
                 var flag = d.Select(c => c.System ?? UnitSystem.Both).Aggregate((f, s) => f | s);
                 return flag;
             }
-            ).FirstOrDefault();
+            ).ThenBy(d=>d.Length).FirstOrDefault();
         }
 
         public static ExpressionSyntax GetConversionExpression(this JsonUnit[] conversionPath)
@@ -138,9 +146,17 @@ namespace Codeworx.Units.Cli.Data
                         }
                         else
                         {
-                            var value = valLeft / valRight;
+                            if (valRight % valLeft == 0)
+                            {
+                                var value = valRight/ valLeft;
+                                conversionExpression = conversionExpression.ReplaceNode(exp, SyntaxFactory.BinaryExpression(SyntaxKind.DivideExpression, exp_leftPart.Left, SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(value))));
+                            }
+                            else
+                            {
+                                var value = valLeft / valRight;
 
-                            conversionExpression = conversionExpression.ReplaceNode(exp, SyntaxFactory.BinaryExpression(SyntaxKind.MultiplyExpression, exp_leftPart.Left, SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(value))));
+                                conversionExpression = conversionExpression.ReplaceNode(exp, SyntaxFactory.BinaryExpression(SyntaxKind.MultiplyExpression, exp_leftPart.Left, SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(value))));
+                            }
                         }
                     }
                     else

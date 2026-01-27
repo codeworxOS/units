@@ -40,14 +40,14 @@ namespace Codeworx.Units.Defaults
             yield return ("Area_SquareCentimeter", "cm²", 0M, 1M, 10000M);
             yield return ("Area_SquareMeter", "m²", 0M, 1M, 1M);
             yield return ("Area_SquareKilometer", "km²", 0M, 1000000M, 1M);
-            yield return ("Area_SquareInch", "in²", 0M, 1M, 1550.0031M);
-            yield return ("Area_SquareFeet", "ft²", 0M, 1M, 10.763910417M);
+            yield return ("Area_SquareInch", "in²", 0M, 0.00064516M, 1M);
+            yield return ("Area_SquareFeet", "ft²", 0M, 0.09290304M, 1M);
             yield return ("Area_Acre", "ac", 0M, 4046.8564224M, 1M);
             yield return ("Volume_CubicCentimeter", "cm³", 0M, 1M, 1000000M);
             yield return ("Volume_Liter", "l", 0M, 1M, 1000M);
             yield return ("Volume_CubicMeter", "m³", 0M, 1M, 1M);
-            yield return ("Volume_CubicInch", "in³", 0M, 1M, 61023.744095M);
-            yield return ("Volume_CubicFoot", "ft³", 0M, 1M, 35.31467M);
+            yield return ("Volume_CubicInch", "in³", 0M, 0.000016387064M, 1M);
+            yield return ("Volume_CubicFoot", "ft³", 0M, 0.028316846592M, 1M);
             yield return ("Volume_Gallon", "gal", 0M, 1M, 264.17205236M);
             yield return ("Volume_Quart", "qt", 0M, 1M, 1056.6882094M);
             yield return ("Speed_MillimeterPerSecond", "mm/s", 0M, 1M, 1000M);

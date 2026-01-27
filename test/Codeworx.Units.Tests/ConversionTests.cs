@@ -1,21 +1,44 @@
 using System;
 using System.Collections.Generic;
 using Codeworx.Units.Defaults;
+using Codeworx.Units.Defaults.AreaDimension;
 using Codeworx.Units.Defaults.DistanceDimension;
+using Codeworx.Units.Defaults.MassDimension;
 using Codeworx.Units.Defaults.TemperatureDimension;
+using Codeworx.Units.Defaults.VolumeDimension;
 
 namespace Codeworx.Units.Tests
 {
     public class ConversionTests
     {
         [Theory]
-        [MemberData(nameof(GetDistanceMeterToOtherConversionData))]
-        [MemberData(nameof(GetDistanceYardToOtherConversionData))]
+        [MemberData(nameof(GetMetricDistanceConversionData))]
+        [MemberData(nameof(GetImperialDistanceConversionData))]
         public void DistanceConversionTests(IDistance original, IDistance check)
         {
             var converted = original.ToUnit(check.Symbol);
 
-            Assert.Equal(Math.Round(converted.Value, 5), Math.Round(check.Value, 5));
+            Assert.Equal(Math.Round(check.Value, 5), Math.Round(converted.Value, 5));
+        }
+
+        [Theory]
+        [MemberData(nameof(GetMetricAreaConversionData))]
+        [MemberData(nameof(GetImperialAreaConversionData))]
+        public void AreaConversionTests(IArea original, IArea check)
+        {
+            var converted = original.ToUnit(check.Symbol);
+
+            Assert.Equal(Math.Round(check.Value, 5), Math.Round(converted.Value, 5));
+        }
+
+        [Theory]
+        [MemberData(nameof(GetMetricVolumeConversionData))]
+        [MemberData(nameof(GetImperialVolumeConversionData))]
+        public void VolumeConversionTests(IVolume original, IVolume check)
+        {
+            var converted = original.ToUnit(check.Symbol);
+
+            Assert.Equal(Math.Round(check.Value, 5), Math.Round(converted.Value, 5));
         }
 
         [Theory]
@@ -26,10 +49,10 @@ namespace Codeworx.Units.Tests
         {
             var converted = original.ToUnit(check.Symbol);
 
-            Assert.Equal(Math.Round(converted.Value, 5), Math.Round(check.Value, 5));
+            Assert.Equal(Math.Round(check.Value, 5), Math.Round(converted.Value, 5));
         }
 
-        public static IEnumerable<object[]> GetDistanceMeterToOtherConversionData()
+        public static IEnumerable<object[]> GetMetricDistanceConversionData()
         {
             yield return new object[] { new Meter(1), new Centimeter(100) };
             yield return new object[] { new Meter(1), new Kilometer(0.001M) };
@@ -41,12 +64,15 @@ namespace Codeworx.Units.Tests
             yield return new object[] { new Meter(1000), new Mile(0.6213711922M) };
         }
 
-        public static IEnumerable<object[]> GetDistanceYardToOtherConversionData()
+        public static IEnumerable<object[]> GetImperialDistanceConversionData()
         {
             yield return new object[] { new Yard(1), new Inch(36M) };
             yield return new object[] { new Yard(1), new Feet(3M) };
             yield return new object[] { new Yard(1), new Meter(0.9144M) };
             yield return new object[] { new Yard(1000), new Mile(0.5681806818M) };
+            yield return new object[] { new Mile(1), new Yard(1760) };
+            yield return new object[] { new Mile(1), new Feet(5280) };
+            yield return new object[] { new Mile(1), new Inch(63360) };
         }
 
         public static IEnumerable<object[]> GetTemperatureCelsiusToConversionData()
@@ -79,6 +105,54 @@ namespace Codeworx.Units.Tests
             yield return new object[] { new Kelvin(100), new Fahrenheit(-279.67M) };
             yield return new object[] { new Kelvin(300), new Celsius(26.85M) };
             yield return new object[] { new Kelvin(300), new Fahrenheit(80.33M) };
+        }
+
+        public static IEnumerable<object[]> GetMetricAreaConversionData()
+        {
+            yield return new object[] { new SquareMeter(0), new SquareCentimeter(0) };
+            yield return new object[] { new SquareMeter(0), new SquareInch(0) };
+            yield return new object[] { new SquareMeter(10), new SquareMillimeter(10000000) };
+            yield return new object[] { new SquareMeter(10), new SquareCentimeter(100000) };
+            yield return new object[] { new SquareMeter(10), new SquareKilometer(0.00001M) };
+            yield return new object[] { new SquareMeter(10), new SquareInch(15500.031M) };
+            yield return new object[] { new SquareMeter(10), new SquareFeet(107.63910M) };
+            yield return new object[] { new SquareMeter(10), new Acre(0.00247105M) };
+        }
+
+        public static IEnumerable<object[]> GetImperialAreaConversionData()
+        {
+            yield return new object[] { new SquareFeet(0), new SquareCentimeter(0) };
+            yield return new object[] { new SquareFeet(0), new SquareInch(0) };
+            yield return new object[] { new SquareFeet(10), new SquareMillimeter(929030.4M) };
+            yield return new object[] { new SquareFeet(10), new SquareCentimeter(9290.304M) };
+            yield return new object[] { new SquareFeet(10), new SquareMeter(0.9290304M) };
+            yield return new object[] { new SquareFeet(10), new SquareKilometer(0.000000929030399M) };
+            yield return new object[] { new SquareFeet(10), new SquareInch(1440) };
+            yield return new object[] { new SquareFeet(10), new Acre(0.0002295684M) };
+        }
+
+        public static IEnumerable<object[]> GetMetricVolumeConversionData()
+        {
+            yield return new object[] { new CubicMeter(0), new Gallon(0) };
+            yield return new object[] { new CubicMeter(0), new CubicCentimeter(0) };
+            yield return new object[] { new CubicMeter(10), new CubicCentimeter(10000000) };
+            yield return new object[] { new CubicMeter(10), new Liter(10000) };
+            yield return new object[] { new CubicMeter(10), new CubicFoot(353.14666721M) };
+            yield return new object[] { new CubicMeter(10), new CubicInch(610237.44095M) };
+            yield return new object[] { new CubicMeter(10), new Gallon(2641.7205236M) };
+            yield return new object[] { new CubicMeter(10), new Quart(10566.882094M) };
+        }
+
+        public static IEnumerable<object[]> GetImperialVolumeConversionData()
+        {
+            yield return new object[] { new Gallon(0), new Quart(0) };
+            yield return new object[] { new Gallon(0), new CubicMeter(0) };
+            yield return new object[] { new Gallon(10), new CubicCentimeter(37854.11784M) };
+            yield return new object[] { new Gallon(10), new CubicMeter(0.0378541178M) };
+            yield return new object[] { new Gallon(10), new Liter(37.85411784M) };
+            yield return new object[] { new Gallon(10), new CubicInch(2310) };
+            yield return new object[] { new Gallon(10), new CubicFoot(1.3368055556M) };
+            yield return new object[] { new Gallon(10), new Quart(40) };
         }
     }
 }

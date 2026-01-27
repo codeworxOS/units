@@ -27,33 +27,33 @@ namespace Codeworx.Units.Defaults.VolumeDimension
 
         public CubicCentimeter ToCubicCentimeter()
         {
-            return new CubicCentimeter(Value / 0.061023744095M);
+            return new CubicCentimeter(Value * 16.387064000000M);
         }
 
         public Liter ToLiter()
         {
-            return new Liter(Value / 61.023744095M);
+            return new Liter(Value * 0.016387064000M);
         }
 
         public CubicMeter ToCubicMeter()
         {
-            return new CubicMeter(Value / 61023.744095M);
+            return new CubicMeter(Value * 0.000016387064M);
         }
 
         public CubicInch ToCubicInch() => this;
         public CubicFoot ToCubicFoot()
         {
-            return new CubicFoot(Value / 1727.9998395850789487768114497M);
+            return new CubicFoot(Value / 1728M);
         }
 
         public Gallon ToGallon()
         {
-            return new Gallon(Value / 230.99999999939433411456424512M);
+            return new Gallon(Value * 0.00432900432903467104M);
         }
 
         public Quart ToQuart()
         {
-            return new Quart(Value / 57.750000002034658833962759271M);
+            return new Quart(Value * 0.0173160173154832016M);
         }
 
         public IVolume ToUnit(string symbol)

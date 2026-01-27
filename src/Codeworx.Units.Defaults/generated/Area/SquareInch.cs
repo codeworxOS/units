@@ -27,33 +27,33 @@ namespace Codeworx.Units.Defaults.AreaDimension
 
         public SquareMillimeter ToSquareMillimeter()
         {
-            return new SquareMillimeter(Value / 0.0015500031M);
+            return new SquareMillimeter(Value * 645.16000000M);
         }
 
         public SquareCentimeter ToSquareCentimeter()
         {
-            return new SquareCentimeter(Value / 0.15500031M);
+            return new SquareCentimeter(Value * 6.45160000M);
         }
 
         public SquareMeter ToSquareMeter()
         {
-            return new SquareMeter(Value / 1550.0031M);
+            return new SquareMeter(Value * 0.00064516M);
         }
 
         public SquareKilometer ToSquareKilometer()
         {
-            return new SquareKilometer(Value / 1550003100.0000M);
+            return new SquareKilometer(Value * 0.00000000064516M);
         }
 
         public SquareInch ToSquareInch() => this;
         public SquareFeet ToSquareFeet()
         {
-            return new SquareFeet(Value / 143.99999999554065408012025821M);
+            return new SquareFeet(Value / 144M);
         }
 
         public Acre ToAcre()
         {
-            return new Acre(Value / 6272639.99997490944M);
+            return new Acre(Value / 6272640M);
         }
 
         public IArea ToUnit(string symbol)

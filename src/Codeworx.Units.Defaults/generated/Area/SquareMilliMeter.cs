@@ -43,12 +43,12 @@ namespace Codeworx.Units.Defaults.AreaDimension
 
         public SquareInch ToSquareInch()
         {
-            return new SquareInch(Value / 645.16000000258064000001032256M);
+            return new SquareInch(Value / 645.16000000M);
         }
 
         public SquareFeet ToSquareFeet()
         {
-            return new SquareFeet(Value / 92903.03999749462054632036427M);
+            return new SquareFeet(Value / 92903.04000000M);
         }
 
         public Acre ToAcre()
