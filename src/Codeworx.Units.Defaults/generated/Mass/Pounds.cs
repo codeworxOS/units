@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.MassDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
-    public struct Pounds : IMass
+    public partial struct Pounds : IMass
     {
         public decimal Value { get; }
 

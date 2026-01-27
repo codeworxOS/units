@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
-    public struct Yard : IDistance
+    public partial struct Yard : IDistance
     {
         public decimal Value { get; }
 

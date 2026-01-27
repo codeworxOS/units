@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
-    public struct Minute : ITime
+    public partial struct Minute : ITime
     {
         public decimal Value { get; }
 

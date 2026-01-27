@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<ITemperature>))]
-    public interface ITemperature : IUnitBase, IComparable
+    public partial interface ITemperature : IUnitBase, IComparable
     {
         TemperatureDimension.Celsius ToCelsius();
         TemperatureDimension.Fahrenheit ToFahrenheit();

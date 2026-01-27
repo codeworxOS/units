@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
-    public struct SquareKilometer : IArea
+    public partial struct SquareKilometer : IArea
     {
         public decimal Value { get; }
 

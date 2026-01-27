@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
-    public struct Mile : IDistance
+    public partial struct Mile : IDistance
     {
         public decimal Value { get; }
 

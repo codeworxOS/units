@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
-    public interface IArea : IUnitBase, IComparable
+    public partial interface IArea : IUnitBase, IComparable
     {
         AreaDimension.SquareMeter ToSquareMeter();
         AreaDimension.Acre ToAcre();

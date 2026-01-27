@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
-    public struct SquareInch : IArea
+    public partial struct SquareInch : IArea
     {
         public decimal Value { get; }
 

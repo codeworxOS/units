@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
-    public struct CubicMeter : IVolume
+    public partial struct CubicMeter : IVolume
     {
         public decimal Value { get; }
 

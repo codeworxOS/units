@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
-    public interface IMass : IUnitBase, IComparable
+    public partial interface IMass : IUnitBase, IComparable
     {
         MassDimension.Kilogram ToKilogram();
         MassDimension.Gram ToGram();

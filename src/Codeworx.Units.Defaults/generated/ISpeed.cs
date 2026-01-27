@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
-    public interface ISpeed : IUnitBase, IComparable
+    public partial interface ISpeed : IUnitBase, IComparable
     {
         SpeedDimension.MeterPerSecond ToMeterPerSecond();
         SpeedDimension.FeetPerSecond ToFeetPerSecond();

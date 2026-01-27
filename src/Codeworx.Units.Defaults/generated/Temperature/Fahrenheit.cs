@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<ITemperature>))]
-    public struct Fahrenheit : ITemperature
+    public partial struct Fahrenheit : ITemperature
     {
         public decimal Value { get; }
 

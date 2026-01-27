@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.SpeedDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
-    public struct Knots : ISpeed
+    public partial struct Knots : ISpeed
     {
         public decimal Value { get; }
 

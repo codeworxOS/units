@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
-    public interface IDistance : IUnitBase, IComparable
+    public partial interface IDistance : IUnitBase, IComparable
     {
         DistanceDimension.Meter ToMeter();
         DistanceDimension.Centimeter ToCentimeter();

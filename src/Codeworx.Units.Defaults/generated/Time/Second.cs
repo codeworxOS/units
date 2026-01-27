@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
-    public struct Second : ITime
+    public partial struct Second : ITime
     {
         public decimal Value { get; }
 

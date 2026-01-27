@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
-    public interface IVolume : IUnitBase, IComparable
+    public partial interface IVolume : IUnitBase, IComparable
     {
         VolumeDimension.CubicMeter ToCubicMeter();
         VolumeDimension.CubicCentimeter ToCubicCentimeter();

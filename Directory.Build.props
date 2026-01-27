@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <Company>codeworx gmbh</Company>
+    <Copyright>copyright © codeworx 2026</Copyright>
+    
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+</Project>

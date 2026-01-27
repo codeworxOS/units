@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
-    public interface ITime : IUnitBase, IComparable
+    public partial interface ITime : IUnitBase, IComparable
     {
         TimeDimension.Second ToSecond();
         TimeDimension.Hour ToHour();

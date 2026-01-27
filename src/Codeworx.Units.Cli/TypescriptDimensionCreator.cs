@@ -37,7 +37,7 @@ namespace Codeworx.Units.Cli
                             }
                             var str = (conversionPath ?? []).GetConversionExpression().ToFullString();
 
-                            str = str.Replace("_value", "this.value");
+                            str = str.Replace("Value", "this.value");
                             str = str.Replace("M", string.Empty);
 
                             conversion = str;

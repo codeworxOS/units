@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
-    public struct Acre : IArea
+    public partial struct Acre : IArea
     {
         public decimal Value { get; }
 

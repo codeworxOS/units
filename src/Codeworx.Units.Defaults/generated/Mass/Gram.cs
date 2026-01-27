@@ -7,7 +7,7 @@ namespace Codeworx.Units.Defaults.MassDimension
     using Codeworx.Units;
 
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
-    public struct Gram : IMass
+    public partial struct Gram : IMass
     {
         public decimal Value { get; }
 
