@@ -16,8 +16,8 @@ namespace Codeworx.Units.Defaults
         SpeedDimension.MillimeterPerSecond ToMillimeterPerSecond();
         SpeedDimension.MilesPerHour ToMilesPerHour();
         new ISpeed ToUnit(string symbol);
-        public ISpeed Add(ISpeed addition);
-        public ISpeed Subtract(ISpeed subtract);
+        ISpeed Add(ISpeed addition);
+        ISpeed Subtract(ISpeed subtract);
         public static ISpeed Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");

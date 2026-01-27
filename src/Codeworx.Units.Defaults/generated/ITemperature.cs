@@ -13,8 +13,8 @@ namespace Codeworx.Units.Defaults
         TemperatureDimension.Fahrenheit ToFahrenheit();
         TemperatureDimension.Kelvin ToKelvin();
         new ITemperature ToUnit(string symbol);
-        public ITemperature Add(ITemperature addition);
-        public ITemperature Subtract(ITemperature subtract);
+        ITemperature Add(ITemperature addition);
+        ITemperature Subtract(ITemperature subtract);
         public static ITemperature Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");

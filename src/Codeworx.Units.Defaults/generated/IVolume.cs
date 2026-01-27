@@ -17,8 +17,8 @@ namespace Codeworx.Units.Defaults
         VolumeDimension.Liter ToLiter();
         VolumeDimension.Quart ToQuart();
         new IVolume ToUnit(string symbol);
-        public IVolume Add(IVolume addition);
-        public IVolume Subtract(IVolume subtract);
+        IVolume Add(IVolume addition);
+        IVolume Subtract(IVolume subtract);
         public static IVolume Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");

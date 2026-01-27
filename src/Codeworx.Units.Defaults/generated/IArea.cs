@@ -17,8 +17,8 @@ namespace Codeworx.Units.Defaults
         AreaDimension.SquareFeet ToSquareFeet();
         AreaDimension.SquareInch ToSquareInch();
         new IArea ToUnit(string symbol);
-        public IArea Add(IArea addition);
-        public IArea Subtract(IArea subtract);
+        IArea Add(IArea addition);
+        IArea Subtract(IArea subtract);
         public static IArea Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");

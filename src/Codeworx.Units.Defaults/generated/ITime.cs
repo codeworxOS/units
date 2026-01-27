@@ -14,8 +14,8 @@ namespace Codeworx.Units.Defaults
         TimeDimension.Minute ToMinute();
         TimeDimension.Millisecond ToMillisecond();
         new ITime ToUnit(string symbol);
-        public ITime Add(ITime addition);
-        public ITime Subtract(ITime subtract);
+        ITime Add(ITime addition);
+        ITime Subtract(ITime subtract);
         public static ITime Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");

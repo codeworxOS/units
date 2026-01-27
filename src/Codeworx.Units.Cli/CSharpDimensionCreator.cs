@@ -443,8 +443,8 @@ namespace Codeworx.Units.Cli
         {
             var parseTemplates = new List<string>
             {
-                "public tmp_Interface Add(tmp_Interface addition);",
-                "public tmp_Interface Subtract(tmp_Interface subtract);",
+                "tmp_Interface Add(tmp_Interface addition);",
+                "tmp_Interface Subtract(tmp_Interface subtract);",
                 "public static tmp_Interface Parse(string valueStr) { var idx = valueStr.IndexOf(\" \"); if (idx != -1) { var valuePart = valueStr.Substring(0, idx); if (!decimal.TryParse(valuePart, NumberStyles.Any, CultureInfo.InvariantCulture, out var val)) { throw new ArgumentException($\"Value could not be parsed. {valuePart}\"); } return Parse(valueStr.Substring(idx + 1), val); } throw new ArgumentException($\"Unit not recognizable from input string. {valueStr}\"); }",
                 $"public static string DefaultImperial => \"{dimensionData.Units[dimensionData.ImperialDefault].Symbol}\";",
                 $"public static string DefaultMetric => \"{dimensionData.Units[dimensionData.MetricDefault].Symbol}\";",

@@ -19,8 +19,8 @@ namespace Codeworx.Units.Defaults
         MassDimension.TonShort ToTonShort();
         MassDimension.MetricTons ToMetricTons();
         new IMass ToUnit(string symbol);
-        public IMass Add(IMass addition);
-        public IMass Subtract(IMass subtract);
+        IMass Add(IMass addition);
+        IMass Subtract(IMass subtract);
         public static IMass Parse(string valueStr)
         {
             var idx = valueStr.IndexOf(" ");
