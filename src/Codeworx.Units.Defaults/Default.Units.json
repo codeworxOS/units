@@ -78,7 +78,8 @@
         "Factor": 1016.0469088,
         "System": "Imperial",
         "Conversions": {
-          "Pounds": 2240
+          "Pounds": 2240,
+          "Ton (short)": 1.12
         }
       }
     }

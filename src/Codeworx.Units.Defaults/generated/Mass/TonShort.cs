@@ -63,7 +63,7 @@ namespace Codeworx.Units.Defaults.MassDimension
         public TonShort ToTonShort() => this;
         public TonLong ToTonLong()
         {
-            return new TonLong(Value * 0.8928571428571428571428571429M);
+            return new TonLong(Value / 1.12M);
         }
 
         public IMass ToUnit(string symbol)
