@@ -21,7 +21,7 @@ namespace Codeworx.Units.EntityFrameworkCore
 
         private static Func<string, decimal, IUnitBase> GetParseMethod(Type type)
         {
-            var methodInfo = type.GetMethods(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public).Single(FindParseMethod);
+            var methodInfo = type.GetMethod("Parse", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public, [typeof(string), typeof(decimal)])!;
 
             var param1 = Expression.Parameter(typeof(string), "key");
             var param2 = Expression.Parameter(typeof(decimal), "value");
@@ -29,21 +29,6 @@ namespace Codeworx.Units.EntityFrameworkCore
             var method = Expression.Call(null, methodInfo, param1, param2);
 
             return (Expression.Lambda(method, param1, param2).Compile() as Func<string, decimal, IUnitBase>)!;
-        }
-
-        private static bool FindParseMethod(System.Reflection.MethodInfo d)
-        {
-            if (d.Name != "Parse")
-                return false;
-
-            var parameters = d.GetParameters();
-            if (parameters.Length != 2)
-                return false;
-
-            if (parameters[0].ParameterType != typeof(string) || parameters[1].ParameterType != typeof(decimal))
-                return false;
-
-            return true;
         }
     }
 }

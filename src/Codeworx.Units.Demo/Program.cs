@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Codeworx.Units.Defaults;
 using Codeworx.Units.Demo.Data;
+using Codeworx.Units.EntityFrameworkCore;
 using Codeworx.Units.EntityFrameworkCore.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ internal class Program
 
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddDbContext<EntityContext>(opt => opt.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=UnitTestData;Trusted_Connection=True;"));
+        builder.Services.AddDbContext<EntityContext>(opt => opt.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=UnitTestData;Trusted_Connection=True;").AddDimensionQueryReplacement());
 
         builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.Converters.AddUnitConverters());
 
@@ -45,12 +46,22 @@ internal class Program
 
         app.MapPost("/AddDistance", async ([FromServices] EntityContext context, [FromBody] DistanceDTO data) =>
         {
-            var entry = new DistanceDimensionModel
+            DistanceDimensionModel entry;
+            if (data.Id != null)
             {
-                RequiredDistance = DimensionValue<IDistance>.GetEntity(data.RequiredDistance),
-                OptionalDistance = NullableDimensionValue<IDistance>.GetEntity(data.OptionalDistance),
-            };
-            context.DistanceDimensionTest.Add(entry);
+                entry = await context.DistanceDimensionTest.FirstAsync(d => d.Id == data.Id);
+                entry.RequiredDistance.Set(data.RequiredDistance);
+                entry.OptionalDistance.Set(data.OptionalDistance);
+            }
+            else
+            {
+                entry = new DistanceDimensionModel
+                {
+                    RequiredDistance = DimensionValue<IDistance>.GetEntity(data.RequiredDistance),
+                    OptionalDistance = NullableDimensionValue<IDistance>.GetEntity(data.OptionalDistance),
+                };
+                context.DistanceDimensionTest.Add(entry);
+            }
 
             await context.SaveChangesAsync();
 
@@ -59,12 +70,22 @@ internal class Program
 
         app.MapPost("/AddMeter", async ([FromServices] EntityContext context, [FromBody] MeterDTO data) =>
         {
-            var entry = new MeterDimensionModel
+            MeterDimensionModel entry;
+            if (data.Id != null)
             {
-                RequiredMeter = data.RequiredMeter,
-                OptionalMeter = data.OptionalMeter,
-            };
-            context.MeterDimensionTest.Add(entry);
+                entry = await context.MeterDimensionTest.FirstAsync(d => d.Id == data.Id);
+                entry.RequiredMeter = data.RequiredMeter;
+                entry.OptionalMeter = data.OptionalMeter;
+            }
+            else
+            {
+                entry = new MeterDimensionModel
+                {
+                    RequiredMeter = data.RequiredMeter,
+                    OptionalMeter = data.OptionalMeter,
+                };
+                context.MeterDimensionTest.Add(entry);
+            }
 
             await context.SaveChangesAsync();
 
@@ -73,12 +94,14 @@ internal class Program
 
         app.MapGet("/QueryDistance", async ([FromServices] EntityContext context, int Id) =>
         {
-            return await GetDistance(context, Id);
+            var tmp = await GetDistance(context, Id);
+            return tmp;
         });
 
         app.MapGet("/QueryMeter", async ([FromServices] EntityContext context, int Id) =>
         {
-            return await GetMeter(context, Id);
+            var tmp = await GetMeter(context, Id);
+            return tmp;
         });
 
         app.UseOpenApi();
@@ -89,25 +112,25 @@ internal class Program
 
     private static async Task<MeterDTO?> GetMeter(EntityContext context, int Id)
     {
-        var entry = await context.MeterDimensionTest.AsNoTracking().Where(d => d.Id == Id).Select(d => new MeterDTO
+        var entryQry = context.MeterDimensionTest.Where(d => d.Id == Id).Select(d => new MeterDTO
         {
             Id = d.Id,
             RequiredMeter = d.RequiredMeter,
             OptionalMeter = d.OptionalMeter,
-        }).FirstOrDefaultAsync();
+        });
 
-        return entry;
+        return await entryQry.FirstOrDefaultAsync();
     }
 
     private static async Task<DistanceDTO?> GetDistance(EntityContext context, int Id)
     {
-        var entry = await context.DistanceDimensionTest.AsNoTracking().Where(d => d.Id == Id).Select(d => new DistanceDTO
+        var entryQry = context.DistanceDimensionTest.Where(d => d.Id == Id).Select(d => new DistanceDTO
         {
             Id = d.Id,
             RequiredDistance = d.RequiredDistance.GetDimension(),
-            OptionalDistance = d.OptionalDistance.GetDimension()
-        }).FirstOrDefaultAsync();
+            OptionalDistance = d.OptionalDistance.GetDimension(),
+        });
 
-        return entry;
+        return await entryQry.FirstOrDefaultAsync();
     }
 }

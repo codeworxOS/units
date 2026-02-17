@@ -18,6 +18,12 @@ namespace Codeworx.Units.EntityFrameworkCore.Entities
 
         public UnitInformation? Unit { get; set; }
 
+        public void Set(T entry)
+        {
+            Value = entry.Value;
+            UnitId = entry.Key;
+        }
+
         public static DimensionValue<T> GetEntity(T entry)
         {
             return new DimensionValue<T> { Value = entry.Value, UnitId = entry.Key };

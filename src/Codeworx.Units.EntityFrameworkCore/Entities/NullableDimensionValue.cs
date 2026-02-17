@@ -16,6 +16,12 @@ namespace Codeworx.Units.EntityFrameworkCore.Entities
 
         public UnitInformation? Unit { get; set; }
 
+        public void Set(T? entry)
+        {
+            Value = entry?.Value;
+            UnitId = entry?.Key;
+        }
+
         public static NullableDimensionValue<T> GetEntity(T? entry)
         {
             return new NullableDimensionValue<T> { Value = entry?.Value, UnitId = entry?.Key };

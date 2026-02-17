@@ -7,8 +7,8 @@ namespace Units.Demo.Database.Model
     {
         public int Id { get; set; }
 
-        public required DimensionValue<IDistance> RequiredDistance { get; set; }
+        public required DimensionValue<IDistance> RequiredDistance { get; init; }
 
-        public required NullableDimensionValue<IDistance> OptionalDistance { get; set; }
+        public required NullableDimensionValue<IDistance> OptionalDistance { get; init; }
     }
 }
