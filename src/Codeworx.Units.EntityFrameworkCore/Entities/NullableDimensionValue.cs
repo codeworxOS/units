@@ -6,7 +6,7 @@ namespace Codeworx.Units.EntityFrameworkCore.Entities
 {
     [Owned]
     [DebuggerDisplay("UnitValue = {GetDimension()?.ToString()}")]
-    public class NullableDimensionValue<T>
+    public class NullableDimensionValue<T>: INullableDimensionValue<T>
         where T : IUnitBase
     {
         public decimal? Value { get; set; }

@@ -8,7 +8,7 @@ namespace Codeworx.Units.EntityFrameworkCore.Entities
 {
     [Owned]
     [DebuggerDisplay("UnitValue = {GetDimension().ToString()}")]
-    public class DimensionValue<T>
+    public class DimensionValue<T> : IDimensionValue<T>
         where T : IUnitBase
     {
         public required decimal Value { get; set; }
