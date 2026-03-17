@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Codeworx.Units.Cli.Typescript
 {
@@ -17,5 +18,7 @@ namespace Codeworx.Units.Cli.Typescript
         public required string SIUnit { get; set; }
 
         public required List<TSUnit> Units { get; set; }
+
+        public string UnitNames => string.Join(" | ", Units.Select(d => "'" + d.UnitName + "'"));
     }
 }

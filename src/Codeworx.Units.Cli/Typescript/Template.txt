@@ -22,6 +22,9 @@ export interface IDimension {
 }
 
 {{#Dimensions}}
+
+export type {{{DimensionName}}}DimensionName = {{{UnitNames}}};
+
 export abstract class I{{{DimensionName}}} implements IDimension {
     public static DefaultSymbol: string = "{{{DefaultUnit}}}";
 
@@ -87,6 +90,17 @@ export abstract class I{{{DimensionName}}} implements IDimension {
         }
     }
 
+    public static getSymbolFromType(typeName: string): string {
+        switch (typeName) {
+{{#Units}}
+            case "{{{UnitName}}}":
+                return "{{{Symbol}}}";
+{{/Units}}
+            default:
+                throw new Error("Type " + typeName + " not supported.");
+        }
+    }
+
     public static getSymbols() : string[] {
         var symbols : string[] = [];
 
@@ -140,7 +154,7 @@ export class {{{UnitName}}} extends I{{{DimensionName}}} {
 {{/Dimensions}}
 
 export class DimensionHelper {
-  constructor(public parse: (value: string) => IDimension, public parseWithSymbol: (symbol: string, value: number) => IDimension, public getSymbols: () => string[], public defaultSymbol: string, public metricSymbol: string, public imperialSymbol: string) { }
+  constructor(public parse: (value: string) => IDimension, public parseWithSymbol: (symbol: string, value: number) => IDimension, public getSymbols: () => string[], public getSymbolFromType: (typeName: string) => string, public defaultSymbol: string, public metricSymbol: string, public imperialSymbol: string) { }
 
   public static GetHelper(
     dimensionName: DimensionName
@@ -150,10 +164,16 @@ export class DimensionHelper {
     
 {{#Dimensions}}
       case '{{{DimensionName}}}':
-        return new DimensionHelper(I{{{DimensionName}}}.parse, I{{{DimensionName}}}.parseWithSymbol, I{{{DimensionName}}}.getSymbols, I{{{DimensionName}}}.DefaultSymbol, I{{{DimensionName}}}.MetricSymbol, I{{{DimensionName}}}.ImperialSymbol);
+        return new DimensionHelper(I{{{DimensionName}}}.parse, I{{{DimensionName}}}.parseWithSymbol, I{{{DimensionName}}}.getSymbols, I{{{DimensionName}}}.getSymbolFromType, I{{{DimensionName}}}.DefaultSymbol, I{{{DimensionName}}}.MetricSymbol, I{{{DimensionName}}}.ImperialSymbol);
 {{/Dimensions}}
     }
 
     throw Error('Invalid dimensionName "' + dimensionName + '"!');
   }
+}
+
+export type Dimensions = {
+{{#Dimensions}}
+  {{{DimensionName}}}: {{{DimensionName}}}DimensionName;
+{{/Dimensions}}
 }
