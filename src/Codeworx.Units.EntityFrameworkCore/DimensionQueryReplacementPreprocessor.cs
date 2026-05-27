@@ -9,6 +9,15 @@ namespace Codeworx.Units.EntityFrameworkCore
 {
     public class DimensionQueryReplacementPreprocessor : IQueryExpressionInterceptor
     {
+        public static readonly DimensionQueryReplacementPreprocessor _instance;
+
+        public static DimensionQueryReplacementPreprocessor Instance => _instance;
+
+        static DimensionQueryReplacementPreprocessor()
+        {
+            _instance = new DimensionQueryReplacementPreprocessor();
+        }
+
         Expression IQueryExpressionInterceptor.QueryCompilationStarting(Expression queryExpression, QueryExpressionEventData eventData)
         {
             DimensionExpressionVisitor visitor = new DimensionExpressionVisitor();

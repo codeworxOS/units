@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
     public partial struct Kilometer : IDistance
     {
+        public decimal BaseValue => ToMeter().Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => Kilometer.Symbol;

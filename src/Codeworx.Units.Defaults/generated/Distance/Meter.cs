@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.DistanceDimension
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
     public partial struct Meter : IDistance
     {
+        public decimal BaseValue => Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => Meter.Symbol;

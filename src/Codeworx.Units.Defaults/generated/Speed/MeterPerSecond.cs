@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.SpeedDimension
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
     public partial struct MeterPerSecond : ISpeed
     {
+        public decimal BaseValue => Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => MeterPerSecond.Symbol;

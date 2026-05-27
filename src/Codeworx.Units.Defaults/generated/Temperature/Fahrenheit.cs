@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.TemperatureDimension
     [TypeConverter(typeof(DimensionTypeConverter<ITemperature>))]
     public partial struct Fahrenheit : ITemperature
     {
+        public decimal BaseValue => ToCelsius().Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => Fahrenheit.Symbol;

@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
     public partial struct SquareMeter : IArea
     {
+        public decimal BaseValue => Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => SquareMeter.Symbol;

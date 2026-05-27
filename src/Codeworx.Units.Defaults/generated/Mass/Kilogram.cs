@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.MassDimension
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public partial struct Kilogram : IMass
     {
+        public decimal BaseValue => Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => Kilogram.Symbol;

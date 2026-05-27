@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.VolumeDimension
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
     public partial struct CubicInch : IVolume
     {
+        public decimal BaseValue => ToCubicMeter().Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => CubicInch.Symbol;

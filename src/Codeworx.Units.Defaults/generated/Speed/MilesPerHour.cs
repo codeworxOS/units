@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.SpeedDimension
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
     public partial struct MilesPerHour : ISpeed
     {
+        public decimal BaseValue => ToMeterPerSecond().Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => MilesPerHour.Symbol;

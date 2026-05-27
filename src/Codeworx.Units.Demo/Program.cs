@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Codeworx.Units.Defaults;
+using Codeworx.Units.Defaults.DistanceDimension;
 using Codeworx.Units.Demo.Data;
 using Codeworx.Units.EntityFrameworkCore;
 using Codeworx.Units.EntityFrameworkCore.Entities;
@@ -117,7 +118,9 @@ internal class Program
             Id = d.Id,
             RequiredMeter = d.RequiredMeter,
             OptionalMeter = d.OptionalMeter,
-        });
+        })
+            .OrderBy(p => p.RequiredMeter)
+            .ThenBy(p => p.OptionalMeter);
 
         return await entryQry.FirstOrDefaultAsync();
     }
@@ -129,7 +132,22 @@ internal class Program
             Id = d.Id,
             RequiredDistance = d.RequiredDistance.GetDimension(),
             OptionalDistance = d.OptionalDistance.GetDimension(),
-        });
+            ////RequiredDistance = new Distance
+            ////{
+            ////    Symbol = d.RequiredDistance.Unit!.Symbol,
+            ////    Value = d.RequiredDistance.Value,
+            ////    BaseValue = d.RequiredDistance.Value * d.RequiredDistance.Unit.ConversionFactor / d.RequiredDistance.Unit.ConversionDivisor + d.RequiredDistance.Unit.ConversionOffset
+            ////},
+            ////OptionalDistance = d.OptionalDistance.Value != null ? new Distance
+            ////{
+            ////    Symbol = d.OptionalDistance.Unit!.Symbol,
+            ////    Value = d.OptionalDistance.Value.Value,
+            ////    BaseValue = d.OptionalDistance.Value.Value * d.OptionalDistance.Unit.ConversionFactor / d.OptionalDistance.Unit.ConversionDivisor + d.OptionalDistance.Unit.ConversionOffset
+            ////} : null,
+        })
+            .Where(p => p.RequiredDistance >= new Meter(1) && p.RequiredDistance <= new Feet(9))
+            .OrderBy(p => p.RequiredDistance)
+            .ThenBy(p => p.OptionalDistance);
 
         return await entryQry.FirstOrDefaultAsync();
     }

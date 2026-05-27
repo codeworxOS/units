@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
     public partial struct Minute : ITime
     {
+        public decimal BaseValue => ToSecond().Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => Minute.Symbol;

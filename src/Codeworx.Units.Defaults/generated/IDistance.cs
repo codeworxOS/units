@@ -50,6 +50,16 @@ namespace Codeworx.Units.Defaults
             return first.Subtract(second);
         }
 
+        public static bool operator >=(IDistance first, IDistance second)
+        {
+            return first.CompareTo(second) >= 0;
+        }
+
+        public static bool operator <=(IDistance first, IDistance second)
+        {
+            return first.CompareTo(second) <= 0;
+        }
+
         public static IDistance Parse(string symbolOrKey, decimal value)
         {
             switch (symbolOrKey)

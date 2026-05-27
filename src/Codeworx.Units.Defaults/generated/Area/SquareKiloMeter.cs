@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.AreaDimension
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
     public partial struct SquareKilometer : IArea
     {
+        public decimal BaseValue => ToSquareMeter().Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => SquareKilometer.Symbol;

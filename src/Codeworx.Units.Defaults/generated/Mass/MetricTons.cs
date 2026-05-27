@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.MassDimension
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
     public partial struct MetricTons : IMass
     {
+        public decimal BaseValue => ToKilogram().Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => MetricTons.Symbol;

@@ -9,6 +9,7 @@ namespace Codeworx.Units.Defaults.TimeDimension
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
     public partial struct Second : ITime
     {
+        public decimal BaseValue => Value;
         public decimal Value { get; }
 
         string IUnitBase.Symbol => Second.Symbol;

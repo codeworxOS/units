@@ -35,6 +35,10 @@ namespace Codeworx.Units.Cli
                 generateEntries.Add(GetInterface(dimensionClassName, dimensionData));
 
                 generateEntries.AddRange(GetImplementations(dimensionClassName, dimensionData));
+
+                var baseUnit = dimensionData.Units[dimensionData.BaseUnit];
+
+                generateEntries.Add(GetGeneralImplementation(dimensionClassName, dimensionData));
             }
 
             generateEntries.Add(GetExtensionSyntax());
@@ -59,6 +63,21 @@ namespace Codeworx.Units.Cli
             }
 
             return true;
+        }
+
+        private IEnumerable<StatementSyntax> GetEntityInfromationStatements()
+        {
+            var statementTemplate = "yield return (\"{0}\", \"{1}\", {2}M, {3}M, {4}M);";
+            foreach ((var dimensionName, var dimensionData) in _dimensionData)
+            {
+
+                foreach ((var unitName, var unitData) in dimensionData.Units)
+                {
+                    var statement = SyntaxFactory.ParseStatement(string.Format(CultureInfo.InvariantCulture, statementTemplate, unitData.Key, unitData.Symbol, unitData.Offset, unitData.Factor, unitData.Divisor));
+
+                    yield return statement;
+                }
+            }
         }
 
         private FileGenerationInfo GetExtensionSyntax()
@@ -94,137 +113,93 @@ namespace Codeworx.Units.Cli
             return new FileGenerationInfo(".", "UnitExtensions", result);
         }
 
-        private IEnumerable<StatementSyntax> GetRegisterConverterStatements()
+        private FileGenerationInfo GetGeneralImplementation(string dimensionClassName, JsonDimension dimensionData)
         {
-            var statementTemplate = "list.Add(new UnitJsonConverter<tmp_Interface>(tmp_Interface.Parse));";
-            foreach ((var dimensionName, var dimensionData) in _dimensionData)
-            {
-                var dimensionClassName = dimensionName.GetClassName();
+            string template = $"public partial struct tmp_Struct {{ public decimal BaseValue  {{ get; set; }} public decimal Value {{ get; set; }} public required string Symbol {{ get; set;}} public string Key => tmp_Interface.Parse(Symbol, Value).Key; public UnitSystem System => UnitSystem.Both; }}";
 
-                var statement = SyntaxFactory.ParseStatement(statementTemplate);
-
-                while (statement.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Interface"))
-                {
-                    var identifierNode = statement.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Interface").First();
-                    statement = statement.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName("I" + dimensionClassName));
-                }
-
-                yield return statement;
-            }
-        }
-
-        private IEnumerable<StatementSyntax> GetEntityInfromationStatements()
-        {
-            var statementTemplate = "yield return (\"{0}\", \"{1}\", {2}M, {3}M, {4}M);";
-            foreach ((var dimensionName, var dimensionData) in _dimensionData)
-            {
-
-                foreach ((var unitName, var unitData) in dimensionData.Units)
-                {
-                    var statement = SyntaxFactory.ParseStatement(string.Format(CultureInfo.InvariantCulture, statementTemplate, unitData.Key, unitData.Symbol, unitData.Offset, unitData.Factor, unitData.Divisor));
-
-                    yield return statement;
-                }
-            }
-        }
-
-        private FileGenerationInfo GetInterface(string dimensionClassName, JsonDimension dimensionData)
-        {
-            string template = $"public partial interface tmp_Interface : IUnitBase, IComparable {{}}";
-
-            var interfaceDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as InterfaceDeclarationSyntax)!;
+            var classDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as StructDeclarationSyntax)!;
 
             var attribArguments = SyntaxFactory.ParseAttributeArgumentList($"(typeof(DimensionTypeConverter<I{dimensionClassName}>))");
             var list = SyntaxFactory.SeparatedList<AttributeSyntax>();
             list = list.Add(SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("TypeConverter"), attribArguments));
-            interfaceDeclaration = interfaceDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list));
-            interfaceDeclaration = interfaceDeclaration.WithIdentifier(SyntaxFactory.Identifier("I" + dimensionClassName));
+            classDeclaration = classDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list));
 
-            interfaceDeclaration = interfaceDeclaration.AddMembers(GetInterfaceMethodDeclarations(dimensionClassName, dimensionData).ToArray());
+            classDeclaration = classDeclaration.WithIdentifier(SyntaxFactory.Identifier(dimensionClassName));
 
-            interfaceDeclaration = interfaceDeclaration.AddMembers(GetStaticInterfaceMembers(dimensionClassName, dimensionData).ToArray());
+            while (classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Struct"))
+            {
+                var identifierNode = classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Struct").First();
+                classDeclaration = classDeclaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName(dimensionClassName));
+            }
 
-            var result = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(CurrentOptions.Namespace))
-                .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")))
-                .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.ComponentModel")))
-                .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("Codeworx.Units")))
-                .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Globalization")))
-              .AddMembers(interfaceDeclaration)
+            while (classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Interface"))
+            {
+                var identifierNode = classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Interface").First();
+                classDeclaration = classDeclaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName($"I{dimensionClassName}"));
+            }
+
+            classDeclaration = classDeclaration.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName("I" + dimensionClassName)));
+            classDeclaration = classDeclaration.AddMembers(GetGeneralImplementationMethodsFromInterface(dimensionClassName, dimensionData).ToArray());
+            classDeclaration = classDeclaration.AddMembers(GetGeneralImplementationOverrides(dimensionClassName).ToArray());
+
+            var result = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(CurrentOptions.Namespace + "." + dimensionClassName + "Dimension"))
+              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")))
+              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Globalization")))
+              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.ComponentModel")))
+              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("Codeworx.Units")))
+              .AddMembers(classDeclaration)
               .WithLeadingTrivia(SyntaxFactory.SyntaxTrivia(SyntaxKind.SingleLineCommentTrivia, "// <auto-generated />"))
               .NormalizeWhitespace();
 
-            return new FileGenerationInfo(".", "I" + dimensionClassName, result);
+            var generated = new FileGenerationInfo(dimensionClassName, dimensionClassName, result);
+            return generated;
         }
 
-        private IEnumerable<MemberDeclarationSyntax> GetInterfaceMethodDeclarations(string dimensionClassName, JsonDimension dimensionData)
+        private FileGenerationInfo GetImplementation(string dimensionClassName, JsonDimension dimensionData, string unitName, JsonUnit unitData)
         {
-            foreach ((var unitName, var unitData) in dimensionData.Units)
+            var unitClassName = unitName.GetClassName();
+            var unitKey = unitData.Key;
+
+            var baseUnit = dimensionData.Units[dimensionData.BaseUnit];
+
+            var member = unitName == dimensionData.BaseUnit ? "Value" : $"To{baseUnit.Name.GetClassName()}().Value";
+
+            string template = $"public partial struct tmp_Struct {{ public decimal BaseValue => {member}; public decimal Value {{get;}} string IUnitBase.Symbol => tmp_Struct.Symbol; public static string Symbol => \"{unitData.Symbol}\"; string IUnitBase.Key => tmp_Struct.Key; public static string Key => \"{unitKey}\";  UnitSystem IUnitBase.System => tmp_Struct.System; public static UnitSystem System => UnitSystem.{unitData.System ?? UnitSystem.Both}; }}";
+
+            var classDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as StructDeclarationSyntax)!;
+
+            var attribArguments = SyntaxFactory.ParseAttributeArgumentList($"(typeof(DimensionTypeConverter<I{dimensionClassName}>))");
+            var list = SyntaxFactory.SeparatedList<AttributeSyntax>();
+            list = list.Add(SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("TypeConverter"), attribArguments));
+            classDeclaration = classDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list));
+
+            classDeclaration = classDeclaration.WithIdentifier(SyntaxFactory.Identifier(unitClassName));
+
+            while (classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Struct"))
             {
-                var unitClassName = unitName.GetClassName();
-                var memberIdentifier = SyntaxFactory.Identifier("To" + unitClassName);
-
-                var methodDeclaration = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(dimensionClassName + "Dimension." + unitClassName), memberIdentifier);
-
-                methodDeclaration = methodDeclaration.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
-
-                yield return methodDeclaration;
+                var identifierNode = classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Struct").First();
+                classDeclaration = classDeclaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName(unitClassName));
             }
 
-            {
-                var methodDeclaration = (SyntaxFactory.ParseMemberDeclaration("new tmp_Interface ToUnit(string symbol);") as MethodDeclarationSyntax)!;
+            classDeclaration = classDeclaration.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName("I" + dimensionClassName)));
 
-                while (methodDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Interface"))
-                {
-                    var identifierNode = methodDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Interface").First();
-                    methodDeclaration = methodDeclaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName("I" + dimensionClassName));
-                }
+            classDeclaration = classDeclaration.AddMembers(GetImplementationConstructor(unitClassName));
 
-                yield return methodDeclaration;
-            }
-        }
+            classDeclaration = classDeclaration.AddMembers(GetImplementationMethodsFromInterface(dimensionClassName, dimensionData, unitData).ToArray());
 
-        private IEnumerable<FileGenerationInfo> GetImplementations(string dimensionClassName, JsonDimension dimensionData)
-        {
-            foreach ((var unitName, var unitData) in dimensionData.Units)
-            {
-                var unitClassName = unitName.GetClassName();
-                var unitKey = unitData.Key;
-                string template = $"public partial struct tmp_Struct {{ public decimal Value {{get;}} string IUnitBase.Symbol => tmp_Struct.Symbol; public static string Symbol => \"{unitData.Symbol}\"; string IUnitBase.Key => tmp_Struct.Key; public static string Key => \"{unitKey}\";  UnitSystem IUnitBase.System => tmp_Struct.System; public static UnitSystem System => UnitSystem.{unitData.System ?? UnitSystem.Both}; }}";
+            classDeclaration = classDeclaration.AddMembers(GetImplementationOverrides(dimensionClassName, unitClassName, unitData).ToArray());
 
-                var classDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as StructDeclarationSyntax)!;
+            var result = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(CurrentOptions.Namespace + "." + dimensionClassName + "Dimension"))
+              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")))
+              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Globalization")))
+              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.ComponentModel")))
+              .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("Codeworx.Units")))
+              .AddMembers(classDeclaration)
+              .WithLeadingTrivia(SyntaxFactory.SyntaxTrivia(SyntaxKind.SingleLineCommentTrivia, "// <auto-generated />"))
+              .NormalizeWhitespace();
 
-                var attribArguments = SyntaxFactory.ParseAttributeArgumentList($"(typeof(DimensionTypeConverter<I{dimensionClassName}>))");
-                var list = SyntaxFactory.SeparatedList<AttributeSyntax>();
-                list = list.Add(SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("TypeConverter"), attribArguments));
-                classDeclaration = classDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list));
-
-                classDeclaration = classDeclaration.WithIdentifier(SyntaxFactory.Identifier(unitClassName));
-
-                while (classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Struct"))
-                {
-                    var identifierNode = classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Struct").First();
-                    classDeclaration = classDeclaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName(unitClassName));
-                }
-
-                classDeclaration = classDeclaration.AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName("I" + dimensionClassName)));
-
-                classDeclaration = classDeclaration.AddMembers(GetImplementationConstructor(unitClassName));
-
-                classDeclaration = classDeclaration.AddMembers(GetImplementationMethodsFromInterface(dimensionClassName, dimensionData, unitData).ToArray());
-
-                classDeclaration = classDeclaration.AddMembers(GetImplementationOverrides(dimensionClassName, unitClassName, unitData).ToArray());
-
-                var result = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(CurrentOptions.Namespace + "." + dimensionClassName + "Dimension"))
-                  .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")))
-                  .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Globalization")))
-                  .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.ComponentModel")))
-                  .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("Codeworx.Units")))
-                  .AddMembers(classDeclaration)
-                  .WithLeadingTrivia(SyntaxFactory.SyntaxTrivia(SyntaxKind.SingleLineCommentTrivia, "// <auto-generated />"))
-                  .NormalizeWhitespace();
-
-                yield return new FileGenerationInfo(dimensionClassName, unitClassName, result);
-            }
+            var generated = new FileGenerationInfo(dimensionClassName, unitClassName, result);
+            return generated;
         }
 
         private ConstructorDeclarationSyntax GetImplementationConstructor(string unitName)
@@ -236,6 +211,46 @@ namespace Codeworx.Units.Cli
             constructorDeclaration = constructorDeclaration.WithIdentifier(SyntaxFactory.Identifier(unitName));
 
             return constructorDeclaration;
+        }
+
+        private IEnumerable<MemberDeclarationSyntax> GetGeneralImplementationMethodsFromInterface(string dimensionClassName, JsonDimension dimensionData)
+        {
+            foreach ((var unitName, var unitData) in dimensionData.Units)
+            {
+                var unitClassName = unitName.GetClassName();
+
+                var memberIdentifier = SyntaxFactory.Identifier("To" + unitClassName);
+
+                var methodDeclaration = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(unitClassName), memberIdentifier);
+                methodDeclaration = methodDeclaration.WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword)));
+
+                var body = SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression($"I{dimensionClassName}.Parse(Symbol, Value).{memberIdentifier}()"));
+                methodDeclaration = methodDeclaration
+                                        .WithExpressionBody(body)
+                                        .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+                                        .NormalizeWhitespace();
+
+                yield return methodDeclaration;
+            }
+
+            var parseTemplates = new[]
+            {
+                $"public tmp_Interface ToUnit(string symbol) => tmp_Interface.Parse(Symbol, Value).ToUnit(symbol);",
+                "IUnitBase IUnitBase.ToUnit(string symbol) => tmp_Interface.Parse(Symbol, Value).ToUnit(symbol);",
+            };
+
+            foreach (var parseTemplate in parseTemplates)
+            {
+                var declaration = (SyntaxFactory.ParseMemberDeclaration(parseTemplate) as MethodDeclarationSyntax)!;
+
+                while (declaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Interface"))
+                {
+                    var identifierNode = declaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Interface").First();
+                    declaration = declaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName("I" + dimensionClassName));
+                }
+
+                yield return declaration;
+            }
         }
 
         private IEnumerable<MemberDeclarationSyntax> GetImplementationMethodsFromInterface(string dimensionClassName, JsonDimension dimensionData, JsonUnit sourceUnit)
@@ -324,23 +339,51 @@ namespace Codeworx.Units.Cli
             }
         }
 
-        private SyntaxNode GetObjectCreationFromConversion(ObjectCreationExpressionSyntax objectCreation, JsonDimension dimensionData, JsonUnit sourceUnit, JsonUnit targetUnit)
+        private IEnumerable<MemberDeclarationSyntax> GetGeneralImplementationOverrides(string dimensionClassName)
         {
-            var conversionPath = dimensionData.GetConversionPath(sourceUnit, targetUnit);
+            var templates = new List<string>();
 
-            if (conversionPath == null)
+            templates.AddRange(new[]
             {
-                WriteWarningOutput($"Invalid Conversion {dimensionData.Name}");
+                "public tmp_Interface Add(tmp_Interface addition) { return tmp_Interface.Parse(Symbol, Value).Add(addition); }",
+                "public tmp_Interface Subtract(tmp_Interface subtraction) { return tmp_Interface.Parse(Symbol, Value).Subtract(subtraction); }",
+            });
+
+            templates.AddRange(new[]
+            {
+                "public override int GetHashCode() { return -1939223833 + Value.GetHashCode(); }",
+                "public override bool Equals(object obj) { return this.CompareTo(obj) == 0; }",
+                "public int CompareTo(object obj) { if (obj == null) return 1; if (obj is tmp_Interface conv) return this.Value.CompareTo(conv.ToUnit(Symbol).Value); throw new ArgumentException(\"obj is not from same dimension interface\"); }",
+            });
+
+            templates.AddRange(new[]
+            {
+                "public override string ToString() { return $\"{Value.ToString(CultureInfo.InvariantCulture)} {Symbol}\"; }",
+            });
+
+
+            foreach (var template in templates)
+            {
+                var declaration = SyntaxFactory.ParseMemberDeclaration(template)!;
+
+                //replace struct name
+                while (declaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Struct"))
+                {
+                    var identifierNode = declaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Struct").First();
+
+                    declaration = declaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName(dimensionClassName));
+                }
+
+                //replace interface name
+                while (declaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Interface"))
+                {
+                    var identifierNode = declaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Interface").First();
+
+                    declaration = declaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName("I" + dimensionClassName));
+                }
+
+                yield return declaration;
             }
-
-            ExpressionSyntax conversionExpression = (conversionPath ?? []).GetConversionExpression();
-
-            var arg = SyntaxFactory.Argument(conversionExpression);
-
-            var argList = SyntaxFactory.ArgumentList(default);
-            argList = argList.AddArguments(arg);
-
-            return objectCreation.WithArgumentList(argList);
         }
 
         private IEnumerable<MemberDeclarationSyntax> GetImplementationOverrides(string dimensionClassName, string unitClassName, JsonUnit unitData)
@@ -439,6 +482,108 @@ namespace Codeworx.Units.Cli
             }
         }
 
+        private IEnumerable<FileGenerationInfo> GetImplementations(string dimensionClassName, JsonDimension dimensionData)
+        {
+            foreach ((var unitName, var unitData) in dimensionData.Units)
+            {
+                FileGenerationInfo generated = GetImplementation(dimensionClassName, dimensionData, unitName, unitData);
+
+                yield return generated;
+            }
+        }
+
+        private FileGenerationInfo GetInterface(string dimensionClassName, JsonDimension dimensionData)
+        {
+            string template = $"public partial interface tmp_Interface : IUnitBase, IComparable {{}}";
+
+            var interfaceDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as InterfaceDeclarationSyntax)!;
+
+            var attribArguments = SyntaxFactory.ParseAttributeArgumentList($"(typeof(DimensionTypeConverter<I{dimensionClassName}>))");
+            var list = SyntaxFactory.SeparatedList<AttributeSyntax>();
+            list = list.Add(SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("TypeConverter"), attribArguments));
+            interfaceDeclaration = interfaceDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list));
+            interfaceDeclaration = interfaceDeclaration.WithIdentifier(SyntaxFactory.Identifier("I" + dimensionClassName));
+
+            interfaceDeclaration = interfaceDeclaration.AddMembers(GetInterfaceMethodDeclarations(dimensionClassName, dimensionData).ToArray());
+
+            interfaceDeclaration = interfaceDeclaration.AddMembers(GetStaticInterfaceMembers(dimensionClassName, dimensionData).ToArray());
+
+            var result = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(CurrentOptions.Namespace))
+                .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")))
+                .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.ComponentModel")))
+                .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("Codeworx.Units")))
+                .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Globalization")))
+              .AddMembers(interfaceDeclaration)
+              .WithLeadingTrivia(SyntaxFactory.SyntaxTrivia(SyntaxKind.SingleLineCommentTrivia, "// <auto-generated />"))
+              .NormalizeWhitespace();
+
+            return new FileGenerationInfo(".", "I" + dimensionClassName, result);
+        }
+
+        private IEnumerable<MemberDeclarationSyntax> GetInterfaceMethodDeclarations(string dimensionClassName, JsonDimension dimensionData)
+        {
+            foreach ((var unitName, var unitData) in dimensionData.Units)
+            {
+                var unitClassName = unitName.GetClassName();
+                var memberIdentifier = SyntaxFactory.Identifier("To" + unitClassName);
+
+                var methodDeclaration = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(dimensionClassName + "Dimension." + unitClassName), memberIdentifier);
+
+                methodDeclaration = methodDeclaration.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+
+                yield return methodDeclaration;
+            }
+
+            {
+                var methodDeclaration = (SyntaxFactory.ParseMemberDeclaration("new tmp_Interface ToUnit(string symbol);") as MethodDeclarationSyntax)!;
+
+                while (methodDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Interface"))
+                {
+                    var identifierNode = methodDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Interface").First();
+                    methodDeclaration = methodDeclaration.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName("I" + dimensionClassName));
+                }
+
+                yield return methodDeclaration;
+            }
+        }
+
+        private SyntaxNode GetObjectCreationFromConversion(ObjectCreationExpressionSyntax objectCreation, JsonDimension dimensionData, JsonUnit sourceUnit, JsonUnit targetUnit)
+        {
+            var conversionPath = dimensionData.GetConversionPath(sourceUnit, targetUnit);
+
+            if (conversionPath == null)
+            {
+                WriteWarningOutput($"Invalid Conversion {dimensionData.Name}");
+            }
+
+            ExpressionSyntax conversionExpression = (conversionPath ?? []).GetConversionExpression();
+
+            var arg = SyntaxFactory.Argument(conversionExpression);
+
+            var argList = SyntaxFactory.ArgumentList(default);
+            argList = argList.AddArguments(arg);
+
+            return objectCreation.WithArgumentList(argList);
+        }
+
+        private IEnumerable<StatementSyntax> GetRegisterConverterStatements()
+        {
+            var statementTemplate = "list.Add(new UnitJsonConverter<tmp_Interface>(tmp_Interface.Parse));";
+            foreach ((var dimensionName, var dimensionData) in _dimensionData)
+            {
+                var dimensionClassName = dimensionName.GetClassName();
+
+                var statement = SyntaxFactory.ParseStatement(statementTemplate);
+
+                while (statement.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Interface"))
+                {
+                    var identifierNode = statement.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Where(d => d.Identifier.Text == "tmp_Interface").First();
+                    statement = statement.ReplaceNode(identifierNode, SyntaxFactory.IdentifierName("I" + dimensionClassName));
+                }
+
+                yield return statement;
+            }
+        }
         private IEnumerable<MemberDeclarationSyntax> GetStaticInterfaceMembers(string dimensionClassName, JsonDimension dimensionData)
         {
             var parseTemplates = new List<string>
