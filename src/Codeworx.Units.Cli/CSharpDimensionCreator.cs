@@ -122,8 +122,8 @@ namespace Codeworx.Units.Cli
             var attribArguments = SyntaxFactory.ParseAttributeArgumentList($"(typeof(DimensionTypeConverter<I{dimensionClassName}>))");
             var list = SyntaxFactory.SeparatedList<AttributeSyntax>();
             list = list.Add(SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("TypeConverter"), attribArguments));
-            classDeclaration = classDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list));
 
+            classDeclaration = classDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list));
             classDeclaration = classDeclaration.WithIdentifier(SyntaxFactory.Identifier(dimensionClassName));
 
             while (classDeclaration.DescendantNodesAndTokens().Where(d => d.IsNode).Select(d => d.AsNode()).OfType<IdentifierNameSyntax>().Any(d => d.Identifier.Text == "tmp_Struct"))
@@ -142,7 +142,7 @@ namespace Codeworx.Units.Cli
             classDeclaration = classDeclaration.AddMembers(GetGeneralImplementationMethodsFromInterface(dimensionClassName, dimensionData).ToArray());
             classDeclaration = classDeclaration.AddMembers(GetGeneralImplementationOverrides(dimensionClassName).ToArray());
 
-            var result = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(CurrentOptions.Namespace + "." + dimensionClassName + "Dimension"))
+            var result = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(CurrentOptions.Namespace + "." + dimensionClassName + "Dimension.Internal"))
               .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")))
               .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Globalization")))
               .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.ComponentModel")))
@@ -501,7 +501,13 @@ namespace Codeworx.Units.Cli
             var attribArguments = SyntaxFactory.ParseAttributeArgumentList($"(typeof(DimensionTypeConverter<I{dimensionClassName}>))");
             var list = SyntaxFactory.SeparatedList<AttributeSyntax>();
             list = list.Add(SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("TypeConverter"), attribArguments));
+
+            var list2 = SyntaxFactory.SeparatedList<AttributeSyntax>();
+            var generalImplArguments = SyntaxFactory.ParseAttributeArgumentList($"(typeof({dimensionClassName}Dimension.Internal.{dimensionClassName}))");
+            list2 = list2.Add(SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("GeneralImplementation"), generalImplArguments));
+
             interfaceDeclaration = interfaceDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list));
+            interfaceDeclaration = interfaceDeclaration.AddAttributeLists(SyntaxFactory.AttributeList(list2));
             interfaceDeclaration = interfaceDeclaration.WithIdentifier(SyntaxFactory.Identifier("I" + dimensionClassName));
 
             interfaceDeclaration = interfaceDeclaration.AddMembers(GetInterfaceMethodDeclarations(dimensionClassName, dimensionData).ToArray());
@@ -595,6 +601,10 @@ namespace Codeworx.Units.Cli
                 $"public static string DefaultMetric => \"{dimensionData.Units[dimensionData.MetricDefault].Symbol}\";",
                 "public static tmp_Interface operator +(tmp_Interface first, tmp_Interface second) { return first.Add(second); }",
                 "public static tmp_Interface operator -(tmp_Interface first, tmp_Interface second) { return first.Subtract(second); }",
+                "public static bool operator <=(tmp_Interface first, tmp_Interface second) { return first.CompareTo(second) <= 0; }",
+                "public static bool operator >=(tmp_Interface first, tmp_Interface second) { return first.CompareTo(second) >= 0; }",
+                "public static bool operator <(tmp_Interface first, tmp_Interface second) { return first.CompareTo(second) < 0; }",
+                "public static bool operator >(tmp_Interface first, tmp_Interface second) { return first.CompareTo(second) > 0; }",
             };
 
 

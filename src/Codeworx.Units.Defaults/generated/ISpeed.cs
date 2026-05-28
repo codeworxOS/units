@@ -7,6 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<ISpeed>))]
+    [GeneralImplementation(typeof(SpeedDimension.Internal.Speed))]
     public partial interface ISpeed : IUnitBase, IComparable
     {
         SpeedDimension.MillimeterPerSecond ToMillimeterPerSecond();
@@ -46,6 +47,26 @@ namespace Codeworx.Units.Defaults
         public static ISpeed operator -(ISpeed first, ISpeed second)
         {
             return first.Subtract(second);
+        }
+
+        public static bool operator <=(ISpeed first, ISpeed second)
+        {
+            return first.CompareTo(second) <= 0;
+        }
+
+        public static bool operator >=(ISpeed first, ISpeed second)
+        {
+            return first.CompareTo(second) >= 0;
+        }
+
+        public static bool operator <(ISpeed first, ISpeed second)
+        {
+            return first.CompareTo(second) < 0;
+        }
+
+        public static bool operator>(ISpeed first, ISpeed second)
+        {
+            return first.CompareTo(second) > 0;
         }
 
         public static ISpeed Parse(string symbolOrKey, decimal value)

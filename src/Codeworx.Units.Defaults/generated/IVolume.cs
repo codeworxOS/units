@@ -7,6 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<IVolume>))]
+    [GeneralImplementation(typeof(VolumeDimension.Internal.Volume))]
     public partial interface IVolume : IUnitBase, IComparable
     {
         VolumeDimension.CubicCentimeter ToCubicCentimeter();
@@ -47,6 +48,26 @@ namespace Codeworx.Units.Defaults
         public static IVolume operator -(IVolume first, IVolume second)
         {
             return first.Subtract(second);
+        }
+
+        public static bool operator <=(IVolume first, IVolume second)
+        {
+            return first.CompareTo(second) <= 0;
+        }
+
+        public static bool operator >=(IVolume first, IVolume second)
+        {
+            return first.CompareTo(second) >= 0;
+        }
+
+        public static bool operator <(IVolume first, IVolume second)
+        {
+            return first.CompareTo(second) < 0;
+        }
+
+        public static bool operator>(IVolume first, IVolume second)
+        {
+            return first.CompareTo(second) > 0;
         }
 
         public static IVolume Parse(string symbolOrKey, decimal value)

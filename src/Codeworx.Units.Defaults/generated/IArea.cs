@@ -7,6 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<IArea>))]
+    [GeneralImplementation(typeof(AreaDimension.Internal.Area))]
     public partial interface IArea : IUnitBase, IComparable
     {
         AreaDimension.SquareMillimeter ToSquareMillimeter();
@@ -47,6 +48,26 @@ namespace Codeworx.Units.Defaults
         public static IArea operator -(IArea first, IArea second)
         {
             return first.Subtract(second);
+        }
+
+        public static bool operator <=(IArea first, IArea second)
+        {
+            return first.CompareTo(second) <= 0;
+        }
+
+        public static bool operator >=(IArea first, IArea second)
+        {
+            return first.CompareTo(second) >= 0;
+        }
+
+        public static bool operator <(IArea first, IArea second)
+        {
+            return first.CompareTo(second) < 0;
+        }
+
+        public static bool operator>(IArea first, IArea second)
+        {
+            return first.CompareTo(second) > 0;
         }
 
         public static IArea Parse(string symbolOrKey, decimal value)

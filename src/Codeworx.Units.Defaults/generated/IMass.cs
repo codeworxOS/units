@@ -7,6 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<IMass>))]
+    [GeneralImplementation(typeof(MassDimension.Internal.Mass))]
     public partial interface IMass : IUnitBase, IComparable
     {
         MassDimension.Microgram ToMicrogram();
@@ -49,6 +50,26 @@ namespace Codeworx.Units.Defaults
         public static IMass operator -(IMass first, IMass second)
         {
             return first.Subtract(second);
+        }
+
+        public static bool operator <=(IMass first, IMass second)
+        {
+            return first.CompareTo(second) <= 0;
+        }
+
+        public static bool operator >=(IMass first, IMass second)
+        {
+            return first.CompareTo(second) >= 0;
+        }
+
+        public static bool operator <(IMass first, IMass second)
+        {
+            return first.CompareTo(second) < 0;
+        }
+
+        public static bool operator>(IMass first, IMass second)
+        {
+            return first.CompareTo(second) > 0;
         }
 
         public static IMass Parse(string symbolOrKey, decimal value)

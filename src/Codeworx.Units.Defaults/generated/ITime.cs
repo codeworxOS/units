@@ -7,6 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<ITime>))]
+    [GeneralImplementation(typeof(TimeDimension.Internal.Time))]
     public partial interface ITime : IUnitBase, IComparable
     {
         TimeDimension.Second ToSecond();
@@ -44,6 +45,26 @@ namespace Codeworx.Units.Defaults
         public static ITime operator -(ITime first, ITime second)
         {
             return first.Subtract(second);
+        }
+
+        public static bool operator <=(ITime first, ITime second)
+        {
+            return first.CompareTo(second) <= 0;
+        }
+
+        public static bool operator >=(ITime first, ITime second)
+        {
+            return first.CompareTo(second) >= 0;
+        }
+
+        public static bool operator <(ITime first, ITime second)
+        {
+            return first.CompareTo(second) < 0;
+        }
+
+        public static bool operator>(ITime first, ITime second)
+        {
+            return first.CompareTo(second) > 0;
         }
 
         public static ITime Parse(string symbolOrKey, decimal value)

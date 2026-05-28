@@ -7,6 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<IDistance>))]
+    [GeneralImplementation(typeof(DistanceDimension.Internal.Distance))]
     public partial interface IDistance : IUnitBase, IComparable
     {
         DistanceDimension.Millimeter ToMillimeter();
@@ -50,14 +51,24 @@ namespace Codeworx.Units.Defaults
             return first.Subtract(second);
         }
 
+        public static bool operator <=(IDistance first, IDistance second)
+        {
+            return first.CompareTo(second) <= 0;
+        }
+
         public static bool operator >=(IDistance first, IDistance second)
         {
             return first.CompareTo(second) >= 0;
         }
 
-        public static bool operator <=(IDistance first, IDistance second)
+        public static bool operator <(IDistance first, IDistance second)
         {
-            return first.CompareTo(second) <= 0;
+            return first.CompareTo(second) < 0;
+        }
+
+        public static bool operator >(IDistance first, IDistance second)
+        {
+            return first.CompareTo(second) > 0;
         }
 
         public static IDistance Parse(string symbolOrKey, decimal value)

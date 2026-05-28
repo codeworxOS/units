@@ -5,6 +5,6 @@ namespace Codeworx.Units.EntityFrameworkCore
     public static class DimensionReplacementExtensions
     {
         public static DbContextOptionsBuilder AddDimensionQueryReplacement(this DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.AddInterceptors(new DimensionQueryReplacementPreprocessor());
+            => optionsBuilder.AddInterceptors(DimensionQueryReplacementPreprocessor.Instance);
     }
 }

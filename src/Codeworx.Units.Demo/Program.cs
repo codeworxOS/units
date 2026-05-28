@@ -132,22 +132,10 @@ internal class Program
             Id = d.Id,
             RequiredDistance = d.RequiredDistance.GetDimension(),
             OptionalDistance = d.OptionalDistance.GetDimension(),
-            ////RequiredDistance = new Distance
-            ////{
-            ////    Symbol = d.RequiredDistance.Unit!.Symbol,
-            ////    Value = d.RequiredDistance.Value,
-            ////    BaseValue = d.RequiredDistance.Value * d.RequiredDistance.Unit.ConversionFactor / d.RequiredDistance.Unit.ConversionDivisor + d.RequiredDistance.Unit.ConversionOffset
-            ////},
-            ////OptionalDistance = d.OptionalDistance.Value != null ? new Distance
-            ////{
-            ////    Symbol = d.OptionalDistance.Unit!.Symbol,
-            ////    Value = d.OptionalDistance.Value.Value,
-            ////    BaseValue = d.OptionalDistance.Value.Value * d.OptionalDistance.Unit.ConversionFactor / d.OptionalDistance.Unit.ConversionDivisor + d.OptionalDistance.Unit.ConversionOffset
-            ////} : null,
         })
-            .Where(p => p.RequiredDistance >= new Meter(1) && p.RequiredDistance <= new Feet(9))
-            .OrderBy(p => p.RequiredDistance)
-            .ThenBy(p => p.OptionalDistance);
+            .Where(p => p.RequiredDistance.BaseValue >= new Meter(1).BaseValue && p.RequiredDistance.BaseValue <= new Feet(9).BaseValue);
+        ////.OrderBy(p => p.RequiredDistance)
+        ////.ThenBy(p => p.OptionalDistance);
 
         return await entryQry.FirstOrDefaultAsync();
     }

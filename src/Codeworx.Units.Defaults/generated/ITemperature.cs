@@ -7,6 +7,7 @@ namespace Codeworx.Units.Defaults
     using System.Globalization;
 
     [TypeConverter(typeof(DimensionTypeConverter<ITemperature>))]
+    [GeneralImplementation(typeof(TemperatureDimension.Internal.Temperature))]
     public partial interface ITemperature : IUnitBase, IComparable
     {
         TemperatureDimension.Celsius ToCelsius();
@@ -43,6 +44,26 @@ namespace Codeworx.Units.Defaults
         public static ITemperature operator -(ITemperature first, ITemperature second)
         {
             return first.Subtract(second);
+        }
+
+        public static bool operator <=(ITemperature first, ITemperature second)
+        {
+            return first.CompareTo(second) <= 0;
+        }
+
+        public static bool operator >=(ITemperature first, ITemperature second)
+        {
+            return first.CompareTo(second) >= 0;
+        }
+
+        public static bool operator <(ITemperature first, ITemperature second)
+        {
+            return first.CompareTo(second) < 0;
+        }
+
+        public static bool operator>(ITemperature first, ITemperature second)
+        {
+            return first.CompareTo(second) > 0;
         }
 
         public static ITemperature Parse(string symbolOrKey, decimal value)
