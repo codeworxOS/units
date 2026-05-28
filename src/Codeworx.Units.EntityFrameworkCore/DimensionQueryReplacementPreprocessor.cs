@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Xml.Linq;
 using Codeworx.Units.EntityFrameworkCore.Entities;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -47,10 +48,8 @@ namespace Codeworx.Units.EntityFrameworkCore
             {
                 if (node.Left.Type.IsAssignableTo(typeof(IUnitBase)) && node.Right.Type.IsAssignableTo(typeof(IUnitBase)))
                 {
-                    var member = typeof(IUnitBase).GetProperty(nameof(IUnitBase.BaseValue))!;
-
-                    var newLeft = Expression.Property(node.Left, member);
-                    var newRight = Expression.Property(node.Right, member);
+                    var newLeft = CleanupBaseUnitExpression(node.Left);
+                    var newRight = CleanupBaseUnitExpression(node.Right);
 
                     switch (node.NodeType)
                     {
@@ -70,6 +69,34 @@ namespace Codeworx.Units.EntityFrameworkCore
                 }
 
                 return base.VisitBinary(node);
+            }
+
+            private Expression CleanupBaseUnitExpression(Expression baseExpression)
+            {
+                var member = typeof(IUnitBase).GetProperty(nameof(IUnitBase.BaseValue));
+
+                Expression result = baseExpression;
+
+                if (result is UnaryExpression unary)
+                {
+                    result = unary.Operand;
+                }
+
+                if (result is ConstantExpression constant)
+                {
+                    if (constant.Value is IUnitBase unitBase)
+                    {
+                        return Expression.Constant(unitBase.BaseValue, typeof(decimal));
+                    }
+                    else if (constant.Value == null)
+                    {
+                        return Expression.Constant(null, typeof(decimal?));
+                    }
+                }
+
+                result = Expression.Property(result, result.Type.IsInterface ? typeof(IUnitBase) : result.Type, nameof(IUnitBase.BaseValue));
+
+                return result;
             }
 
             protected override Expression VisitMethodCall(MethodCallExpression node)

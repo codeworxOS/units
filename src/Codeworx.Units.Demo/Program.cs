@@ -133,7 +133,8 @@ internal class Program
             RequiredDistance = d.RequiredDistance.GetDimension(),
             OptionalDistance = d.OptionalDistance.GetDimension(),
         })
-            .Where(p => p.RequiredDistance.BaseValue >= new Meter(1).BaseValue && p.RequiredDistance.BaseValue <= new Feet(9).BaseValue);
+            .Where(p => p.RequiredDistance >= new Meter(1) && p.RequiredDistance <= new Feet(9));
+            
         ////.OrderBy(p => p.RequiredDistance)
         ////.ThenBy(p => p.OptionalDistance);
 
