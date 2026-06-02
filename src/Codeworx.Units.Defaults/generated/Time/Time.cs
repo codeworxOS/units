@@ -11,24 +11,24 @@ namespace Codeworx.Units.Defaults.TimeDimension.Internal
     {
         public decimal BaseValue { get; set; }
         public decimal Value { get; set; }
-        public required string Symbol { get; set; }
-        public string Key => ITime.Parse(Symbol, Value).Key;
+        public string Symbol => ITime.Parse(Key, Value).Symbol;
+        public required string Key { get; set; }
         public UnitSystem System => UnitSystem.Both;
 
-        public Second ToSecond() => ITime.Parse(Symbol, Value).ToSecond();
-        public Hour ToHour() => ITime.Parse(Symbol, Value).ToHour();
-        public Minute ToMinute() => ITime.Parse(Symbol, Value).ToMinute();
-        public Millisecond ToMillisecond() => ITime.Parse(Symbol, Value).ToMillisecond();
-        public ITime ToUnit(string symbol) => ITime.Parse(Symbol, Value).ToUnit(symbol);
-        IUnitBase IUnitBase.ToUnit(string symbol) => ITime.Parse(Symbol, Value).ToUnit(symbol);
+        public Second ToSecond() => ITime.Parse(Key, Value).ToSecond();
+        public Hour ToHour() => ITime.Parse(Key, Value).ToHour();
+        public Minute ToMinute() => ITime.Parse(Key, Value).ToMinute();
+        public Millisecond ToMillisecond() => ITime.Parse(Key, Value).ToMillisecond();
+        public ITime ToUnit(string symbol) => ITime.Parse(Key, Value).ToUnit(symbol);
+        IUnitBase IUnitBase.ToUnit(string symbol) => ITime.Parse(Key, Value).ToUnit(symbol);
         public ITime Add(ITime addition)
         {
-            return ITime.Parse(Symbol, Value).Add(addition);
+            return ITime.Parse(Key, Value).Add(addition);
         }
 
         public ITime Subtract(ITime subtraction)
         {
-            return ITime.Parse(Symbol, Value).Subtract(subtraction);
+            return ITime.Parse(Key, Value).Subtract(subtraction);
         }
 
         public override int GetHashCode()

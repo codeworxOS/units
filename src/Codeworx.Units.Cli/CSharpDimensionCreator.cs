@@ -115,7 +115,7 @@ namespace Codeworx.Units.Cli
 
         private FileGenerationInfo GetGeneralImplementation(string dimensionClassName, JsonDimension dimensionData)
         {
-            string template = $"public partial struct tmp_Struct {{ public decimal BaseValue  {{ get; set; }} public decimal Value {{ get; set; }} public required string Symbol {{ get; set;}} public string Key => tmp_Interface.Parse(Symbol, Value).Key; public UnitSystem System => UnitSystem.Both; }}";
+            string template = $"public partial struct tmp_Struct {{ public decimal BaseValue  {{ get; set; }} public decimal Value {{ get; set; }} public string Symbol => tmp_Interface.Parse(Key, Value).Symbol; public required string Key {{ get; set; }} public UnitSystem System => UnitSystem.Both; }}";
 
             var classDeclaration = (SyntaxFactory.ParseMemberDeclaration(template) as StructDeclarationSyntax)!;
 
@@ -224,7 +224,7 @@ namespace Codeworx.Units.Cli
                 var methodDeclaration = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(unitClassName), memberIdentifier);
                 methodDeclaration = methodDeclaration.WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword)));
 
-                var body = SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression($"I{dimensionClassName}.Parse(Symbol, Value).{memberIdentifier}()"));
+                var body = SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression($"I{dimensionClassName}.Parse(Key, Value).{memberIdentifier}()"));
                 methodDeclaration = methodDeclaration
                                         .WithExpressionBody(body)
                                         .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
@@ -235,8 +235,8 @@ namespace Codeworx.Units.Cli
 
             var parseTemplates = new[]
             {
-                $"public tmp_Interface ToUnit(string symbol) => tmp_Interface.Parse(Symbol, Value).ToUnit(symbol);",
-                "IUnitBase IUnitBase.ToUnit(string symbol) => tmp_Interface.Parse(Symbol, Value).ToUnit(symbol);",
+                $"public tmp_Interface ToUnit(string symbol) => tmp_Interface.Parse(Key, Value).ToUnit(symbol);",
+                "IUnitBase IUnitBase.ToUnit(string symbol) => tmp_Interface.Parse(Key, Value).ToUnit(symbol);",
             };
 
             foreach (var parseTemplate in parseTemplates)
@@ -345,8 +345,8 @@ namespace Codeworx.Units.Cli
 
             templates.AddRange(new[]
             {
-                "public tmp_Interface Add(tmp_Interface addition) { return tmp_Interface.Parse(Symbol, Value).Add(addition); }",
-                "public tmp_Interface Subtract(tmp_Interface subtraction) { return tmp_Interface.Parse(Symbol, Value).Subtract(subtraction); }",
+                "public tmp_Interface Add(tmp_Interface addition) { return tmp_Interface.Parse(Key, Value).Add(addition); }",
+                "public tmp_Interface Subtract(tmp_Interface subtraction) { return tmp_Interface.Parse(Key, Value).Subtract(subtraction); }",
             });
 
             templates.AddRange(new[]

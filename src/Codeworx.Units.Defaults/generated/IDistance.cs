@@ -66,7 +66,7 @@ namespace Codeworx.Units.Defaults
             return first.CompareTo(second) < 0;
         }
 
-        public static bool operator >(IDistance first, IDistance second)
+        public static bool operator>(IDistance first, IDistance second)
         {
             return first.CompareTo(second) > 0;
         }

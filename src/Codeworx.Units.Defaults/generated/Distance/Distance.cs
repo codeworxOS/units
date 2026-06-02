@@ -11,28 +11,28 @@ namespace Codeworx.Units.Defaults.DistanceDimension.Internal
     {
         public decimal BaseValue { get; set; }
         public decimal Value { get; set; }
-        public required string Symbol { get; set; }
-        public string Key => IDistance.Parse(Symbol, Value).Key;
+        public string Symbol => IDistance.Parse(Key, Value).Symbol;
+        public required string Key { get; set; }
         public UnitSystem System => UnitSystem.Both;
 
-        public Millimeter ToMillimeter() => IDistance.Parse(Symbol, Value).ToMillimeter();
-        public Centimeter ToCentimeter() => IDistance.Parse(Symbol, Value).ToCentimeter();
-        public Meter ToMeter() => IDistance.Parse(Symbol, Value).ToMeter();
-        public Kilometer ToKilometer() => IDistance.Parse(Symbol, Value).ToKilometer();
-        public Inch ToInch() => IDistance.Parse(Symbol, Value).ToInch();
-        public Feet ToFeet() => IDistance.Parse(Symbol, Value).ToFeet();
-        public Yard ToYard() => IDistance.Parse(Symbol, Value).ToYard();
-        public Mile ToMile() => IDistance.Parse(Symbol, Value).ToMile();
-        public IDistance ToUnit(string symbol) => IDistance.Parse(Symbol, Value).ToUnit(symbol);
-        IUnitBase IUnitBase.ToUnit(string symbol) => IDistance.Parse(Symbol, Value).ToUnit(symbol);
+        public Millimeter ToMillimeter() => IDistance.Parse(Key, Value).ToMillimeter();
+        public Centimeter ToCentimeter() => IDistance.Parse(Key, Value).ToCentimeter();
+        public Meter ToMeter() => IDistance.Parse(Key, Value).ToMeter();
+        public Kilometer ToKilometer() => IDistance.Parse(Key, Value).ToKilometer();
+        public Inch ToInch() => IDistance.Parse(Key, Value).ToInch();
+        public Feet ToFeet() => IDistance.Parse(Key, Value).ToFeet();
+        public Yard ToYard() => IDistance.Parse(Key, Value).ToYard();
+        public Mile ToMile() => IDistance.Parse(Key, Value).ToMile();
+        public IDistance ToUnit(string symbol) => IDistance.Parse(Key, Value).ToUnit(symbol);
+        IUnitBase IUnitBase.ToUnit(string symbol) => IDistance.Parse(Key, Value).ToUnit(symbol);
         public IDistance Add(IDistance addition)
         {
-            return IDistance.Parse(Symbol, Value).Add(addition);
+            return IDistance.Parse(Key, Value).Add(addition);
         }
 
         public IDistance Subtract(IDistance subtraction)
         {
-            return IDistance.Parse(Symbol, Value).Subtract(subtraction);
+            return IDistance.Parse(Key, Value).Subtract(subtraction);
         }
 
         public override int GetHashCode()

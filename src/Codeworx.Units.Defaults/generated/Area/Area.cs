@@ -11,27 +11,27 @@ namespace Codeworx.Units.Defaults.AreaDimension.Internal
     {
         public decimal BaseValue { get; set; }
         public decimal Value { get; set; }
-        public required string Symbol { get; set; }
-        public string Key => IArea.Parse(Symbol, Value).Key;
+        public string Symbol => IArea.Parse(Key, Value).Symbol;
+        public required string Key { get; set; }
         public UnitSystem System => UnitSystem.Both;
 
-        public SquareMillimeter ToSquareMillimeter() => IArea.Parse(Symbol, Value).ToSquareMillimeter();
-        public SquareCentimeter ToSquareCentimeter() => IArea.Parse(Symbol, Value).ToSquareCentimeter();
-        public SquareMeter ToSquareMeter() => IArea.Parse(Symbol, Value).ToSquareMeter();
-        public SquareKilometer ToSquareKilometer() => IArea.Parse(Symbol, Value).ToSquareKilometer();
-        public SquareInch ToSquareInch() => IArea.Parse(Symbol, Value).ToSquareInch();
-        public SquareFeet ToSquareFeet() => IArea.Parse(Symbol, Value).ToSquareFeet();
-        public Acre ToAcre() => IArea.Parse(Symbol, Value).ToAcre();
-        public IArea ToUnit(string symbol) => IArea.Parse(Symbol, Value).ToUnit(symbol);
-        IUnitBase IUnitBase.ToUnit(string symbol) => IArea.Parse(Symbol, Value).ToUnit(symbol);
+        public SquareMillimeter ToSquareMillimeter() => IArea.Parse(Key, Value).ToSquareMillimeter();
+        public SquareCentimeter ToSquareCentimeter() => IArea.Parse(Key, Value).ToSquareCentimeter();
+        public SquareMeter ToSquareMeter() => IArea.Parse(Key, Value).ToSquareMeter();
+        public SquareKilometer ToSquareKilometer() => IArea.Parse(Key, Value).ToSquareKilometer();
+        public SquareInch ToSquareInch() => IArea.Parse(Key, Value).ToSquareInch();
+        public SquareFeet ToSquareFeet() => IArea.Parse(Key, Value).ToSquareFeet();
+        public Acre ToAcre() => IArea.Parse(Key, Value).ToAcre();
+        public IArea ToUnit(string symbol) => IArea.Parse(Key, Value).ToUnit(symbol);
+        IUnitBase IUnitBase.ToUnit(string symbol) => IArea.Parse(Key, Value).ToUnit(symbol);
         public IArea Add(IArea addition)
         {
-            return IArea.Parse(Symbol, Value).Add(addition);
+            return IArea.Parse(Key, Value).Add(addition);
         }
 
         public IArea Subtract(IArea subtraction)
         {
-            return IArea.Parse(Symbol, Value).Subtract(subtraction);
+            return IArea.Parse(Key, Value).Subtract(subtraction);
         }
 
         public override int GetHashCode()

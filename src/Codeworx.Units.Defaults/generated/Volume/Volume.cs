@@ -11,27 +11,27 @@ namespace Codeworx.Units.Defaults.VolumeDimension.Internal
     {
         public decimal BaseValue { get; set; }
         public decimal Value { get; set; }
-        public required string Symbol { get; set; }
-        public string Key => IVolume.Parse(Symbol, Value).Key;
+        public string Symbol => IVolume.Parse(Key, Value).Symbol;
+        public required string Key { get; set; }
         public UnitSystem System => UnitSystem.Both;
 
-        public CubicCentimeter ToCubicCentimeter() => IVolume.Parse(Symbol, Value).ToCubicCentimeter();
-        public Liter ToLiter() => IVolume.Parse(Symbol, Value).ToLiter();
-        public CubicMeter ToCubicMeter() => IVolume.Parse(Symbol, Value).ToCubicMeter();
-        public CubicInch ToCubicInch() => IVolume.Parse(Symbol, Value).ToCubicInch();
-        public CubicFoot ToCubicFoot() => IVolume.Parse(Symbol, Value).ToCubicFoot();
-        public Gallon ToGallon() => IVolume.Parse(Symbol, Value).ToGallon();
-        public Quart ToQuart() => IVolume.Parse(Symbol, Value).ToQuart();
-        public IVolume ToUnit(string symbol) => IVolume.Parse(Symbol, Value).ToUnit(symbol);
-        IUnitBase IUnitBase.ToUnit(string symbol) => IVolume.Parse(Symbol, Value).ToUnit(symbol);
+        public CubicCentimeter ToCubicCentimeter() => IVolume.Parse(Key, Value).ToCubicCentimeter();
+        public Liter ToLiter() => IVolume.Parse(Key, Value).ToLiter();
+        public CubicMeter ToCubicMeter() => IVolume.Parse(Key, Value).ToCubicMeter();
+        public CubicInch ToCubicInch() => IVolume.Parse(Key, Value).ToCubicInch();
+        public CubicFoot ToCubicFoot() => IVolume.Parse(Key, Value).ToCubicFoot();
+        public Gallon ToGallon() => IVolume.Parse(Key, Value).ToGallon();
+        public Quart ToQuart() => IVolume.Parse(Key, Value).ToQuart();
+        public IVolume ToUnit(string symbol) => IVolume.Parse(Key, Value).ToUnit(symbol);
+        IUnitBase IUnitBase.ToUnit(string symbol) => IVolume.Parse(Key, Value).ToUnit(symbol);
         public IVolume Add(IVolume addition)
         {
-            return IVolume.Parse(Symbol, Value).Add(addition);
+            return IVolume.Parse(Key, Value).Add(addition);
         }
 
         public IVolume Subtract(IVolume subtraction)
         {
-            return IVolume.Parse(Symbol, Value).Subtract(subtraction);
+            return IVolume.Parse(Key, Value).Subtract(subtraction);
         }
 
         public override int GetHashCode()

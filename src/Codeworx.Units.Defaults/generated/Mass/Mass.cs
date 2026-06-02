@@ -11,29 +11,29 @@ namespace Codeworx.Units.Defaults.MassDimension.Internal
     {
         public decimal BaseValue { get; set; }
         public decimal Value { get; set; }
-        public required string Symbol { get; set; }
-        public string Key => IMass.Parse(Symbol, Value).Key;
+        public string Symbol => IMass.Parse(Key, Value).Symbol;
+        public required string Key { get; set; }
         public UnitSystem System => UnitSystem.Both;
 
-        public Microgram ToMicrogram() => IMass.Parse(Symbol, Value).ToMicrogram();
-        public Milligram ToMilligram() => IMass.Parse(Symbol, Value).ToMilligram();
-        public Gram ToGram() => IMass.Parse(Symbol, Value).ToGram();
-        public Kilogram ToKilogram() => IMass.Parse(Symbol, Value).ToKilogram();
-        public MetricTons ToMetricTons() => IMass.Parse(Symbol, Value).ToMetricTons();
-        public Ounce ToOunce() => IMass.Parse(Symbol, Value).ToOunce();
-        public Pounds ToPounds() => IMass.Parse(Symbol, Value).ToPounds();
-        public TonShort ToTonShort() => IMass.Parse(Symbol, Value).ToTonShort();
-        public TonLong ToTonLong() => IMass.Parse(Symbol, Value).ToTonLong();
-        public IMass ToUnit(string symbol) => IMass.Parse(Symbol, Value).ToUnit(symbol);
-        IUnitBase IUnitBase.ToUnit(string symbol) => IMass.Parse(Symbol, Value).ToUnit(symbol);
+        public Microgram ToMicrogram() => IMass.Parse(Key, Value).ToMicrogram();
+        public Milligram ToMilligram() => IMass.Parse(Key, Value).ToMilligram();
+        public Gram ToGram() => IMass.Parse(Key, Value).ToGram();
+        public Kilogram ToKilogram() => IMass.Parse(Key, Value).ToKilogram();
+        public MetricTons ToMetricTons() => IMass.Parse(Key, Value).ToMetricTons();
+        public Ounce ToOunce() => IMass.Parse(Key, Value).ToOunce();
+        public Pounds ToPounds() => IMass.Parse(Key, Value).ToPounds();
+        public TonShort ToTonShort() => IMass.Parse(Key, Value).ToTonShort();
+        public TonLong ToTonLong() => IMass.Parse(Key, Value).ToTonLong();
+        public IMass ToUnit(string symbol) => IMass.Parse(Key, Value).ToUnit(symbol);
+        IUnitBase IUnitBase.ToUnit(string symbol) => IMass.Parse(Key, Value).ToUnit(symbol);
         public IMass Add(IMass addition)
         {
-            return IMass.Parse(Symbol, Value).Add(addition);
+            return IMass.Parse(Key, Value).Add(addition);
         }
 
         public IMass Subtract(IMass subtraction)
         {
-            return IMass.Parse(Symbol, Value).Subtract(subtraction);
+            return IMass.Parse(Key, Value).Subtract(subtraction);
         }
 
         public override int GetHashCode()

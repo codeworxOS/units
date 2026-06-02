@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Xml.Linq;
 using Codeworx.Units.EntityFrameworkCore.Entities;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Codeworx.Units.EntityFrameworkCore
 {
     public class DimensionQueryReplacementPreprocessor : IQueryExpressionInterceptor
     {
         public static readonly DimensionQueryReplacementPreprocessor _instance;
-
-        public static DimensionQueryReplacementPreprocessor Instance => _instance;
 
         static DimensionQueryReplacementPreprocessor()
         {
@@ -23,26 +24,28 @@ namespace Codeworx.Units.EntityFrameworkCore
         {
         }
 
+        public static DimensionQueryReplacementPreprocessor Instance => _instance;
         Expression IQueryExpressionInterceptor.QueryCompilationStarting(Expression queryExpression, QueryExpressionEventData eventData)
         {
-            DimensionExpressionVisitor visitor = new DimensionExpressionVisitor();
+            BaseValueExpressionVisitor baseValueVisitor = new BaseValueExpressionVisitor();
+            var result = baseValueVisitor.Visit(queryExpression);
 
-            var tmp = visitor.Visit(queryExpression);
-            return tmp;
+            DimensionExpressionVisitor visitor = new DimensionExpressionVisitor(baseValueVisitor.DimensionProperties);
+            result = visitor.Visit(result);
+
+            return result;
         }
 
-        private class DimensionExpressionVisitor : ExpressionVisitor
+        private class BaseValueExpressionVisitor : ExpressionVisitor
         {
-            private static ConcurrentDictionary<Type, MethodInfo> _parseMethods = new ConcurrentDictionary<Type, MethodInfo>();
+            private List<PropertyInfo> _dimensionProperties;
 
-            private static readonly MethodInfo _nullableMethod;
-            private static readonly MethodInfo _defaultMethod;
-
-            static DimensionExpressionVisitor()
+            public BaseValueExpressionVisitor()
             {
-                _nullableMethod = typeof(NullableDimensionValue<>).GetMethod(nameof(NullableDimensionValue<IUnitBase>.GetDimension))!;
-                _defaultMethod = typeof(DimensionValue<>).GetMethod(nameof(DimensionValue<IUnitBase>.GetDimension))!;
+                _dimensionProperties = new List<PropertyInfo>();
             }
+
+            public IReadOnlyList<PropertyInfo> DimensionProperties => _dimensionProperties.ToImmutableList();
 
             protected override Expression VisitBinary(BinaryExpression node)
             {
@@ -71,6 +74,13 @@ namespace Codeworx.Units.EntityFrameworkCore
                 return base.VisitBinary(node);
             }
 
+            protected override Expression VisitMethodCall(MethodCallExpression node)
+            {
+                Queryable.OrderBy()
+
+                return base.VisitMethodCall(node);
+            }
+
             private Expression CleanupBaseUnitExpression(Expression baseExpression)
             {
                 var member = typeof(IUnitBase).GetProperty(nameof(IUnitBase.BaseValue));
@@ -94,25 +104,60 @@ namespace Codeworx.Units.EntityFrameworkCore
                     }
                 }
 
+                if (result is MemberExpression memberExpression && memberExpression.Member is PropertyInfo propertyInfo)
+                {
+                    _dimensionProperties.Add(propertyInfo);
+                }
+
                 result = Expression.Property(result, result.Type.IsInterface ? typeof(IUnitBase) : result.Type, nameof(IUnitBase.BaseValue));
 
                 return result;
             }
+        }
 
-            protected override Expression VisitMethodCall(MethodCallExpression node)
+        private class DimensionExpressionVisitor : ExpressionVisitor
+        {
+            private static readonly MethodInfo _defaultMethod;
+            private static readonly MethodInfo _nullableMethod;
+            private static ConcurrentDictionary<Type, MethodInfo> _parseMethods = new ConcurrentDictionary<Type, MethodInfo>();
+            private readonly IReadOnlyList<PropertyInfo> _baseValueProperties;
+
+            static DimensionExpressionVisitor()
+            {
+                _nullableMethod = typeof(NullableDimensionValue<>).GetMethod(nameof(NullableDimensionValue<IUnitBase>.GetDimension))!;
+                _defaultMethod = typeof(DimensionValue<>).GetMethod(nameof(DimensionValue<IUnitBase>.GetDimension))!;
+            }
+
+            public DimensionExpressionVisitor(IEnumerable<PropertyInfo> baseValueProperties)
+            {
+                _baseValueProperties = baseValueProperties.ToImmutableList();
+            }
+
+            protected override MemberBinding VisitMemberBinding(MemberBinding node)
+            {
+                if (node is MemberAssignment assignment && _baseValueProperties.Contains(node.Member))
+                {
+                    if (assignment.Expression is MethodCallExpression methodCallExpression)
+                    {
+                        var expression = VisitMethodCall(methodCallExpression, true);
+                        return Expression.Bind(node.Member, expression);
+                    }
+                }
+                return base.VisitMemberBinding(node);
+            }
+
+            protected Expression VisitMethodCall(MethodCallExpression node, bool withBaseValue)
             {
                 if (node.Object is MemberExpression property)
                 {
                     if (node.Method.HasSameMetadataDefinitionAs(_defaultMethod))
                     {
-                        var expression = GetDefaultInitExpression(property);
-
+                        var expression = GetDefaultInitExpression(property, withBaseValue);
                         return expression;
                     }
                     else if (node.Method.HasSameMetadataDefinitionAs(_nullableMethod))
                     {
-                        var expression = GetNullableInitExpression(property);
-
+                        var expression = GetNullableInitExpression(property, withBaseValue);
                         return expression;
                     }
                 }
@@ -120,7 +165,55 @@ namespace Codeworx.Units.EntityFrameworkCore
                 return base.VisitMethodCall(node);
             }
 
-            private Expression GetNullableInitExpression(MemberExpression unitPropertyExpression)
+            protected override Expression VisitMethodCall(MethodCallExpression node)
+            {
+                return VisitMethodCall(node, false);
+            }
+
+            private Expression GetDefaultInitExpression(MemberExpression unitPropertyExpression, bool withBaseValue)
+            {
+                var dimensionType = unitPropertyExpression.Type.GenericTypeArguments[0];
+                var attribute = dimensionType.GetCustomAttribute<GeneralImplementationAttribute>();
+
+                if (attribute != null)
+                {
+                    var bindings = new List<MemberBinding>()
+                    {
+                         Expression.Bind(
+                            attribute.ImplementationType.GetProperty(nameof(IUnitBase.Key))!,
+                            Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.UnitId))),
+                        Expression.Bind(
+                            attribute.ImplementationType.GetProperty(nameof(IUnitBase.Value))!,
+                            Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.Value))),
+                    };
+
+
+                    if (withBaseValue)
+                    {
+                        Expression baseExpression = Expression.Property(
+                                                                Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.Unit)),
+                                                                nameof(UnitInformation.ConversionOffset));
+
+                        baseExpression = Expression.Add(baseExpression, Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.Value)));
+                        baseExpression = Expression.Multiply(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.ConversionFactor)));
+                        baseExpression = Expression.Divide(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.ConversionDivisor)));
+
+                        bindings.Add(Expression.Bind(
+                            attribute.ImplementationType.GetProperty(nameof(IUnitBase.BaseValue))!,
+                            baseExpression));
+                    }
+
+                    var init = Expression.MemberInit(
+                        Expression.New(attribute.ImplementationType),
+                        bindings);
+
+                    return Expression.Convert(init, dimensionType);
+                }
+
+                return Expression.Constant(null, dimensionType);
+            }
+
+            private Expression GetNullableInitExpression(MemberExpression unitPropertyExpression, bool withBaseValue)
             {
                 var unitPropertyValueExpression = Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Value));
                 var unitPropertyUnitIdExpression = Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.UnitId));
@@ -133,64 +226,40 @@ namespace Codeworx.Units.EntityFrameworkCore
 
                 if (attribute != null)
                 {
-                    Expression baseExpression = Expression.Property(
-                                                            Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.Unit)),
-                                                            nameof(UnitInformation.ConversionOffset));
-
-                    baseExpression = Expression.Add(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Value)), nameof(Nullable<decimal>.Value)));
-                    baseExpression = Expression.Multiply(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.ConversionFactor)));
-                    baseExpression = Expression.Divide(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.ConversionDivisor)));
-
-                    var init = Expression.MemberInit(
-                        Expression.New(attribute.ImplementationType),
+                    var bindings = new List<MemberBinding>()
+                    {
                         Expression.Bind(
-                            attribute.ImplementationType.GetProperty(nameof(IUnitBase.Symbol))!,
-                            Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.Symbol))),
+                            attribute.ImplementationType.GetProperty(nameof(IUnitBase.Key))!,
+                            Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.UnitId))),
                         Expression.Bind(
                             attribute.ImplementationType.GetProperty(nameof(IUnitBase.Value))!,
                             Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Value)), nameof(Nullable<decimal>.Value))),
-                        Expression.Bind(
-                            attribute.ImplementationType.GetProperty(nameof(IUnitBase.BaseValue))!,
-                            baseExpression)
+                    };
+
+                    if (withBaseValue)
+                    {
+                        Expression baseExpression = Expression.Property(
+                                                                Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.Unit)),
+                                                                nameof(UnitInformation.ConversionOffset));
+
+                        baseExpression = Expression.Add(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Value)), nameof(Nullable<decimal>.Value)));
+                        baseExpression = Expression.Multiply(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.ConversionFactor)));
+                        baseExpression = Expression.Divide(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.ConversionDivisor)));
+
+                        bindings.Add(Expression.Bind(
+                           attribute.ImplementationType.GetProperty(nameof(IUnitBase.BaseValue))!,
+                           baseExpression)
+                        );
+                    }
+
+                    var init = Expression.MemberInit(
+                        Expression.New(attribute.ImplementationType),
+                        bindings
                         );
 
                     var body = Expression.Condition(unitPropertyValueHasValueExpression, Expression.Convert(init, dimensionType), Expression.Constant(null, dimensionType));
 
                     return body;
-                }
-
-                return Expression.Constant(null, dimensionType);
-            }
-
-            private Expression GetDefaultInitExpression(MemberExpression unitPropertyExpression)
-            {
-                var dimensionType = unitPropertyExpression.Type.GenericTypeArguments[0];
-                var attribute = dimensionType.GetCustomAttribute<GeneralImplementationAttribute>();
-
-                if (attribute != null)
-                {
-                    Expression baseExpression = Expression.Property(
-                                                            Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.Unit)),
-                                                            nameof(UnitInformation.ConversionOffset));
-
-                    baseExpression = Expression.Add(baseExpression, Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.Value)));
-                    baseExpression = Expression.Multiply(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.ConversionFactor)));
-                    baseExpression = Expression.Divide(baseExpression, Expression.Property(Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.ConversionDivisor)));
-
-                    var init = Expression.MemberInit(
-                        Expression.New(attribute.ImplementationType),
-                        Expression.Bind(
-                            attribute.ImplementationType.GetProperty(nameof(IUnitBase.Symbol))!,
-                            Expression.Property(Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.Unit)), nameof(UnitInformation.Symbol))),
-                        Expression.Bind(
-                            attribute.ImplementationType.GetProperty(nameof(IUnitBase.Value))!,
-                            Expression.Property(unitPropertyExpression, nameof(DimensionValue<IUnitBase>.Value))),
-                        Expression.Bind(
-                            attribute.ImplementationType.GetProperty(nameof(IUnitBase.BaseValue))!,
-                            baseExpression)
-                        );
-
-                    return Expression.Convert(init, dimensionType);
                 }
 
                 return Expression.Constant(null, dimensionType);

@@ -11,26 +11,26 @@ namespace Codeworx.Units.Defaults.SpeedDimension.Internal
     {
         public decimal BaseValue { get; set; }
         public decimal Value { get; set; }
-        public required string Symbol { get; set; }
-        public string Key => ISpeed.Parse(Symbol, Value).Key;
+        public string Symbol => ISpeed.Parse(Key, Value).Symbol;
+        public required string Key { get; set; }
         public UnitSystem System => UnitSystem.Both;
 
-        public MillimeterPerSecond ToMillimeterPerSecond() => ISpeed.Parse(Symbol, Value).ToMillimeterPerSecond();
-        public MeterPerSecond ToMeterPerSecond() => ISpeed.Parse(Symbol, Value).ToMeterPerSecond();
-        public KilometerPerHour ToKilometerPerHour() => ISpeed.Parse(Symbol, Value).ToKilometerPerHour();
-        public FeetPerSecond ToFeetPerSecond() => ISpeed.Parse(Symbol, Value).ToFeetPerSecond();
-        public MilesPerHour ToMilesPerHour() => ISpeed.Parse(Symbol, Value).ToMilesPerHour();
-        public Knots ToKnots() => ISpeed.Parse(Symbol, Value).ToKnots();
-        public ISpeed ToUnit(string symbol) => ISpeed.Parse(Symbol, Value).ToUnit(symbol);
-        IUnitBase IUnitBase.ToUnit(string symbol) => ISpeed.Parse(Symbol, Value).ToUnit(symbol);
+        public MillimeterPerSecond ToMillimeterPerSecond() => ISpeed.Parse(Key, Value).ToMillimeterPerSecond();
+        public MeterPerSecond ToMeterPerSecond() => ISpeed.Parse(Key, Value).ToMeterPerSecond();
+        public KilometerPerHour ToKilometerPerHour() => ISpeed.Parse(Key, Value).ToKilometerPerHour();
+        public FeetPerSecond ToFeetPerSecond() => ISpeed.Parse(Key, Value).ToFeetPerSecond();
+        public MilesPerHour ToMilesPerHour() => ISpeed.Parse(Key, Value).ToMilesPerHour();
+        public Knots ToKnots() => ISpeed.Parse(Key, Value).ToKnots();
+        public ISpeed ToUnit(string symbol) => ISpeed.Parse(Key, Value).ToUnit(symbol);
+        IUnitBase IUnitBase.ToUnit(string symbol) => ISpeed.Parse(Key, Value).ToUnit(symbol);
         public ISpeed Add(ISpeed addition)
         {
-            return ISpeed.Parse(Symbol, Value).Add(addition);
+            return ISpeed.Parse(Key, Value).Add(addition);
         }
 
         public ISpeed Subtract(ISpeed subtraction)
         {
-            return ISpeed.Parse(Symbol, Value).Subtract(subtraction);
+            return ISpeed.Parse(Key, Value).Subtract(subtraction);
         }
 
         public override int GetHashCode()

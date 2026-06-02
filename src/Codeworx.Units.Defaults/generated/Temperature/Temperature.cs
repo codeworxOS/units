@@ -11,23 +11,23 @@ namespace Codeworx.Units.Defaults.TemperatureDimension.Internal
     {
         public decimal BaseValue { get; set; }
         public decimal Value { get; set; }
-        public required string Symbol { get; set; }
-        public string Key => ITemperature.Parse(Symbol, Value).Key;
+        public string Symbol => ITemperature.Parse(Key, Value).Symbol;
+        public required string Key { get; set; }
         public UnitSystem System => UnitSystem.Both;
 
-        public Celsius ToCelsius() => ITemperature.Parse(Symbol, Value).ToCelsius();
-        public Fahrenheit ToFahrenheit() => ITemperature.Parse(Symbol, Value).ToFahrenheit();
-        public Kelvin ToKelvin() => ITemperature.Parse(Symbol, Value).ToKelvin();
-        public ITemperature ToUnit(string symbol) => ITemperature.Parse(Symbol, Value).ToUnit(symbol);
-        IUnitBase IUnitBase.ToUnit(string symbol) => ITemperature.Parse(Symbol, Value).ToUnit(symbol);
+        public Celsius ToCelsius() => ITemperature.Parse(Key, Value).ToCelsius();
+        public Fahrenheit ToFahrenheit() => ITemperature.Parse(Key, Value).ToFahrenheit();
+        public Kelvin ToKelvin() => ITemperature.Parse(Key, Value).ToKelvin();
+        public ITemperature ToUnit(string symbol) => ITemperature.Parse(Key, Value).ToUnit(symbol);
+        IUnitBase IUnitBase.ToUnit(string symbol) => ITemperature.Parse(Key, Value).ToUnit(symbol);
         public ITemperature Add(ITemperature addition)
         {
-            return ITemperature.Parse(Symbol, Value).Add(addition);
+            return ITemperature.Parse(Key, Value).Add(addition);
         }
 
         public ITemperature Subtract(ITemperature subtraction)
         {
-            return ITemperature.Parse(Symbol, Value).Subtract(subtraction);
+            return ITemperature.Parse(Key, Value).Subtract(subtraction);
         }
 
         public override int GetHashCode()
