@@ -5,6 +5,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Codeworx.Units.EntityFrameworkCore.Entities;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -18,6 +19,7 @@ namespace Codeworx.Units.EntityFrameworkCore
         static DimensionQueryReplacementPreprocessor()
         {
             _instance = new DimensionQueryReplacementPreprocessor();
+
         }
 
         private DimensionQueryReplacementPreprocessor()
@@ -40,9 +42,29 @@ namespace Codeworx.Units.EntityFrameworkCore
         {
             private List<PropertyInfo> _dimensionProperties;
 
+            private static readonly MethodInfo _orderByMethod;
+            private static readonly MethodInfo _orderByDescendingMethod;
+            private static readonly MethodInfo _thenByMethod;
+            private static readonly MethodInfo _thenByDescendingMethod;
+
             public BaseValueExpressionVisitor()
             {
                 _dimensionProperties = new List<PropertyInfo>();
+            }
+
+            static BaseValueExpressionVisitor()
+            {
+                Expression<Func<IQueryable<object>, IOrderedQueryable<object>>> exp = p => p.OrderBy(x => 1);
+                _orderByMethod = ((MethodCallExpression)exp.Body).Method.GetGenericMethodDefinition();
+
+                Expression<Func<IQueryable<object>, IOrderedQueryable<object>>> exp2 = p => p.OrderByDescending(x => 1);
+                _orderByDescendingMethod = ((MethodCallExpression)exp2.Body).Method.GetGenericMethodDefinition();
+
+                Expression<Func<IOrderedQueryable<object>, IOrderedQueryable<object>>> exp3 = p => p.ThenBy(x => 1);
+                _thenByMethod = ((MethodCallExpression)exp3.Body).Method.GetGenericMethodDefinition();
+
+                Expression<Func<IOrderedQueryable<object>, IOrderedQueryable<object>>> exp4 = p => p.ThenByDescending(x => 1);
+                _thenByDescendingMethod = ((MethodCallExpression)exp4.Body).Method.GetGenericMethodDefinition();
             }
 
             public IReadOnlyList<PropertyInfo> DimensionProperties => _dimensionProperties.ToImmutableList();
@@ -58,6 +80,8 @@ namespace Codeworx.Units.EntityFrameworkCore
                     {
                         case ExpressionType.Equal:
                             return Expression.Equal(newLeft, newRight);
+                        case ExpressionType.NotEqual:
+                            return Expression.NotEqual(newLeft, newRight);
                         case ExpressionType.GreaterThan:
                             return Expression.GreaterThan(newLeft, newRight);
                         case ExpressionType.GreaterThanOrEqual:
@@ -66,8 +90,6 @@ namespace Codeworx.Units.EntityFrameworkCore
                             return Expression.LessThan(newLeft, newRight);
                         case ExpressionType.LessThanOrEqual:
                             return Expression.LessThanOrEqual(newLeft, newRight);
-                        case ExpressionType.NotEqual:
-                            return Expression.NotEqual(newLeft, newRight);
                     }
                 }
 
@@ -76,7 +98,28 @@ namespace Codeworx.Units.EntityFrameworkCore
 
             protected override Expression VisitMethodCall(MethodCallExpression node)
             {
-                Queryable.OrderBy()
+                if (node.Method.IsGenericMethod)
+                {
+                    var method = node.Method.GetGenericMethodDefinition();
+                    if (method == _orderByMethod || method == _orderByDescendingMethod || method == _thenByMethod || method == _thenByDescendingMethod)
+                    {
+                        if (node.Arguments[1] is UnaryExpression unary &&
+                            unary.Operand is LambdaExpression lambda &&
+                            lambda.Body is MemberExpression member &&
+                            member.Type.IsAssignableTo(typeof(IUnitBase)))
+                        {
+                            if (member.Member is PropertyInfo propertyInfo)
+                            {
+                                _dimensionProperties.Add(propertyInfo);
+                            }
+
+                            var newBody = CleanupBaseUnitExpression(member);
+                            var newLambda = Expression.Lambda(newBody, lambda.Parameters);
+                            var newMethod = method.MakeGenericMethod(lambda.Parameters[0].Type, newBody.Type);
+                            return Expression.Call(newMethod, Visit(node.Arguments[0]), Expression.Quote(newLambda));
+                        }
+                    }
+                }
 
                 return base.VisitMethodCall(node);
             }
@@ -219,7 +262,7 @@ namespace Codeworx.Units.EntityFrameworkCore
                 var unitPropertyUnitIdExpression = Expression.Property(unitPropertyExpression, nameof(NullableDimensionValue<IUnitBase>.UnitId));
 
                 var unitPropertyValueValueExpression = Expression.Property(unitPropertyValueExpression, nameof(Nullable<decimal>.Value));
-                var unitPropertyValueHasValueExpression = Expression.Property(unitPropertyValueExpression, nameof(Nullable<decimal>.HasValue));
+                var unitPropertyValueHasValueExpression = Expression.NotEqual(unitPropertyValueExpression, Expression.Constant(null, typeof(decimal?)));
 
                 var dimensionType = unitPropertyExpression.Type.GenericTypeArguments[0];
                 var attribute = dimensionType.GetCustomAttribute<GeneralImplementationAttribute>();

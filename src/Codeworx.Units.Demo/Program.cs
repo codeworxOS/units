@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Codeworx.Units.Defaults;
 using Codeworx.Units.Defaults.DistanceDimension;
+using Codeworx.Units.Defaults.DistanceDimension.Internal;
 using Codeworx.Units.Demo.Data;
 using Codeworx.Units.EntityFrameworkCore;
 using Codeworx.Units.EntityFrameworkCore.Entities;
@@ -131,17 +133,15 @@ internal class Program
         {
             Id = d.Id,
             RequiredDistance = d.RequiredDistance.GetDimension(),
-            OptionalDistance = d.OptionalDistance.GetDimension(),//new Distance  {
-                                                                 //     Symbol = p.OptionalDistance.Unit.Symbol,
-                                                                 //     Value = p.OptionalDistance.Value,
-                                                                 //     BaseValue = p.OptionalDistance.value + p.OptionalDistance.Unit.Offset....
-                                                                 //}
+            OptionalDistance = d.OptionalDistance.GetDimension(),
         })
-        //.Where(p => p.RequiredDistance >= new Meter(1) && p.RequiredDistance <= new Feet(9));
-        //.Where(p => p.OptionalDistance <= new Meter(2) || p.OptionalDistance == null);
-        .OrderBy(p => p.RequiredDistance);
-        //.ThenBy(p => p.OptionalDistance);
+        .Where(p => p.RequiredDistance >= new Meter(1) && p.RequiredDistance <= new Feet(9))
+        .Where(p => p.OptionalDistance <= new Meter(10))
+        .OrderBy(p => p.RequiredDistance)
+        .ThenBy(p => p.OptionalDistance);
 
-        return await entryQry.FirstOrDefaultAsync();
+        var result = await entryQry.FirstOrDefaultAsync();
+
+        return result;
     }
 }
