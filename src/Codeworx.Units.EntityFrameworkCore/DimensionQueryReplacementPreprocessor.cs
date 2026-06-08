@@ -76,8 +76,6 @@ namespace Codeworx.Units.EntityFrameworkCore
 
             protected override Expression VisitMethodCall(MethodCallExpression node)
             {
-                Queryable.OrderBy()
-
                 return base.VisitMethodCall(node);
             }
 

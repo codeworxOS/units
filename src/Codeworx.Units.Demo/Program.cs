@@ -139,8 +139,8 @@ internal class Program
         })
         //.Where(p => p.RequiredDistance >= new Meter(1) && p.RequiredDistance <= new Feet(9));
         //.Where(p => p.OptionalDistance <= new Meter(2) || p.OptionalDistance == null);
-        .OrderBy(p => p.RequiredDistance);
-        //.ThenBy(p => p.OptionalDistance);
+        .OrderBy(p => p.RequiredDistance)
+        .ThenBy(p => p.OptionalDistance);
 
         return await entryQry.FirstOrDefaultAsync();
     }
