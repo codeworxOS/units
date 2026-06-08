@@ -121,6 +121,7 @@ internal class Program
             RequiredMeter = d.RequiredMeter,
             OptionalMeter = d.OptionalMeter,
         })
+            .Where(p => p.RequiredMeter > new Meter(0.5m))
             .OrderBy(p => p.RequiredMeter)
             .ThenBy(p => p.OptionalMeter);
 

@@ -71,7 +71,9 @@ namespace Codeworx.Units.EntityFrameworkCore
 
             protected override Expression VisitBinary(BinaryExpression node)
             {
-                if (node.Left.Type.IsAssignableTo(typeof(IUnitBase)) && node.Right.Type.IsAssignableTo(typeof(IUnitBase)))
+                if (node.Left.Type.IsAssignableTo(typeof(IUnitBase)) &&
+                    node.Right.Type.IsAssignableTo(typeof(IUnitBase)) &&
+                    (node.Left.Type.IsInterface || node.Right.Type.IsInterface))
                 {
                     var newLeft = CleanupBaseUnitExpression(node.Left);
                     var newRight = CleanupBaseUnitExpression(node.Right);
@@ -106,7 +108,8 @@ namespace Codeworx.Units.EntityFrameworkCore
                         if (node.Arguments[1] is UnaryExpression unary &&
                             unary.Operand is LambdaExpression lambda &&
                             lambda.Body is MemberExpression member &&
-                            member.Type.IsAssignableTo(typeof(IUnitBase)))
+                            member.Type.IsAssignableTo(typeof(IUnitBase)) &&
+                            member.Type.IsInterface)
                         {
                             if (member.Member is PropertyInfo propertyInfo)
                             {
