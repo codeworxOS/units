@@ -181,7 +181,7 @@ namespace Codeworx.Units.EntityFrameworkCore
 
             protected override MemberBinding VisitMemberBinding(MemberBinding node)
             {
-                if (node is MemberAssignment assignment && _baseValueProperties.Contains(node.Member))
+                if (node is MemberAssignment assignment && _baseValueProperties.Any(d=>d.DeclaringType == node.Member.DeclaringType && d.Name == node.Member.Name))
                 {
                     if (assignment.Expression is MethodCallExpression methodCallExpression)
                     {
