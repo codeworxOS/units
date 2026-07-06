@@ -16,7 +16,7 @@ export const DimensionNameList: DimensionName[] = [{{{NameList}}}];
 export interface IDimension {
   value: number;
   symbol: string;
-  dimension: string;
+  dimension: DimensionName;
   system: UnitSystems[];
   toUnit(symbol: string): IDimension;
 }
@@ -40,7 +40,7 @@ export abstract class I{{{DimensionName}}} implements IDimension {
 
     public system: UnitSystems[];
 
-    public dimension: string = "{{{DimensionName}}}";
+    public dimension: DimensionName = "{{{DimensionName}}}";
 
     public constructor(val: number, sym: string, system: UnitSystems[]) {
         this.value = val;
